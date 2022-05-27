@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+		<meta name="author" content="AdminKit">
+		<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+
+		<link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
+
+		<title>我做过的题</title>
+
+		<link rel="stylesheet" href="https://unpkg.com/@adminkit/core@latest/dist/css/app.css">
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	</head>
+	<body>
+	<div class="wrapper">
+			<nav id="sidebar" class="sidebar js-sidebar">
+				<div class="sidebar-content js-simplebar">
+					<a class="sidebar-brand">
+		      <span class="align-middle">考试系统</span>
+		    </a>
+		
+					<ul class="sidebar-nav">
+						<li class="sidebar-header">
+									导航栏
+								</li>
+						
+						
+								<li class="sidebar-item">
+									<a class="sidebar-link" href="teacher.html" th:if="${usertype} eq '0'" >
+						  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+						</a>
+						<a class="sidebar-link" href="/personpage3" th:if="${usertype} eq '1'" >
+						  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+						</a>
+						<a class="sidebar-link" href="admin.html" th:if="${usertype} eq '2'" >
+						  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+						</a>
+								</li>
+						
+								<li class="sidebar-item">
+									<a class="sidebar-link" href="/myexam">
+						  <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">考试主页</span>
+						</a>
+								</li>
+						
+								<li class="sidebar-item">
+									<a class="sidebar-link" href="/class">
+						  <i class="align-middle" data-feather="book"></i> <span class="align-middle">课程主页</span>
+						</a>
+								</li>
+						
+								<li class="sidebar-item">
+									<a class="sidebar-link" href="/questionbankpage">
+						  <i class="align-middle" data-feather="map"></i> <span class="align-middle">题库练习</span>
+						</a>
+								</li>
+								<li class="sidebar-item" th:if="${usertype} eq '0'">
+											<a class="sidebar-link" href="/AddExaminfo">
+								  <i class="align-middle" data-feather="file"></i> <span class="align-middle">上传考试</span>
+								</a>
+										</li>
+					</ul>
+				</div>
+			</nav>
+		
+			<div class="main">
+				<nav class="navbar navbar-expand navbar-light navbar-bg">
+					<a class="sidebar-toggle js-sidebar-toggle">
+						<i class="hamburger align-self-center"></i>
+					</a>
+		
+					<div class="navbar-collapse collapse">
+						<ul class="navbar-nav navbar-align">
+							<li class="nav-item dropdown">
+								<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+									<i class="align-middle" data-feather="settings"></i>
+								</a>
+		
+								<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+									<i class="align-middle me-2" data-feather="feather"></i>
+									<span th:if="${usertype} eq '0'">老师</span>
+									<span th:if="${usertype} eq '1'">学生</span>
+									<span th:if="${usertype} eq '2'">管理员</span>
+									<img src="images/someicon/teacher.jpg" class="avatar img-fluid rounded me-1" alt="老师" th:if="${usertype} eq '0'"/> 
+									<img src="images/someicon/student.jpg" class="avatar img-fluid rounded me-1" alt="学生" th:if="${usertype} eq '1'"/> 
+									<img src="images/someicon/admin.jpg" class="avatar img-fluid rounded me-1" alt="管理员" th:if="${usertype} eq '2'"/> 
+									<span class="text-dark" th:text="${usermail}"></span>
+								</a>
+								<div class="dropdown-menu dropdown-menu-end">
+									<a class="dropdown-item" href="teacherinfoupdate" th:if="${usertype} eq '0'"><i class="align-middle me-1" data-feather="user"></i> 修改信息</a>
+									<a class="dropdown-item" href="/newstudentInformation" th:if="${usertype} eq '1'"><i class="align-middle me-1" data-feather="user"></i>  修改信息</a>
+									<a class="dropdown-item" href="admininfoupdate" th:if="${usertype} eq '2'"><i class="align-middle me-1" data-feather="user"></i>  修改信息</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="logout">Log out</a>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</nav>
+	
+			<main class="content">
+				<div class="container-fluid p-0">
+				<div class="row">
+					<div class="col-lg-5">
+						<h1 class="h3 mb-3">我做过的题</h1>
+					</div>
+					<div class="col-lg-5" th:if="${usertype} eq '0'">
+
+
+							<div class="mb-3">
+								<form action="/Addquestion" enctype='multipart/form-data' method='POST'>
+								<button class="btn btn-success" type="submit" style="margin-left: 200px;">老师上传题库</button>
+								</form>
+							</div>
+
+					</div>
+				</div>
+
+
+				<form action="/myquestion_search" enctype='multipart/form-data' method='POST'>
+					<div class="col-md-9">
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-5">
+										<input type="search" placeholder="请输入科目" name="subject" th:value="${subject}" class="form-control">
+									</div>
+									<div class="col-md-5">
+										<button type="submit" class="btn btn-primary">开始搜索</button>
+									</div>
+								</div>
+								<div class="row" style="margin-top: 15px;">
+									<div class="col-md-3">
+										<label class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox" name="choiceq" value=1>
+											<span class="form-check-label">
+										选择题
+										</span>
+										</label>
+									</div>
+									<div class="col-md-3">
+										<label class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox" name="judq" value=1>
+											<span class="form-check-label">
+										判断题
+										</span>
+										</label>
+									</div>
+									<div class="col-md-3">
+										<label class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox" name="fillq" value=1  >
+											<span class="form-check-label">
+										填空题
+										</span>
+										</label>
+									</div>
+									<div class="col-md-3">
+										<label class="form-check form-check-inline">
+										<input class="form-check-input" type="checkbox" name="bigq" value=1>
+										<span class="form-check-label">
+									简答题
+									</span>
+									</label></div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				
+				
+
+
+
+
+				<div class="row">
+					<div class="col-12 col-lg-12 col-xxl-9 d-flex">
+						<div class="card flex-fill">
+							<div class="card-header">
+
+								<h5 class="card-title mb-0">搜索结果</h5>
+							</div>
+							
+							
+							<table class="table table-hover my-0">
+								<!-- <thead>
+									<tr>
+										<th>Name</th>
+										<th class="d-none d-xl-table-cell">Start Date</th>
+										<th class="d-none d-xl-table-cell">End Date</th>
+										<th>Status</th>
+										<th class="d-none d-md-table-cell">Assignee</th>
+									</tr>
+								</thead> -->
+								<thead>
+								<tr>
+								<tr>
+									<th>题型</th>
+									<th>科目</th>
+									<th>难度</th>
+									<th>分数</th>
+									<th>题干</th>
+									<th>图片</th>
+									<th>查看详情</th>
+								</tr>
+								</tr>
+								</thead>
+
+								<tbody>
+
+								<tr th:each="i:${cqinfolist}">
+									<td>选择题</td>
+									<td th:text="${i.subject}"></td>
+									<td th:text="${i.difficulty}"></td>
+									<td th:text="${i.point}"></td>
+									<td th:text="${i.content}"></td>
+									<td>
+										<a th:href="@{${i.picture}}"><img th:src="@{${i.picture}}" onerror="javascript:this.src='images/no.png';" width=40px height=40px></a>
+									</td>
+									<td>
+										<form action="/myquestion_diddetail" enctype='multipart/form-data' method='POST'>
+											<button type="submit" style="width: 40px; height: 20px; border-radius: 10%;border: none;background-color: #1faaa1;">
+												<h5 >
+													<font color="white">
+														<p style="margin-top:0px">详情</p>
+													</font>
+												</h5>
+											</button>
+											<input type="hidden" name="qtype" value=0><br/>
+											<input type="hidden" name="aid" th:value="${calist[iStat.index]}">
+										</form>
+									</td>
+								</tr>
+
+								<tr th:each="i:${jqinfolist}">
+									<td>判断题</td>
+									<td th:text="${i.subject}"></td>
+									<td th:text="${i.difficulty}"></td>
+									<td th:text="${i.point}"></td>
+									<td th:text="${i.content}"></td>
+									<td>
+										<a th:href="@{${i.picture}}"><img th:src="@{${i.picture}}" onerror="javascript:this.src='images/no.png';" width=40px height=40px></a>
+									</td>
+									
+									<td>
+										<form action="/myquestion_diddetail" enctype='multipart/form-data' method='POST'>
+											<button type="submit" style="width: 40px; height: 20px; border-radius: 10%;border: none;background-color: #1faaa1;">
+												<h5 >
+													<font color="white">
+														<p style="margin-top:0px">详情</p>
+													</font>
+												</h5>
+											</button>
+											<input type="hidden" name="qtype" value=1><br/>
+											<input type="hidden" name="aid" th:value="${jalist[iStat.index]}">
+										</form>
+									</td>
+								</tr>
+
+								<tr th:each="i:${fqinfolist}">
+									<td>填空题</td>
+									<td th:text="${i.subject}"></td>
+									<td th:text="${i.difficulty}"></td>
+									<td th:text="${i.point}"></td>
+									<td th:text="${i.content}"></td>
+									<td>
+										<img th:src="@{${i.picture}}" onerror="javascript:this.src='images/no.png';" width=40px height=40px>
+									</td>
+									
+									<td>
+										<form action="/myquestion_diddetail" enctype='multipart/form-data' method='POST'>
+											<button type="submit" style="width: 40px; height: 20px; border-radius: 10%;border: none;background-color: #1faaa1;">
+												<h5 >
+													<font color="white">
+														<p style="margin-top:0px">详情</p>
+													</font>
+												</h5>
+											</button>
+											<input type="hidden" name="qtype" value=2><br/>
+											<input type="hidden" name="aid" th:value="${falist[iStat.index]}">
+										</form>
+									</td>
+								</tr>
+
+								<tr th:each="i:${bqinfolist}">
+									<td>简答题</td>
+									<td th:text="${i.subject}"></td>
+									<td th:text="${i.difficulty}"></td>
+									<td th:text="${i.point}"></td>
+									<td th:text="${i.content}"></td>
+									<td>
+										<img th:src="@{${i.picture}}" onerror="javascript:this.src='images/no.png';" width=40px height=40px>
+									</td>
+									<td>
+										<form action="/myquestion_diddetail" enctype='multipart/form-data' method='POST'>
+											<button type="submit" style="width: 40px; height: 20px; border-radius: 10%;border: none;background-color: #1faaa1;">
+												<h5 >
+													<font color="white">
+														<p style="margin-top:0px">详情</p>
+													</font>
+												</h5>
+											</button>
+											<input type="hidden" name="qtype" value=3><br/>
+											<input type="hidden" name="aid" th:value="${balist[iStat.index]}">
+										</form>
+									</td>
+								</tr>
+
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+				</div>
+
+
+
+				</div>
+			</main>
+		</div>
+	</div>
+	<script src="https://unpkg.com/@adminkit/core@latest/dist/js/app.js"></script>
+	</body>
+</html>

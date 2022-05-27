@@ -1,0 +1,132 @@
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+    <meta name="author" content="AdminKit">
+    <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+
+    <link rel="canonical" href="https://demo-basic.adminkit.io/pages-sign-up.html" />
+
+    <title>学生注册</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/@adminkit/core@latest/dist/css/app.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <script src="js/jquery-3.2.1.js"></script>
+
+
+
+
+</head>
+<body>
+<main class="d-flex w-100">
+    <div class="container d-flex flex-column">
+        <div class="row vh-100">
+            <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+                <div class="d-table-cell align-middle">
+
+                    <div class="text-center mt-4">
+                        <h1 class="h2">学生注册</h1>
+
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="m-sm-4">
+                                <form action="studentadd" method="post" id="studentedit" >
+                                    <div class="mb-3">
+                                        <label class="form-label">用户名</label>
+                                        <input class="form-control form-control-lg" type="text" name="username" id="username" placeholder="请输入用户名"  >
+                                        <span></span>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">邮箱</label>
+                                        <input class="form-control form-control-lg" type="text" name="usermail" id="usermail" placeholder="请输入邮箱" >
+                                        <span></span>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">密码</label>
+                                        <input  class="form-control form-control-lg" type="password"  name="userpassword" id="userpassword" placeholder="请输入密码">
+                                        <span></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">确认密码</label>
+                                        <input  class="form-control form-control-lg" type="password" name="ruserpassword" id="ruserpassword"placeholder="确认密码">
+                                        <span></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">性别 </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="usergender" id="uesrgender1" value="0" checked> 男
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="usergender" id="uesrgender2"  value="1"> 女
+                                        </label>
+
+                                        <span></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">学院</label>
+                                        <input class="form-control form-control-lg" type="text"  name="useracademy" id="useracademy" placeholder="请输入学院">
+                                        <span></span>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">专业</label>
+                                        <input class="form-control form-control-lg" type="text"  name="usermajor" id="usermajor"  placeholder="请输入专业">
+                                        <span></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">年级</label>
+                                        <input class="form-control form-control-lg" type="text"  name="usergrade" id="usergrade"  placeholder="请输入年级">
+                                        <span></span>
+                                    </div>
+                                    <div class="text-center mb-3">
+                                        <input style="align-items: center" type="submit" value="注册" class="btn btn-success btn-sm text-left">
+                                        <a href="#" style="align-items: center"  >返回</a>
+                                    </div>
+
+
+                                    <script>
+                                        function mySubmit(flag){
+                                            return flag;
+                                        }
+                                        $("#studentedit").submit(function () {
+                                            if($("#userpassword").val()==''||$("#username").val()==''
+                                                || $("#usermail").val()==''||$("#usergrade").val()==''
+                                                ||$("#useracademy").val()==''
+                                                || $("#usermajor").val()==''){
+                                                alert("请填入完整读者信息！");
+                                                return mySubmit(false);
+                                            }
+                                        })
+                                    </script>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script src="https://unpkg.com/@adminkit/core@latest/dist/js/app.js"></script>
+
+</body>
+</html>
+<input type="hidden" id="path" name="path" value="${pageContext.request.contextPath }"/>
+
+
+<script type="text/javascript" src="js/sturegister.js"></script>
+<script type="text/javascript" src="js/common.js"></script>

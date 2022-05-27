@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.mainbox{
+	display:flex;
+	min-width: 1024px;
+	max-width: 1920px;
+	margin:0 auto;
+	height:800px;
+	padding:0.125rem 0.125rem 0;
+	.column{
+		flex:3
+	}
+	
+	.column:nth-child(2) {
+	  flex: 6;
+	  margin: 0 0.125rem 0.1875rem;
+	  overflow: hidden;
+	}
+}
+body {
+  background-size: cover;
+  line-height: 1.15;
+  height:100%;
+  overflow:hidden hidden;
+  }
+
+.classa{
+	display:flex;
+	.subclass{
+		flex:3;
+		background-color:pink;
+	}
+}
+
+.forcard{
+	display:flex;
+	.subforcard{
+		flex:2;
+		background-color:pink;
+	}
+	.subforcard:nth-child(1) {
+	  flex: 6;
+	  margin: 0 0.125rem 0.1875rem;
+	  overflow: hidden;
+	}
+}

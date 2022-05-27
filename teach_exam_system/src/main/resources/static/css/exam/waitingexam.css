@@ -1,0 +1,88 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.timecount {
+  display: flex;
+  height: 200px;
+}
+.timecount .forno {
+  flex: 3;
+  padding-top: 10px;
+  margin-left: 25px;
+}
+.timetitle {
+  padding-left: 150px;
+  height: 50px;
+}
+.forecast {
+  display: flex;
+  margin-top: 15px;
+}
+.forecast .sub {
+  flex: 4;
+}
+.forecast .sub:nth-child(2) {
+  flex: 8;
+}
+.forecast .sub:nth-child(2) .formin {
+  display: flex;
+}
+.forecast .sub:nth-child(2) .formin .subsub {
+  flex: 3.5;
+  display: flex;
+}
+.forecast .sub:nth-child(2) .formin .subsub:nth-child(2) {
+  flex: 4;
+  display: flex;
+}
+.forecast .sub:nth-child(3) {
+  flex: 5;
+}
+.forqshow {
+  display: flex;
+  margin-bottom: 20px;
+}
+.forqshow .forqtitle {
+  flex: 2;
+  padding-left: 25px;
+}
+.forqshow .forq {
+  flex: 7;
+  padding-left: 5px;
+  display: flex;
+  flex-flow: row wrap;
+}
+.forqshow .forq .eachq {
+  flex: 0 0 12%;
+  margin-left: 0px;
+  margin-right: 5px;
+  padding-bottom: 5px;
+}
+.forqshow .forinfo {
+  height: 10px;
+}
+.forqlist {
+  display: flex;
+  margin-top: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
+  flex-flow: row wrap;
+}
+.forqlist .forq {
+  flex: 0 0 12%;
+  margin-right: 10px;
+  margin-top: 8px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+  text-align: center;
+  height: 40px;
+}
+.forqlist .forq .button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: #1CBB8C;
+}

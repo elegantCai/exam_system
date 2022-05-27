@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>上传考试题目</title>
+		<script type="text/javascript">
+			function checkNum(obj) {
+			    obj.value = obj.value.replace(/[^\d.]/g, "");  //清除“数字”和“.”以外的字符
+			    obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
+			    obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+			    obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');//只能输入两个小数
+			    if (obj.value.indexOf(".") < 0 && obj.value != "") {//以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+			        obj.value = parseFloat(obj.value);
+			    }
+			}
+		</script>
+		<link href="css/app.css" rel="stylesheet">
+		<link rel="stylesheet" href=""/>
+		<link rel="stylesheet" href="../../static/css/exam/upexamquestion.css"/>
+	</head>
+	<body>
+		<div class="wrapper">
+			<nav id="sidebar" class="sidebar js-sidebar">
+				<div class="sidebar-content js-simplebar">
+					<a class="sidebar-brand">
+		      <span class="align-middle">考试系统</span>
+		    </a>
+		
+					<ul class="sidebar-nav">
+						<li class="sidebar-header">
+							Pages
+						</li>
+						<li class="sidebar-item">
+							<a class="sidebar-link" href="pages-profile.html">
+								<i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+						</a>
+						</li>
+						<li class="sidebar-item">
+									<a class="sidebar-link" href="charts-chartjs.html">
+						  <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Charts</span>
+						</a>
+								</li>
+						
+								<li class="sidebar-item">
+									<a class="sidebar-link" href="maps-google.html">
+						  <i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
+						</a>
+								</li>
+					</ul>
+				</div>
+			</nav>
+		
+			<div class="main">
+				<nav class="navbar navbar-expand navbar-light navbar-bg">
+					<a class="sidebar-toggle js-sidebar-toggle">
+						<i class="hamburger align-self-center"></i>
+					</a>
+		
+					<div class="navbar-collapse collapse">
+						<ul class="navbar-nav navbar-align">
+							<li class="nav-item dropdown">
+								<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+									<i class="align-middle" data-feather="settings"></i>
+								</a>
+		
+								<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+									<i class="align-middle me-2" data-feather="feather"></i>
+									<span th:if="${usertype} eq '0'">老师</span>
+									<span th:if="${usertype} eq '1'">学生</span>
+									<span th:if="${usertype} eq '2'">管理员</span>
+									<img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> 
+									<span class="text-dark" th:text="${usermail}"></span>
+								</a>
+								<div class="dropdown-menu dropdown-menu-end">
+									<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="#">Log out</a>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</nav>
+				
+				<!--在这里写我自己的东西-->
+			<section class="mainbox">
+				<div class="column">
+					<div class="examinfo">
+						<div class="examtitle">
+							<div class="forh3">
+								<h2>考试信息</h2>
+							</div>
+							<div class="forh3">
+								<a class="badge bg-success text-white ms-2" th:if ="${type} eq '0'">
+								    贡献为题库
+								</a>
+								<a class="badge bg-success text-white ms-2" th:if ="${type} eq '1'">
+								    不贡献为题库
+								</a>
+							</div>
+						</div>
+						<div class="subexaminfo">
+							<div class="subsub">
+								考试id:<p th:text="${newexamid}"></p>
+							</div>
+							<div class="subsub">
+								考试科目:<p th:text="${subject}">111</p>
+							</div>
+						</div>
+						<div class="subexaminfo">
+							<div class="subsub">
+								开始时间:<p th:text="${starttime}"></p>
+							</div>
+							<div class="subsub">
+								结束时间:<p th:text="${endtime}"></p>
+							</div>
+						</div>
+						<div class="subexamclass">
+							<div class="subsub">
+								<p>班级id</p>
+							</div>
+							<div th:each="i:${classidlist}">
+								<div class="subsub">
+									<p th:text="${i}"></p>
+								</div>
+							</div>	
+						</div>	
+						<div class="subexamclass">
+							<div class="subsub">
+								<p>班名</p>
+							</div>
+							<div th:each="i:${classnames}">
+								<div class="subsub">
+									<p th:text="${i}"></p>
+								</div>
+							</div>	
+						</div>	
+					</div>
+					<div class="questioncard">
+						<div class="forh3">
+							<h2 style="margin-top: 7px;">出题卡</h2>
+							<div class="forpoint">
+								<p style="padding-left:12px">目前总分:</p>
+							</div>
+							<div class="forpoint">
+								<p th:text="${totalpoint}" style="margin-left: 15px;">ggg</p>
+							</div>
+						</div>
+						<div class="qlistborder">
+							<div th:if="${not #lists.isEmpty(upcqlist)}">
+							    <h4 style="margin-top:8px;margin-left:15px;margin-bottom:0px;">选择题</h4>
+								<div class="forqlist" th:each="i:${upcqlist}">
+									<div class="forq">
+										<form action="/Addexam_qdetail" enctype='multipart/form-data' method='POST'>
+											<button type="submit" style="width: 40px; height: 40px; border-radius: 50%;border: none;background-color: #17A2B8;">
+												<input type="hidden" name="qtype" value=0><br/>
+												<p style="margin-top:-10px;"th:text="${iStat.count}">1</p>
+												<input type="hidden" name="qid" th:value="${i}">
+											</button>
+										</form>
+									</div>
+								</div>							 
+							</div>
+						</div>
+						<div class="qlistborder">
+							<div th:if="${not #lists.isEmpty(upjqlist)}">
+							    <h4 style="margin-top:8px;margin-left:15px;margin-bottom:0px;">判断题</h4>
+								<div class="forqlist" th:each="i:${upjqlist}">
+									<div class="forq">
+										<form action="/Addexam_qdetail" enctype='multipart/form-data' method='POST'>
+											<button type="submit" style="width: 40px; height: 40px; border-radius: 50%;border: none;background-color: #17A2B8;">
+												<input type="hidden" name="qtype" value=0><br/>
+												<p style="margin-top:-10px;"th:text="${iStat.count}">1</p>
+												<input type="hidden" name="qid" th:value="${i}">
+											</button>
+										</form>
+									</div>
+								</div>							 
+							</div>
+						</div>
+						<div class="qlistborder">
+							<div th:if="${not #lists.isEmpty(upfqlist)}">
+							    <h4 style="margin-top:8px;margin-left:15px;margin-bottom:0px;">填空题</h4>
+								<div class="forqlist" th:each="i:${upfqlist}">
+									<div class="forq">
+										<form action="/Addexam_qdetail" enctype='multipart/form-data' method='POST'>
+											<button type="submit" style="width: 40px; height: 40px; border-radius: 50%;border: none;background-color: #17A2B8;">
+												<input type="hidden" name="qtype" value=0><br/>
+												<p style="margin-top:-10px;"th:text="${iStat.count}">1</p>
+												<input type="hidden" name="qid" th:value="${i}">
+											</button>
+										</form>
+									</div>
+								</div>							 
+							</div>
+						</div>
+						<div class="qlistborder">
+							<div th:if="${not #lists.isEmpty(upbqlist)}">
+							    <h4 style="margin-top:8px;margin-left:15px;margin-bottom:0px;">简答题</h4>
+								<div class="forqlist" th:each="i:${upbqlist}">
+									<div class="forq">
+										<form action="/Addexam_qdetail" enctype='multipart/form-data' method='POST'>
+											<button type="submit" style="width: 40px; height: 40px; border-radius: 50%;border: none;background-color: #17A2B8;">
+												<input type="hidden" name="qtype" value=0><br/>
+												<p style="margin-top:-10px;"th:text="${iStat.count}">1</p>
+												<input type="hidden" name="qid" th:value="${i}">
+											</button>
+										</form>
+									</div>
+								</div>							 
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="column">
+					<div class="bigbox">
+						<form action="/AddingExamquestion1" enctype='multipart/form-data' method='POST'>
+							<div class="typechoose">
+								<div class="eachtype">
+									<button type="submit" style="width: 80px; height: 40px; border-radius: 20%;border: none;background-color: #17A2B8;">
+										<input type="hidden" name="qtype" value=0><br/>
+										<h4 style="margin-top:-10px;">
+											<font color="white">选择题</font>
+										</h4>
+									</button>
+								</div>
+								<div class="eachtype">
+									<button type="submit" style="width: 80px; height: 40px; border-radius: 20%;border: none;background-color: #17A2B8;">
+										<input type="hidden" name="qtype" value=1><br/>
+										<h4 style="margin-top:-10px;">
+											<font color="white">判断题</font>
+										</h4>
+									</button>
+								</div>
+								<div class="eachtype">
+									<button type="submit" style="width: 80px; height: 40px; border-radius: 20%;border: none;background-color: #17A2B8;">
+										<input type="hidden" name="qtype" value=2><br/>
+										<h4 style="margin-top:-10px;">
+											<font color="white">填空题</font>
+										</h4>
+									</button>
+								</div>
+								<div class="eachtype">
+									<button type="submit" style="width: 80px; height: 40px; border-radius: 20%;border: none;background-color: #17A2B8;">
+										<input type="hidden" name="qtype" value=3><br/>
+										<h4 style="margin-top:-10px;">
+											<font color="white">简答题</font>
+										</h4>
+									</button>
+								</div>
+								<div class="eachtype"></div>
+								<div class="eachtype"></div>
+								<div class="eachtype"></div>
+								<div class="eachtype"></div>
+								<div class="eachtype"></div>
+							</div>
+						</form>
+						<div th:if="${#lists.isEmpty(qtype)}" >
+							<div class="tips">
+								<h4>老师，您好！</h4>
+								<h4>请在上方点击题型按钮添加题目，然后在此编辑区添加内容。</h4>
+							</div>
+						</div>
+						<div th:if="${not #strings.isEmpty(qtype)}">
+							<form action="/AddingExamquestion2" enctype='multipart/form-data' method='POST'>
+								<div class="forinput">
+									<div class="subthing">分数：</div>
+									<div class="subthing">
+										<input type="text" placeholder="请输入题目分值（整数）" name="point" 
+										class="form-control"  onkeyup="checkNum(this)">
+									</div>
+									<div class="subthing"></div>
+									<div class="subthing"></div>
+									<div class="subthing"></div>
+									<div class="subthing"></div>
+								</div>
+								<div class="forinput2">
+									<div class="subthing">题干：</div>
+									<div class="subthing">
+										<textarea cols="50" rows="6"  name="content" class="form-control">输入题干</textarea>
+									</div>
+									<div class="subthing"></div>
+									<div class="subthing"></div>
+								</div>
+								<div class="forinput3">
+									<div class="subthing">题目照片：</div>
+									<div class="subthing">
+										<input type="file" name="picture" class="form-control">
+									</div>
+									<div class="subthing"></div>
+									<div class="subthing"></div>
+									<div class="subthing"></div>
+									<div class="subthing"></div>
+									<div class="subthing"></div>
+								</div>
+								<!-- 选择题要额外加选项 -->
+								<div th:if ="${qtype} eq '0'">
+									<div class="forinput2">
+										<div class="subthing">
+											<input class="form-check-input" type="radio" name="type" value=1 >
+											<span class="form-check-label">A</span>
+										</div>
+										<div class="subthing">
+											<textarea cols="50" rows="3"  name="optiona" class="form-control">选项A</textarea>
+										</div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+									</div>
+									<div class="forinput2">
+										<div class="subthing">
+											<input class="form-check-input" type="radio" name="type" value=1 >
+											<span class="form-check-label">B</span>
+										</div>
+										<div class="subthing">
+											<textarea cols="50" rows="3"  name="optionb" class="form-control">选项B</textarea>
+										</div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+									</div>
+									<div class="forinput2">
+										<div class="subthing">
+											<input class="form-check-input" type="radio" name="type" value=1 >
+											<span class="form-check-label">C</span>
+										</div>
+										<div class="subthing">
+											<textarea cols="50" rows="3"  name="optionc" class="form-control">选项C</textarea>
+										</div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+									</div>
+									<div class="forinput2">
+										<div class="subthing">
+											<input class="form-check-input" type="radio" name="type" value=1 >
+											<span class="form-check-label">D</span>
+										</div>
+										<div class="subthing">
+											<textarea cols="50" rows="3"  name="optiond" class="form-control">选项D</textarea>
+										</div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+									</div>
+								</div>
+								<!-- 判断题的答案是T or F -->
+								<div th:if ="${qtype} eq '1'">
+									<div class="forinput3">
+										<div class="subthing">题目答案：</div>
+										<div class="subthing">
+											<div class="subsub">
+												<input class="form-check-input" type="radio" name="answer" value="T" >
+												<span class="form-check-label">正确</span>
+											</div>
+											<div class="subsub">
+												<input class="form-check-input" type="radio" name="answer" value="F">
+												<span class="form-check-label">错误</span>
+											</div>
+											<div class="subsub"></div>
+										</div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+									</div> 
+								</div>
+								<div th:if ="${qtype} ge '2'">
+									<div class="forinput2">
+										<div class="subthing">答案：</div>
+										<div class="subthing">
+											<textarea cols="50" rows="6"  name="content" class="form-control">输入标准答案</textarea>
+										</div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+									</div>
+									<div class="forinput3">
+										<div class="subthing">答案照片：</div>
+										<div class="subthing">
+											<input type="file" name="answerpic" class="form-control">
+										</div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+									</div>
+								</div>
+								<!-- 其他的把这里隐藏了，因为不隐藏会报错 -->
+								<div  style="display:none;" th:if ="${qtype} le '2'">
+									题目答案照片：<input type="file" name="answerpic"><br/>
+								</div>
+								<div class="forinput3">
+									<div class="subthing">预估难度：</div>
+									<div class="subthing">
+										<div class="subsub">
+											<input class="form-check-input" type="radio" name="difficulty" value=0 >
+											<span class="form-check-label">困难</span>
+										</div>
+										<div class="subsub">
+											<input class="form-check-input" type="radio" name="difficulty" value=1 >
+											<span class="form-check-label">中等</span>
+										</div>
+										<div class="subsub">
+											<input class="form-check-input" type="radio" name="difficulty" value=2 >
+											<span class="form-check-label">容易</span>
+										</div>
+										<div class="subsub"></div>
+									</div>
+									<div class="subthing"></div>
+									<div class="subthing"></div>
+									<div class="subthing"></div>
+									<div class="subthing"></div>
+									<div class="subthing"></div>
+								</div> 
+							</form>			
+					</div>
+				</div>
+			</section>
+				
+				
+			</div>
+		</div>
+		
+		<script src="js/app.js"></script>
+	</body>
+</html>

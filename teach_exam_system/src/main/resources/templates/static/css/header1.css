@@ -1,0 +1,146 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+header {
+  position: relative;
+  height: 8rem;
+  background-color: rgba(34, 46, 60, 1.0);
+  background-size: 100% 100%;
+}
+header h1 {
+  font-size: 4rem;
+  color: rgba(255, 255, 255, 1);
+  font-weight: 1000;
+  text-align: center;
+  line-height: 4rem;
+  font-family: 宋体;
+}
+
+header .direct4 {
+  position: absolute;
+  right: 0rem;
+  top: 0rem;
+  height: 8rem;
+  width: 12rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 4rem;
+}
+header .direct4:hover {
+  position: absolute;
+  height: 8rem;
+  width: 12rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  font-size: 2rem;
+}
+header .direct4 a span {
+  position: absolute;
+  left:4rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 2rem;
+  top: 3.5rem;
+  font-weight: 800;
+  font-family: 宋体;
+}
+header .direct4 a span:hover {
+  position: absolute;
+  left:3.5rem;
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 2.6rem;
+  top: 3.2rem;
+  font-weight: 1000;
+  font-family: 宋体;
+}
+header .direct3 {
+  position: absolute;
+  right: 12rem;
+  top: 0rem;
+  height: 8rem;
+  width: 12rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 4rem;
+}
+header .direct3:hover {
+  position: absolute;
+  height: 8rem;
+  width: 12rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  font-size: 2rem;
+}
+header .direct3 a span {
+  position: absolute;
+  left:4rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 2rem;
+  top: 3.5rem;
+  font-weight: 800;
+  font-family: 宋体;
+}
+header .direct3 a span:hover {
+  position: absolute;
+  left:3.5rem;
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 2.6rem;
+  top: 3.2rem;
+  font-weight: 1000;
+  font-family: 宋体;
+}
+header .direct2 {
+  position: absolute;
+  right: 3.5rem;
+  top: 0rem;
+  height: 1.14rem;
+  width: 1.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.35rem;
+}
+header .direct2:hover {
+  position: absolute;
+  right: 3.5rem;
+  top: 0rem;
+  height: 1.14rem;
+  width: 1.5rem;
+  background-color: rgba(0, 66, 99, 0.7);
+  font-size: 0.35rem;
+}
+header .direct2 a span {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: STliti;
+  font-size: 0.3rem;
+  bottom: 0;
+  top: 0.5rem;
+  left: 0.45rem;
+  font-weight: 600;
+  font-family: STliti;
+}
+header .direct1 {
+  position: absolute;
+  right: 5rem;
+  top: 0rem;
+  height: 1.14rem;
+  width: 1.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.4rem;
+}
+header .direct1:hover {
+  position: absolute;
+  right: 5rem;
+  top: 0rem;
+  height: 1.14rem;
+  width: 1.5rem;
+  background-color: rgba(0, 66, 99, 0.7);
+  font-size: 0.4rem;
+}
+header .direct1 a span {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: STliti;
+  font-size: 0.3rem;
+  bottom: 0;
+  top: 0.5rem;
+  left: 0.45rem;
+  font-weight: 600;
+  font-family: STliti;
+}

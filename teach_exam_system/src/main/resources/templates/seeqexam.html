@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>试题分数分析</title>
+		<link href="css/app.css" rel="stylesheet">
+		<link rel="stylesheet" href=""/>
+		<link rel="stylesheet" href="../../static/css/exam/seeqexam.css"/>
+		
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>				
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		
+	</head>
+	<body  onload="start_run()">
+	
+	
+
+		<div class="wrapper">
+				<nav id="sidebar" class="sidebar js-sidebar">
+					<div class="sidebar-content js-simplebar">
+						<a class="sidebar-brand">
+			      <span class="align-middle">考试系统</span>
+			    </a>
+			
+						<ul class="sidebar-nav">
+							<li class="sidebar-header">
+										导航栏
+									</li>
+							
+							
+									<li class="sidebar-item">
+										<a class="sidebar-link" href="teacher.html" th:if="${usertype} eq '0'" >
+							  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+							</a>
+							<a class="sidebar-link" href="/personpage3" th:if="${usertype} eq '1'" >
+							  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+							</a>
+							<a class="sidebar-link" href="admin.html" th:if="${usertype} eq '2'" >
+							  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+							</a>
+									</li>
+							
+									<li class="sidebar-item">
+										<a class="sidebar-link" href="/myexam">
+							  <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">考试主页</span>
+							</a>
+									</li>
+							
+									<li class="sidebar-item">
+										<a class="sidebar-link" href="/class">
+							  <i class="align-middle" data-feather="book"></i> <span class="align-middle">课程主页</span>
+							</a>
+									</li>
+							
+									<li class="sidebar-item">
+										<a class="sidebar-link" href="/questionbankpage">
+							  <i class="align-middle" data-feather="map"></i> <span class="align-middle">题库练习</span>
+							</a>
+									</li>
+									<li class="sidebar-item" th:if="${usertype} eq '0'">
+												<a class="sidebar-link" href="/AddExaminfo">
+									  <i class="align-middle" data-feather="file"></i> <span class="align-middle">上传考试</span>
+									</a>
+											</li>
+						</ul>
+					</div>
+				</nav>
+			
+				<div class="main">
+					<nav class="navbar navbar-expand navbar-light navbar-bg">
+						<a class="sidebar-toggle js-sidebar-toggle">
+							<i class="hamburger align-self-center"></i>
+						</a>
+			
+						<div class="navbar-collapse collapse">
+							<ul class="navbar-nav navbar-align">
+								<li class="nav-item dropdown">
+									<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+										<i class="align-middle" data-feather="settings"></i>
+									</a>
+			
+									<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+										<i class="align-middle me-2" data-feather="feather"></i>
+										<span th:if="${usertype} eq '0'">老师</span>
+										<span th:if="${usertype} eq '1'">学生</span>
+										<span th:if="${usertype} eq '2'">管理员</span>
+										<img src="images/someicon/teacher.jpg" class="avatar img-fluid rounded me-1" alt="老师" th:if="${usertype} eq '0'"/> 
+										<img src="images/someicon/student.jpg" class="avatar img-fluid rounded me-1" alt="学生" th:if="${usertype} eq '1'"/> 
+										<img src="images/someicon/admin.jpg" class="avatar img-fluid rounded me-1" alt="管理员" th:if="${usertype} eq '2'"/> 
+										<span class="text-dark" th:utext="${usermail}"></span>
+									</a>
+									<div class="dropdown-menu dropdown-menu-end">
+										<a class="dropdown-item" href="teacherinfoupdate" th:if="${usertype} eq '0'"><i class="align-middle me-1" data-feather="user"></i> 修改信息</a>
+										<a class="dropdown-item" href="/newstudentInformation" th:if="${usertype} eq '1'"><i class="align-middle me-1" data-feather="user"></i>  修改信息</a>
+										<a class="dropdown-item" href="admininfoupdate" th:if="${usertype} eq '2'"><i class="align-middle me-1" data-feather="user"></i>  修改信息</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" href="logout">Log out</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</nav>
+		
+				
+				<!--在这里写我自己的东西-->
+			<main class="content">
+				<div class="container-fluid p-0">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="bigbox">
+								<div class="typechoose">
+										<div class="eachtype"></div>
+										<div class="eachtype"></div>
+										<div class="eachtype">
+											<h1 style="margin-top:6px;">题目详情</h1>
+										</div>
+										<div class="eachtype"></div>
+										<div class="eachtype"></div>
+								</div>	
+								<div class="forinput">
+									<div class="subthing">题目id：</div>
+									<div class="subthing">
+										<p th:utext="${qinfo.id}" style="font-weight:700;"></p>
+									</div>
+									<div class="subthing">学科：</div>
+									<div class="subthing">
+										<p th:utext="${qinfo.subject}" style="font-weight:700;"></p>
+										</div>
+									<div class="subthing">得分率</div>
+									<div class="subthing" >										
+										<progress id='pro1' value="0" max="100">
+											<span th:utext="${scorerate}"></span>
+										</progress>
+																				
+									</div>	
+								</div>
+								<div class="forinput">
+									<div class="subthing">分值：</div>
+									<div class="subthing">
+										<p th:utext="${qinfo.point}" style="font-weight:700;">23</p>
+									</div>
+									<div class="subthing">难度：</div>
+									<div class="subthing">
+										<p th:utext ="${qinfo.difficulty}" style="font-weight:700;"></p>
+									</div>
+									<div class="subthing">均分</div>
+									<div class="subthing">
+										<p th:utext="${avescore}" style="font-weight:700;"></p>
+									</div>
+								</div>
+								
+								<div class="forinput2">
+									<div class="subthing">题干：</div>
+									<div class="subthing">
+										<p th:utext="${qinfo.content}" style="margin-left:20px;margin-top:5px;"></p>
+									</div>
+									<div class="subthing"></div>
+									<div class="subthing"></div>
+								</div>
+								<div th:if="${not #strings.isEmpty(qinfo.picture)}">
+									<div class="forinput3">
+										<div class="subtext">题目照片：</div>
+										<div class="subpic">
+											<img th:src="@{${qinfo.picture}}" width="100%">
+										</div>
+									</div>
+								</div>
+																
+								<!-- 选择题要额外加选项 -->
+								<div th:if ="${qtype} eq '0'">
+									<div class="forinput2">
+										<div th:if="${qinfo.answer} eq 'A'" class="subthing">
+											<input class="form-check-input" type="radio" checked>	
+											<span class="form-check-label">A</span>
+										</div>
+										<div th:if="${qinfo.answer} ne 'A'" class="subthing">
+											<input class="form-check-input" type="radio" >	
+											<span class="form-check-label">A</span>
+										</div>
+										<div class="subthing">
+											<p th:utext="${qinfo.optiona}" style="margin-left:20px;margin-top:5px;"></p>
+										</div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+									</div>
+									<div class="forinput2">
+										<div th:if="${qinfo.answer} eq 'B'" class="subthing">
+											<input class="form-check-input" type="radio" checked>	
+											<span class="form-check-label">B</span>
+										</div>
+										<div th:if="${qinfo.answer} ne 'B'" class="subthing">
+											<input class="form-check-input" type="radio" >	
+											<span class="form-check-label">B</span>
+										</div>
+										<div class="subthing">
+											<p th:utext="${qinfo.optionb}" style="margin-left:20px;margin-top:5px;"></p>
+										</div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+									</div>
+									<div class="forinput2">
+										<div th:if="${qinfo.answer} eq 'C'" class="subthing">
+											<input class="form-check-input" type="radio" checked>	
+											<span class="form-check-label">C</span>
+										</div>
+										<div th:if="${qinfo.answer} ne 'C'" class="subthing">
+											<input class="form-check-input" type="radio" >	
+											<span class="form-check-label">C</span>
+										</div>
+										<div class="subthing">
+											<p th:utext="${qinfo.optionc}" style="margin-left:20px;margin-top:5px;"></p>
+										</div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+									</div>	
+									<div class="forinput2">
+										<div th:if="${qinfo.answer} eq 'D'" class="subthing">
+											<input class="form-check-input" type="radio" checked>	
+											<span class="form-check-label">D</span>
+										</div>
+										<div th:if="${qinfo.answer} ne 'D'" class="subthing">
+											<input class="form-check-input" type="radio" >	
+											<span class="form-check-label">D</span>
+										</div>
+										<div class="subthing">
+											<p th:utext="${qinfo.optiond}" style="margin-left:20px;margin-top:5px;"></p>
+										</div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+									</div>
+									<div class="card mt-3" id="chart1" style="margin-left:20px;width:65rem;height:30rem">
+									</div>
+								</div>
+								<div th:if ="${qtype} eq '1'">
+									<div class="forinput5">
+										<div class="subthing">题目答案：</div>
+										<div class="subthing">
+											<div class="subsub">
+												<div th:if="${qinfo.answer} eq 'T'">
+													<input class="form-check-input" type="radio" checked="true">
+												</div>
+												<div th:if="${qinfo.answer} ne 'T'">
+													<input class="form-check-input" type="radio" >
+												</div>	
+												<span class="form-check-label">正确</span>
+												
+											</div>
+											<div class="subsub">
+												<div th:if="${qinfo.answer} eq 'F'">
+													<input class="form-check-input" type="radio" checked="true">
+												</div>
+												<div th:if="${qinfo.answer} ne 'F'">
+													<input class="form-check-input" type="radio" >
+												</div>	
+												<span class="form-check-label">错误</span>
+												
+											</div>
+											<div class="subsub"></div>
+										</div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+									</div> 
+									<div class="card mt-3" id="chart2" style="margin-left:20px;width:65rem;height:30rem">
+									</div>
+								</div>
+								<div th:if ="${qtype} ge '2'">
+									<div class="forinput2">
+										<div class="subthing">答案：</div>
+										<div class="subthing">
+											<p th:utext="${qinfo.answer}" style="margin-left:20px;margin-top:5px;"></p>
+										</div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+									</div>
+									<div th:if ="${qtype} eq '2'" class="card mt-3" id="chart3" style="margin-left:20px;width:65rem;height:30rem">
+									</div>
+								</div>
+								<div th:if ="${qtype} eq '3'">
+									<div class="forinput3" th:if="${not #strings.isEmpty(qinfo.answerpic)}">
+										<div class="subtext">题目照片：</div>
+										<div class="subpic">
+											<img th:src="@{${qinfo.answerpic}}" width="100%">
+										</div>
+									</div>
+									
+								</div>
+								<div th:if ="${#strings.isEmpty(absent) and (usertype==1)}">
+									
+									<div th:if ="${qtype} le '2'">
+										<div class="forfill">
+											<div class="subsub">
+												<p style="font-weight:700;">我的答案：</p>
+											</div>
+											<div class="subsub2">
+												<p th:utext="${aqinfo.answer}"></p>
+											</div>
+											<div class="subsub"></div>
+											<div class="subsub" th:if ="${aqinfo.score} gt '0'">
+												<img src='/img/yes.png' style="width:50px;height:50px;margin-top:-15px">
+											</div>
+											<div class="subsub" th:if ="${aqinfo.score} eq '0'">
+												<img src='/img/wrong.png' style="width:50px;height:50px;margin-top:-15px">
+											</div>
+											<div class="subsub"></div>
+											<div class="subsub"></div>
+											<div class="subsub"></div>
+											<div class="subsub"></div>
+										</div>
+									</div>
+									<div th:if ="${qtype} eq '3'">
+										<div class="forbig">
+											<div class="subsub">
+												<p style="font-weight:700;">我的答案：</p>
+											</div>
+											<div class="subsub2">
+												<p th:utext="${aqinfo.answer}"></p>
+											</div>
+											<div class="subsub"></div>
+											<div class="subsub"></div>
+										</div>
+										<div class="forbig" th:if="${not #strings.isEmpty(aqinfo.answerpic)}">
+											<div class="subsub">
+												<p style="font-weight:700;">标答照片：</p>
+											</div>
+											<div class="subsub2">
+												<div class="forimg">
+													<img th:src="@{${aqinfo.answerpic}}" style="width: 100% ; height:100%">
+												</div>	
+											</div>
+											<div class="subsub"></div>
+											<div class="subsub"></div>
+										</div>
+										<div class="forbig" th:if="${not #strings.isEmpty(aqinfo.comment)}">
+											<div class="subsub">
+												<p style="font-weight:700;">批注评语</p>
+											</div>
+											<div class="subsub2">
+												<p th:utext="${aqinfo.comment}"></p>
+											</div>
+											<div class="subsub"></div>
+											<div class="subsub"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--在这里改样式-->						
+						<div class="bigbox1" th:if ="${qtype} eq '3'">
+							<div class="forqtitle">
+								<h1>
+									<font color="midnightblue">
+										优秀答案展示
+									</font>
+								</h1>
+							</div>
+							<div class="forqshow">
+								<div class="eachq" th:each="i:${goodmails}">
+									<p th:utext="'By: '+${i}" style="text-align:center;font-size:18px;font-weight: 700;">作答学生邮箱</p>
+									<p th:utext="${goodanswers[iStat.index]}" style="font-size:16px;font-weight: 500;white-space:normal; word-break:break-all;overflow:hidden;"></p>
+									<div th:if ="${not #strings.isEmpty(goodanswerpics[iStat.index])}">
+										<a  th:href="@{${goodanswerpics[iStat.index]}}"><img th:src="@{${goodanswerpics[iStat.index]}}" width=315px height=200px style="text-align: center;"></a>
+									</div>
+									<p th:utext="'得分: '+${goodscores[iStat.index]}" style="text-align:center;font-size:18px;font-weight: 700;"></p>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</main>
+				
+				
+			</div>
+		</div>
+		
+		<script src="js/app.js"></script>
+		
+		
+		<script type="text/javascript">
+		function start_run(){
+			var cor1='[[${cornumber}]]';
+			var all1='[[${allnumber}]]';			
+			var progress1=document.getElementById("pro1");
+   			progress1.value=cor1;
+   			progress1.max=all1;
+   	}
+	</script>
+		
+	<script src="js/jquery-3.6.0.js"></script>
+	<script src="js/echarts.min.js"></script>
+		
+		
+	<!-- chart1 -->
+	<script type="text/javascript">
+		$(function() {
+			// 基于准备好的dom，初始化echarts实例
+		    var myChart = echarts.init(document.getElementById('chart1'));
+			
+		    var chose=new Array(); 
+			chose[0]= "A";
+			chose[1]= "B";
+			chose[2]= "C";
+			chose[3]= "D";
+			chose[4]= "NO";
+			console.log(chose);
+
+			var a1 = '[[${answerA}]]';
+			console.log(a1);
+			var a = JSON.parse(a1);
+			console.log(a);
+			var b1 = '[[${answerB}]]';
+			console.log(b1);
+			var b = JSON.parse(b1);
+			console.log(b);
+			var c1 = '[[${answerC}]]';
+			console.log(c1);
+			var c = JSON.parse(c1);
+			console.log(c);
+			var d1 = '[[${answerD}]]';
+			console.log(d1);
+			var d = JSON.parse(d1);
+			console.log(d);
+			var n1 = '[[${noanswer}]]';
+			console.log(n1);
+			var n = JSON.parse(n1);
+			console.log(n);
+			
+			var num=new Array();
+			num[0]=a;
+			num[1]=b;
+			num[2]=c;
+			num[3]=d;
+			num[4]=n;
+			
+			var option = {
+					 title: {
+					    text: "各个选项对应的选择人数统计图",
+					    subtext: "数据来自所有参加该场考试的班级",
+					    left:'0%',
+					  },
+					  tooltip: {
+					    trigger: "axis",
+					    axisPointer: {
+					      type: "shadow",
+					    },
+					  },
+					  legend: {
+					    right: '13%',
+				        data: ["人数"],
+					  },
+					  grid: {
+					    left: "3%",
+					    right: "13%",
+					    bottom: "6%",
+					    containLabel: true,
+					  },
+					  xAxis: {
+					    type: "value",
+					    boundaryGap: [0, 0.1],
+					  },
+					  yAxis: {
+					    type: "category",
+					    data: chose,
+					  },
+					  series: [
+					    {
+					      name: "人数",
+					      type: "bar",
+					      data: num,
+					    },
+					  ],
+					};
+
+			// 使用刚指定的配置项和数据显示图表。
+		    myChart.setOption(option);
+		    $(window).resize(function(){
+		    	myChart.resize();
+		    });
+		})
+	</script>
+		
+		
+		
+
+	<!-- chart2 -->
+	<script type="text/javascript">
+		$(function() {
+			// 基于准备好的dom，初始化echarts实例
+		    var myChart2 = echarts.init(document.getElementById('chart2'));
+			
+		    var chose=new Array(); 
+			chose[0]= "T";
+			chose[1]= "F";
+			chose[2]= "NO";
+			console.log(chose);
+
+			var t1 = '[[${answerT}]]';
+			console.log(t1);
+			var t = JSON.parse(t1);
+			console.log(t);
+			var f1 = '[[${answerF}]]';
+			console.log(f1);
+			var f = JSON.parse(f1);
+			console.log(f);
+			var n1 = '[[${noanswer}]]';
+			console.log(n1);
+			var n = JSON.parse(n1);
+			console.log(n);
+			
+			var num1=new Array();
+			num1[0]=t;
+			num1[1]=f;
+			num1[2]=n;
+			
+			var option = {
+					 title: {
+					    text: "各个选项对应的选择人数统计图",
+					    subtext: "数据来自所有参加该场考试的班级",
+					    left:'0%',
+					  },
+					  tooltip: {
+					    trigger: "axis",
+					    axisPointer: {
+					      type: "shadow",
+					    },
+					  },
+					  legend: {
+					    right: '13%',
+				        data: ["人数"],
+					  },
+					  grid: {
+					    left: "3%",
+					    right: "13%",
+					    bottom: "6%",
+					    containLabel: true,
+					  },
+					  xAxis: {
+					    type: "value",
+					    boundaryGap: [0, 0.1],
+					  },
+					  yAxis: {
+					    type: "category",
+					    data: chose,
+					  },
+					  series: [
+					    {
+					      name: "人数",
+					      type: "bar",
+					      data: num1,
+					    },
+					  ],
+					};
+
+			// 使用刚指定的配置项和数据显示图表。
+		    myChart2.setOption(option);
+		    $(window).resize(function(){
+		    	myChart2.resize();
+		    });
+		})
+	</script>
+		
+		<!-- chart2 -->
+	<script type="text/javascript">
+		$(function() {
+			// 基于准备好的dom，初始化echarts实例
+		    var myChart3 = echarts.init(document.getElementById('chart3'));
+			
+		    var chose1=new Array(); 
+			chose1[0]= "做对的人数";
+			chose1[1]= "做错的人数";
+			chose1[2]= "未作答的人数";
+			console.log(chose1);
+
+			var cor1 = '[[${cornumber}]]';
+			console.log(cor1);
+			var cor = JSON.parse(cor1);
+			console.log(cor);
+			var wrong1 = '[[${wrongnumber}]]';
+			console.log(wrong1);
+			var wrong = JSON.parse(wrong1);
+			console.log(wrong);
+			var n1 = '[[${noanswer}]]';
+			console.log(n1);
+			var n = JSON.parse(n1);
+			console.log(n);
+			
+			var num2=new Array();
+			num2[0]=cor;
+			num2[1]=wrong;
+			num2[2]=n;
+			
+			var option = {
+					 title: {
+					    text: "各个选项对应的选择人数统计图",
+					    subtext: "数据来自所有参加该场考试的班级",
+					    left:'0%',
+					  },
+					  tooltip: {
+					    trigger: "axis",
+					    axisPointer: {
+					      type: "shadow",
+					    },
+					  },
+					  legend: {
+					    right: '13%',
+				        data: ["人数"],
+					  },
+					  grid: {
+					    left: "3%",
+					    right: "13%",
+					    bottom: "6%",
+					    containLabel: true,
+					  },
+					  xAxis: {
+					    type: "value",
+					    boundaryGap: [0, 0.1],
+					  },
+					  yAxis: {
+					    type: "category",
+					    data: chose1,
+					  },
+					  series: [
+					    {
+					      name: "人数",
+					      type: "bar",
+					      data: num2,
+					    },
+					  ],
+					};
+
+			// 使用刚指定的配置项和数据显示图表。
+		    myChart3.setOption(option);
+		    $(window).resize(function(){
+		    	myChart3.resize();
+		    });
+		})
+	</script>
+		
+		
+		
+		
+	</body>
+</html>
+

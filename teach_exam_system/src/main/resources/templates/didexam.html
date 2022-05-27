@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>已完成考试详情</title>
+		<link href="css/app.css" rel="stylesheet">
+		<link rel="stylesheet" href=""/>
+		<link rel="stylesheet" href="../../static/css/exam/didexam.css"/>
+	</head>
+	<body>
+		<div class="wrapper">
+				<nav id="sidebar" class="sidebar js-sidebar">
+					<div class="sidebar-content js-simplebar">
+						<a class="sidebar-brand">
+			      <span class="align-middle">考试系统</span>
+			    </a>
+			
+						<ul class="sidebar-nav">
+							<li class="sidebar-header">
+										导航栏
+									</li>
+							
+							
+									<li class="sidebar-item">
+										<a class="sidebar-link" href="teacher.html" th:if="${usertype} eq '0'" >
+							  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+							</a>
+							<a class="sidebar-link" href="/personpage3" th:if="${usertype} eq '1'" >
+							  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+							</a>
+							<a class="sidebar-link" href="admin.html" th:if="${usertype} eq '2'" >
+							  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+							</a>
+									</li>
+							
+									<li class="sidebar-item">
+										<a class="sidebar-link" href="/myexam">
+							  <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">考试主页</span>
+							</a>
+									</li>
+							
+									<li class="sidebar-item">
+										<a class="sidebar-link" href="/class">
+							  <i class="align-middle" data-feather="book"></i> <span class="align-middle">课程主页</span>
+							</a>
+									</li>
+							
+									<li class="sidebar-item">
+										<a class="sidebar-link" href="/questionbankpage">
+							  <i class="align-middle" data-feather="map"></i> <span class="align-middle">题库练习</span>
+							</a>
+									</li>
+									<li class="sidebar-item" th:if="${usertype} eq '0'">
+												<a class="sidebar-link" href="/AddExaminfo">
+									  <i class="align-middle" data-feather="file"></i> <span class="align-middle">上传考试</span>
+									</a>
+											</li>
+						</ul>
+					</div>
+				</nav>
+			
+				<div class="main">
+					<nav class="navbar navbar-expand navbar-light navbar-bg">
+						<a class="sidebar-toggle js-sidebar-toggle">
+							<i class="hamburger align-self-center"></i>
+						</a>
+			
+						<div class="navbar-collapse collapse">
+							<ul class="navbar-nav navbar-align">
+								<li class="nav-item dropdown">
+									<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+										<i class="align-middle" data-feather="settings"></i>
+									</a>
+			
+									<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+										<i class="align-middle me-2" data-feather="feather"></i>
+										<span th:if="${usertype} eq '0'">老师</span>
+										<span th:if="${usertype} eq '1'">学生</span>
+										<span th:if="${usertype} eq '2'">管理员</span>
+										<img src="images/someicon/teacher.jpg" class="avatar img-fluid rounded me-1" alt="老师" th:if="${usertype} eq '0'"/> 
+										<img src="images/someicon/student.jpg" class="avatar img-fluid rounded me-1" alt="学生" th:if="${usertype} eq '1'"/> 
+										<img src="images/someicon/admin.jpg" class="avatar img-fluid rounded me-1" alt="管理员" th:if="${usertype} eq '2'"/> 
+										<span class="text-dark" th:utext="${usermail}"></span>
+									</a>
+									<div class="dropdown-menu dropdown-menu-end">
+										<a class="dropdown-item" href="teacherinfoupdate" th:if="${usertype} eq '0'"><i class="align-middle me-1" data-feather="user"></i> 修改信息</a>
+										<a class="dropdown-item" href="/newstudentInformation" th:if="${usertype} eq '1'"><i class="align-middle me-1" data-feather="user"></i>  修改信息</a>
+										<a class="dropdown-item" href="admininfoupdate" th:if="${usertype} eq '2'"><i class="align-middle me-1" data-feather="user"></i>  修改信息</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" href="logout">Log out</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</nav>
+		
+				
+				<!--在这里写我自己的东西-->
+			<main class="content">
+				<div class="container-fluid p-0">
+					<div class="row">
+						<div th:if="${(usertype==0 || usertype==2)}" class="col-md-3">
+							<div class="forpeople">
+								<div class="fortitle">
+									<form action="/seedidexams2" enctype='multipart/form-data' method='POST'>
+										<button type="submit" style="width: 120px; height: 40px; border-radius: 20%;border: none;background-color: #0000b6;">
+											<h3 style="margin-top:8px;">
+												<font color="white">试卷详情</font>
+											</h3>
+										</button>
+										<input type="hidden" name="examid" th:value="${examid}">
+									</form>
+								</div>
+								<div class="forp1">
+									<div class="sub">
+										<span style="font-size:18px;font-weight: 700;">序号</span>
+									</div>
+									<div class="sub">
+										<span style="font-size:18px;font-weight: 700;">得分</span>
+									</div>
+									<div class="sub">
+										<span style="font-size:18px;font-weight: 700;">详情</span>
+									</div>
+								</div>
+								<div class="forp" th:each="i:${didlist}">
+									<div class="sub">
+										<span style="font-size:14px"  th:utext="${iStat.count}">序号</span>
+									</div>
+									<div class="sub">
+										<div th:if="${absentlist[iStat.index]} eq '0'">
+											<span style="font-size:14px;" th:utext="${nowscorelist[iStat.index]}"></span>
+										</div>
+										<div th:if="${absentlist[iStat.index]} eq '1'">
+											<span style="font-size:14px;">
+												<font color=red>缺考</font>
+											</span>
+										</div>
+										<div th:if="${absentlist[iStat.index]} eq '5'">
+											<span style="font-size:14px;">
+												<font color=yellow>异常</font>
+											</span>
+										</div>
+									</div>
+									<div class="sub" th:if="${absentlist[iStat.index]} eq '0'">
+										<form action="/seedidexams2" enctype='multipart/form-data' method='POST'>
+											<input type="hidden" name="examid" th:value="${examid}">
+											<input type="hidden" name="did" th:value="${i}">
+											<button type="submit" style="width: 30px; height: 15px; border-radius: 20%;border: none;background-color: #87b684;">
+												<p style="font-size:10px;">
+													<font color=white>详情</font>
+												</p>
+											</button>
+										</form>
+									</div>
+									<div class="sub" th:if="${absentlist[iStat.index]} eq '1'">
+										<span style="font-size:14px;">
+											<font color=red>--</font>
+										</span>
+									</div>
+									<div class="sub" th:if="${absentlist[iStat.index]} eq '5'">
+										<form action="/seedidexams2" enctype='multipart/form-data' method='POST'>
+											<input type="hidden" name="examid" th:value="${examid}">
+											<input type="hidden" name="did" th:value="${i}">
+											<button type="submit" style="width: 30px; height: 15px; border-radius: 20%;border: none;background-color: #ff902f;">
+												<p style="font-size:10px;">
+													<font color=white>详情</font>
+												</p>
+											</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div th:if="${#strings.isEmpty(noinfo) and (usertype==0 || usertype==2)}" class="col-md-9">
+							<div class="bigbox">
+									<div class="forexaminfo1">
+										<div class="sub"></div>
+										<div class="sub">
+											<span style="font-size:20px">考试id：</span>
+											<span th:utext="${examid}" style="font-size:20px;font-weight: 700;">123</span>
+										</div>
+										<div class="sub">
+											<span style="font-size:20px">科目：</span>
+											<span th:utext="${thisexaminfo.subject}" style="font-size:20px;font-weight: 700;">物理化学</span>
+										</div>
+										<div class="sub">
+											<span style="font-size:20px">作答邮箱：</span>
+											<span th:utext="${thisd.studentemail}" style="font-size:12px;font-weight: 700;"></span>
+										</div>
+										<div class="sub"></div>
+									</div>
+									<div class="forexaminfo">
+										<div class="sub"></div>
+										<div class="sub">
+											<span style="font-size:20px">总分：</span>
+											<span th:utext="${thisexaminfo.totalpoint}" style="font-size:20px;font-weight: 700;">123</span>
+										</div>
+										<div class="sub">
+											<span style="font-size:20px" th:if="${absent} eq '0'">当前得分：</span>
+											<span style="font-size:20px" th:if="${absent} eq '3'">得分：</span>
+											<span th:utext="${thisd.totalpoint}" style="font-size:20px;font-weight: 700;">123</span>
+										</div>
+										<div class="sub">
+											<span style="font-size:20px">批改状态：</span>
+											<span th:if="${absent} eq '1'" style="font-size:20px;font-weight: 700;">缺考</span>
+											<span th:if="${absent} eq '0'" style="font-size:20px;font-weight: 700;">未批改</span>
+											<span th:if="${absent} eq '3'" style="font-size:20px;font-weight: 700;">已批改</span>
+											<span th:if="${absent} eq '5'" style="font-size:20px;font-weight: 700;">异常</span>
+										</div>
+										<div class="sub"></div>
+									</div>
+									<div th:if="${not #lists.isEmpty(cqinfolist)}">
+										<div class="forqtitle">
+											<div class="someinfo">
+												<h3>选择题:</h3>
+											</div>
+											<div class="maininfo">	
+											</div>
+										</div>
+										<div class="forq" th:each="i:${cqinfolist}">
+												<div class="someinfo">
+													<div class="subsub">
+														题号:
+													</div>
+													<div class="suba">
+														<p th:utext="${iStat.count}" style="font-weight:700;">123</p>
+													</div>
+													<div class="subsub">
+														分值:
+													</div>
+													<div class="suba">
+														<p th:utext="${i.point}" style="font-weight:700;">123</p>
+													</div>
+													<div class="subsub">
+														难度:
+													</div>
+													<div class="suba">
+														<p th:if ="${i.difficulty} lt '0.5'" style="font-weight:700;">简单</p>
+														<p th:if ="${i.difficulty} eq '0.5'" style="font-weight:700;">中等</p>
+														<p th:if ="${i.difficulty} gt '0.5'" style="font-weight:700;">困难</p>
+													</div>
+													<div class="suba"></div>
+													<div class="suba"></div>
+													<div class="suba"></div>
+													<div class="suba"></div>
+													<div class="subsub"></div>
+													<div class="subsub"></div>
+												</div>
+												<div class="maininfo">
+													<div class="forblank"></div>
+													<div class="forreal">
+														<p th:utext="${i.content}">我是题干哈哈哈哈</p>
+														<div th:if="${not #strings.isEmpty(i.picture)}">
+															<div class="forimg">
+																<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+															</div>		
+														</div>
+														<div class="foroption">
+															<div class="foro1">
+																<div class="foro11">
+																	<div th:if="${i.answer} eq 'A'">
+																		<input class="form-check-input" type="radio" checked>
+																	</div>
+																	<div th:if="${i.answer} ne 'A'">
+																		<input class="form-check-input" type="radio">
+																	</div>
+																</div>
+																<div class="foro12">
+																	<span class="form-check-label"> A </span>
+																</div>
+															</div>
+															<div class="foro2">
+																<p style="white-space:normal; word-break:break-all;overflow:hidden;" th:utext="${i.optiona}">
+																	我是选项A
+																</p>
+															</div>
+														</div>
+														<div class="foroption">
+															<div class="foro1">
+																<div class="foro11">
+																	<div th:if="${i.answer} eq 'B'">
+																		<input class="form-check-input" type="radio" checked>
+																	</div>
+																	<div th:if="${i.answer} ne 'B'">
+																		<input class="form-check-input" type="radio">
+																	</div>
+																</div>
+																<div class="foro12">
+																	<span class="form-check-label"> B </span>
+																</div>
+															</div>
+															<div class="foro2">
+																<p style="white-space:normal; word-break:break-all;overflow:hidden;" th:utext="${i.optionb}">
+																	我是题干
+																</p>
+															</div>
+														</div>
+														<div class="foroption">
+															<div class="foro1">
+																<div class="foro11">
+																	<div th:if="${i.answer} eq 'C'">
+																		<input class="form-check-input" type="radio" checked>
+																	</div>
+																	<div th:if="${i.answer} ne 'C'">
+																		<input class="form-check-input" type="radio">
+																	</div>
+																</div>
+																<div class="foro12">
+																	<span class="form-check-label"> C </span>
+																</div>
+															</div>
+															<div class="foro2">
+																<p style="white-space:normal; word-break:break-all;overflow:hidden;" th:utext="${i.optionc}">
+																	我是题干
+																</p>
+															</div>
+														</div>
+														<div class="foroption">
+															<div class="foro1">
+																<div class="foro11">
+																	<div th:if="${i.answer} eq 'D'">
+																		<input class="form-check-input" type="radio" checked>
+																	</div>
+																	<div th:if="${i.answer} ne 'D'">
+																		<input class="form-check-input" type="radio">
+																	</div>
+																</div>
+																<div class="foro12">
+																	<span class="form-check-label"> D </span>
+																</div>
+															</div>
+															<div class="foro2">
+																<p style="white-space:normal; word-break:break-all;overflow:hidden;" th:utext="${i.optiond}">
+																	我是题干
+																</p>
+															</div>
+														</div>
+														<div class="forfill">
+															<div class="subsub">
+																<p style="font-weight:700;">作答：</p>
+															</div>
+															<div class="subsub2">
+																<p th:utext="${acqinfolist[iStat.index].answer}"></p>
+															</div>
+															<div class="subsub"></div>
+															<div class="subsub" th:if ="${acqinfolist[iStat.index].score} gt '0'">
+																<img src='/img/yes.png' style="width:50px;height:50px;margin-top:-15px">
+															</div>
+															<div class="subsub" th:if ="${acqinfolist[iStat.index].score} eq '0'">
+																<img src='/img/wrong.png' style="width:50px;height:50px;margin-top:-15px">
+															</div>
+															<div class="subsub"></div>
+															<div class="subsub"></div>
+															<div class="subsub"></div>
+															<div class="subsub"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+									</div>
+									<div th:if="${not #lists.isEmpty(jqinfolist)}">
+										<div class="forqtitle1">
+											<div class="someinfo">
+												<h3>判断题:</h3>
+											</div>
+											<div class="maininfo">	
+											</div>
+										</div>
+										<div class="forq" th:each="i:${jqinfolist}">
+											<div class="someinfo">
+												<div class="subsub">
+													题号:
+												</div>
+												<div class="suba">
+													<p th:utext="${iStat.count}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													分值:
+												</div>
+												<div class="suba">
+													<p th:utext="${i.point}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													难度:
+												</div>
+												<div class="suba">
+													<p th:if ="${i.difficulty} lt '0.5'" style="font-weight:700;">简单</p>
+													<p th:if ="${i.difficulty} eq '0.5'" style="font-weight:700;">中等</p>
+													<p th:if ="${i.difficulty} gt '0.8'" style="font-weight:700;">困难</p>
+												</div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="subsub"></div>
+												<div class="subsub"></div>
+											</div>
+											<div class="maininfo">
+												<div class="forblank"></div>
+												<div class="forreal">
+													<p th:utext="${i.content}">我是题干哈哈哈哈</p>
+													<div th:if="${not #strings.isEmpty(i.picture)}">
+														<div class="forimg">
+															<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+														</div>		
+													</div>
+													<div class="forjud">
+														<div class="subsub">
+															<p style="font-weight:700;">判断正误</p>
+														</div>
+														<div class="subsub">
+															<div class="forT">
+																<div th:if="${i.answer} eq 'T'">
+																	<input class="form-check-input" type="radio" checked="true">
+																</div>
+																<div th:if="${i.answer} ne 'T'">
+																	<input class="form-check-input" type="radio">
+																</div>
+															</div>
+															<div class="forT1">
+																<span class="form-check-label">正确</span>
+															</div>
+														</div>
+														<div class="subsub">
+															<div class="forT">
+																<div th:if="${i.answer} eq 'F'">
+																	<input class="form-check-input" type="radio" checked="true">
+																</div>
+																<div th:if="${i.answer} ne 'F'">
+																	<input class="form-check-input" type="radio">
+																</div>
+															</div>
+															<div class="forT1">
+																<span class="form-check-label">错误</span>
+															</div>
+														</div>
+														<div class="subsub">123</div>
+														<div class="subsub">123</div>
+													</div>
+													<div class="forfill">
+														<div class="subsub">
+															<p style="font-weight:700;">作答：</p>
+														</div>
+														<div class="subsub2">
+															<p th:utext="${ajqinfolist[iStat.index].answer}"></p>
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub" th:if ="${ajqinfolist[iStat.index].score} gt '0'">
+															<img src='/img/yes.png' style="width:50px;height:50px;margin-top:-15px">
+														</div>
+														<div class="subsub" th:if ="${ajqinfolist[iStat.index].score} eq '0'">
+															<img src='/img/wrong.png' style="width:50px;height:50px;margin-top:-15px">
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div th:if="${not #lists.isEmpty(fqinfolist)}">
+										<div class="forqtitle1">
+											<div class="someinfo">
+												<h3>填空题:</h3>
+											</div>
+											<div class="maininfo">	
+											</div>
+										</div>
+										<div class="forq" th:each="i:${fqinfolist}">
+											<div class="someinfo">
+												<div class="subsub">
+													题号:
+												</div>
+												<div class="suba">
+													<p th:utext="${iStat.count}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													分值:
+												</div>
+												<div class="suba">
+													<p th:utext="${i.point}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													难度:
+												</div>
+												<div class="suba">
+													<p th:if ="${i.difficulty} eq '0.2'" style="font-weight:700;">简单</p>
+													<p th:if ="${i.difficulty} eq '0.5'" style="font-weight:700;">中等</p>
+													<p th:if ="${i.difficulty} eq '0.8'" style="font-weight:700;">困难</p>
+												</div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="subsub"></div>
+												<div class="subsub"></div>
+											</div>
+											<div class="maininfo">
+												<div class="forblank"></div>
+												<div class="forreal">
+													<p th:utext="${i.content}">我是题干哈哈哈哈</p>
+													<div th:if="${not #strings.isEmpty(i.picture)}">
+														<div class="forimg">
+															<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+														</div>		
+													</div>
+													<div class="forfill">
+														<div class="subsub">
+															<p style="font-weight:700;">正确答案：</p>
+														</div>
+														<div class="subsub2">
+															<p th:utext="${i.answer}"></p>
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+													<div class="forfill">
+														<div class="subsub">
+															<p style="font-weight:700;">作答：</p>
+														</div>
+														<div class="subsub2">
+															<p th:utext="${afqinfolist[iStat.index].answer}"></p>
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub" th:if ="${afqinfolist[iStat.index].score} gt '0'">
+															<img src='/img/yes.png' style="width:50px;height:50px;margin-top:-15px">
+														</div>
+														<div class="subsub" th:if ="${afqinfolist[iStat.index].score} eq '0'">
+															<img src='/img/wrong.png' style="width:50px;height:50px;margin-top:-15px">
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div th:if="${not #lists.isEmpty(bqinfolist)}">
+										<div class="forqtitle1">
+											<div class="someinfo">
+												<h3>简答题:</h3>
+											</div>
+											<div class="maininfo">	
+											</div>
+										</div>
+										<div class="forq" th:each="i:${bqinfolist}">
+											<div class="someinfo">
+												<div class="subsub">
+													题号:
+												</div>
+												<div class="suba">
+													<p th:utext="${iStat.count}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													分值:
+												</div>
+												<div class="suba">
+													<p th:utext="${i.point}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													难度:
+												</div>
+												<div class="suba">
+													<p th:if ="${i.difficulty} eq '0.2'" style="font-weight:700;">简单</p>
+													<p th:if ="${i.difficulty} eq '0.5'" style="font-weight:700;">中等</p>
+													<p th:if ="${i.difficulty} eq '0.8'" style="font-weight:700;">困难</p>
+												</div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="subsub"></div>
+												<div class="subsub"></div>
+											</div>
+											<div class="maininfo">
+												<div class="forblank"></div>
+												<div class="forreal">
+													<p th:utext="${i.content}">我是题干哈哈哈哈</p>
+													<div th:if="${not #strings.isEmpty(i.picture)}">
+														<div class="forimg">
+															<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+														</div>		
+													</div>
+													<div class="forbig">
+														<div class="subsub">
+															<p style="font-weight:700;">正确答案：</p>
+														</div>
+														<div class="subsub2">
+															<p th:utext="${i.content}">我是答案哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或</p>
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+													<div class="forbig" th:if="${not #strings.isEmpty(i.picture)}">
+														<div class="subsub">
+															<p style="font-weight:700;">标答照片：</p>
+														</div>
+														<div class="subsub2">
+															<div class="forimg">
+																<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+															</div>			
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+													<div class="forbig">
+														<div class="subsub">
+															<p style="font-weight:700;">学生作答：</p>
+														</div>
+														<div class="subsub2">
+															<p th:utext="${abqinfolist[iStat.index].answer}"></p>
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+													<div class="forbig" th:if="${not #strings.isEmpty(abqinfolist[iStat.index].answerpic)}">
+														<div class="subsub">
+															<p style="font-weight:700;">学生照片：</p>
+														</div>
+														<div class="subsub2">
+															<div class="forimg">
+																<img th:src="@{${abqinfolist[iStat.index].answerpic}}" style="width: 100% ; height:100%">
+															</div>	
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+													<div th:if="${not #strings.isEmpty(abqinfolist[iStat.index].comment)}">
+														<div class="forbig">
+															<div class="subsub">
+																<p style="font-weight:700;">大题笔记：</p>
+															</div>
+															<div class="subsub2">
+																<p th:utext="${comment}"></p>
+															</div>
+															<div class="subsub"></div>
+															<div class="subsub"></div>
+														</div>
+													</div>
+													<div th:if ="${abqinfolist[iStat.index].score} ge '0'">
+														<div class="forfill">
+															<div class="subsub">
+																<p style="font-weight:700;">学生得分：</p>
+															</div>
+															<div class="subsub2">
+																<p th:utext="${abqinfolist[iStat.index].score}"></p>
+															</div>
+															<div class="subsub"></div>
+															<div class="subsub"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>				
+								</div>
+							
+						</div>
+						<div th:if="${(noinfo==1) and (usertype==0 || usertype==2)}" class="col-md-9">
+							<div class="bigbox">
+									<div class="forexaminfo">
+										<div class="sub"></div>
+										<div class="sub">
+											<span style="font-size:20px">考试id：</span>
+											<span th:utext="${examid}" style="font-size:20px;font-weight: 700;">123</span>
+										</div>
+										<div class="sub">
+											<span style="font-size:20px">科目：</span>
+											<span th:utext="${thisexaminfo.subject}" style="font-size:20px;font-weight: 700;">物理化学</span>
+										</div>
+										<div class="sub">
+											<span style="font-size:20px">总分：</span>
+											<span th:utext="${thisexaminfo.totalpoint}" style="font-size:20px;font-weight: 700;">123</span>
+										</div>
+										<div class="sub"></div>
+									</div>
+									<div th:if="${not #lists.isEmpty(cqinfolist)}">
+										<div class="forqtitle">
+											<div class="someinfo">
+												<h3>选择题:</h3>
+											</div>
+											<div class="maininfo">	
+											</div>
+										</div>
+										<div class="forq" th:each="i:${cqinfolist}">
+												<div class="someinfo">
+													<div class="subsub">
+														题号:
+													</div>
+													<div class="suba">
+														<p th:utext="${iStat.count}" style="font-weight:700;">123</p>
+													</div>
+													<div class="subsub">
+														分值:
+													</div>
+													<div class="suba">
+														<p th:utext="${i.point}" style="font-weight:700;">123</p>
+													</div>
+													<div class="subsub">
+														难度:
+													</div>
+													<div class="suba">
+														<p th:if ="${i.difficulty} lt '0.5'" style="font-weight:700;">简单</p>
+														<p th:if ="${i.difficulty} eq '0.5'" style="font-weight:700;">中等</p>
+														<p th:if ="${i.difficulty} gt '0.5'" style="font-weight:700;">困难</p>
+													</div>
+													<div class="suba"></div>
+													<div class="suba"></div>
+													<div class="suba"></div>
+													<div class="suba"></div>
+													<div class="subsub"></div>
+													<div class="subsub"></div>
+												</div>
+												<div class="maininfo">
+													<div class="forblank"></div>
+													<div class="forreal">
+														<p th:utext="${i.content}">我是题干哈哈哈哈</p>
+														<div th:if="${not #strings.isEmpty(i.picture)}">
+															<div class="forimg">
+																<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+															</div>		
+														</div>
+														<div class="foroption">
+															<div class="foro1">
+																<div class="foro11">
+																	<div th:if="${i.answer} eq 'A'">
+																		<input class="form-check-input" type="radio" checked>
+																	</div>
+																	<div th:if="${i.answer} ne 'A'">
+																		<input class="form-check-input" type="radio">
+																	</div>
+																</div>
+																<div class="foro12">
+																	<span class="form-check-label"> A </span>
+																</div>
+															</div>
+															<div class="foro2">
+																<p style="white-space:normal; word-break:break-all;overflow:hidden;" th:utext="${i.optiona}">
+																	我是选项A
+																</p>
+															</div>
+														</div>
+														<div class="foroption">
+															<div class="foro1">
+																<div class="foro11">
+																	<div th:if="${i.answer} eq 'B'">
+																		<input class="form-check-input" type="radio" checked>
+																	</div>
+																	<div th:if="${i.answer} ne 'B'">
+																		<input class="form-check-input" type="radio">
+																	</div>
+																</div>
+																<div class="foro12">
+																	<span class="form-check-label"> B </span>
+																</div>
+															</div>
+															<div class="foro2">
+																<p style="white-space:normal; word-break:break-all;overflow:hidden;" th:utext="${i.optionb}">
+																	我是题干
+																</p>
+															</div>
+														</div>
+														<div class="foroption">
+															<div class="foro1">
+																<div class="foro11">
+																	<div th:if="${i.answer} eq 'C'">
+																		<input class="form-check-input" type="radio" checked>
+																	</div>
+																	<div th:if="${i.answer} ne 'C'">
+																		<input class="form-check-input" type="radio">
+																	</div>
+																</div>
+																<div class="foro12">
+																	<span class="form-check-label"> C </span>
+																</div>
+															</div>
+															<div class="foro2">
+																<p style="white-space:normal; word-break:break-all;overflow:hidden;" th:utext="${i.optionc}">
+																	我是题干
+																</p>
+															</div>
+														</div>
+														<div class="foroption">
+															<div class="foro1">
+																<div class="foro11">
+																	<div th:if="${i.answer} eq 'D'">
+																		<input class="form-check-input" type="radio" checked>
+																	</div>
+																	<div th:if="${i.answer} ne 'D'">
+																		<input class="form-check-input" type="radio">
+																	</div>
+																</div>
+																<div class="foro12">
+																	<span class="form-check-label"> D </span>
+																</div>
+															</div>
+															<div class="foro2">
+																<p style="white-space:normal; word-break:break-all;overflow:hidden;" th:utext="${i.optiond}">
+																	我是题干
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+									</div>
+									<div th:if="${not #lists.isEmpty(jqinfolist)}">
+										<div class="forqtitle1">
+											<div class="someinfo">
+												<h3>判断题:</h3>
+											</div>
+											<div class="maininfo">	
+											</div>
+										</div>
+										<div class="forq" th:each="i:${jqinfolist}">
+											<div class="someinfo">
+												<div class="subsub">
+													题号:
+												</div>
+												<div class="suba">
+													<p th:utext="${iStat.count}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													分值:
+												</div>
+												<div class="suba">
+													<p th:utext="${i.point}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													难度:
+												</div>
+												<div class="suba">
+													<p th:if ="${i.difficulty} lt '0.5'" style="font-weight:700;">简单</p>
+													<p th:if ="${i.difficulty} eq '0.5'" style="font-weight:700;">中等</p>
+													<p th:if ="${i.difficulty} gt '0.8'" style="font-weight:700;">困难</p>
+												</div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="subsub"></div>
+												<div class="subsub"></div>
+											</div>
+											<div class="maininfo">
+												<div class="forblank"></div>
+												<div class="forreal">
+													<p th:utext="${i.content}">我是题干哈哈哈哈</p>
+													<div th:if="${not #strings.isEmpty(i.picture)}">
+														<div class="forimg">
+															<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+														</div>		
+													</div>
+													<div class="forjud">
+														<div class="subsub">
+															<p style="font-weight:700;">判断正误</p>
+														</div>
+														<div class="subsub">
+															<div class="forT">
+																<div th:if="${i.answer} eq 'T'">
+																	<input class="form-check-input" type="radio" checked="true">
+																</div>
+																<div th:if="${i.answer} ne 'T'">
+																	<input class="form-check-input" type="radio">
+																</div>
+															</div>
+															<div class="forT1">
+																<span class="form-check-label">正确</span>
+															</div>
+														</div>
+														<div class="subsub">
+															<div class="forT">
+																<div th:if="${i.answer} eq 'F'">
+																	<input class="form-check-input" type="radio" checked="true">
+																</div>
+																<div th:if="${i.answer} ne 'F'">
+																	<input class="form-check-input" type="radio">
+																</div>
+															</div>
+															<div class="forT1">
+																<span class="form-check-label">错误</span>
+															</div>
+														</div>
+														<div class="subsub">123</div>
+														<div class="subsub">123</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div th:if="${not #lists.isEmpty(fqinfolist)}">
+										<div class="forqtitle1">
+											<div class="someinfo">
+												<h3>填空题:</h3>
+											</div>
+											<div class="maininfo">	
+											</div>
+										</div>
+										<div class="forq" th:each="i:${fqinfolist}">
+											<div class="someinfo">
+												<div class="subsub">
+													题号:
+												</div>
+												<div class="suba">
+													<p th:utext="${iStat.count}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													分值:
+												</div>
+												<div class="suba">
+													<p th:utext="${i.point}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													难度:
+												</div>
+												<div class="suba">
+													<p th:if ="${i.difficulty} eq '0.2'" style="font-weight:700;">简单</p>
+													<p th:if ="${i.difficulty} eq '0.5'" style="font-weight:700;">中等</p>
+													<p th:if ="${i.difficulty} eq '0.8'" style="font-weight:700;">困难</p>
+												</div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="subsub"></div>
+												<div class="subsub"></div>
+											</div>
+											<div class="maininfo">
+												<div class="forblank"></div>
+												<div class="forreal">
+													<p th:utext="${i.content}">我是题干哈哈哈哈</p>
+													<div th:if="${not #strings.isEmpty(i.picture)}">
+														<div class="forimg">
+															<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+														</div>		
+													</div>
+													<div class="forfill">
+														<div class="subsub">
+															<p style="font-weight:700;">正确答案：</p>
+														</div>
+														<div class="subsub2">
+															<p th:utext="${i.answer}"></p>
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div th:if="${not #lists.isEmpty(bqinfolist)}">
+										<div class="forqtitle1">
+											<div class="someinfo">
+												<h3>简答题:</h3>
+											</div>
+											<div class="maininfo">	
+											</div>
+										</div>
+										<div class="forq" th:each="i:${bqinfolist}">
+											<div class="someinfo">
+												<div class="subsub">
+													题号:
+												</div>
+												<div class="suba">
+													<p th:utext="${iStat.count}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													分值:
+												</div>
+												<div class="suba">
+													<p th:utext="${i.point}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													难度:
+												</div>
+												<div class="suba">
+													<p th:if ="${i.difficulty} eq '0.2'" style="font-weight:700;">简单</p>
+													<p th:if ="${i.difficulty} eq '0.5'" style="font-weight:700;">中等</p>
+													<p th:if ="${i.difficulty} eq '0.8'" style="font-weight:700;">困难</p>
+												</div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="subsub"></div>
+												<div class="subsub"></div>
+											</div>
+											<div class="maininfo">
+												<div class="forblank"></div>
+												<div class="forreal">
+													<p th:utext="${i.content}">我是题干哈哈哈哈</p>
+													<div th:if="${not #strings.isEmpty(i.picture)}">
+														<div class="forimg">
+															<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+														</div>		
+													</div>
+													<div class="forbig">
+														<div class="subsub">
+															<p style="font-weight:700;">正确答案：</p>
+														</div>
+														<div class="subsub2">
+															<p th:utext="${i.content}">我是答案哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或</p>
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+													<div class="forbig" th:if="${not #strings.isEmpty(i.picture)}">
+														<div class="subsub">
+															<p style="font-weight:700;">标答照片：</p>
+														</div>
+														<div class="subsub2">
+															<div class="forimg">
+																<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+															</div>			
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>				
+								</div>
+							
+						</div>
+						<div th:if="${(noinfo==1) and (usertype==1)}" class="col-md-12">
+							<div class="bigbox">
+									<p style="font-size:20px;text-align:center;padding-top:8px;"><font color=red  th:utext="${warning}">您缺考了本次考试，请联系老师或管理员</font></p>
+									<p style="font-size:20px;text-align:center;padding-top:8px;"><font color=red  th:utext="${warning}">您缺考了本次考试，请联系老师或管理员</font></p>
+									<div class="forexaminfo">
+										<div class="sub"></div>
+										<div class="sub">
+											<span style="font-size:20px">考试id：</span>
+											<span th:utext="${examid}" style="font-size:20px;font-weight: 700;">123</span>
+										</div>
+										<div class="sub">
+											<span style="font-size:20px">科目：</span>
+											<span th:utext="${thisexaminfo.subject}" style="font-size:20px;font-weight: 700;">物理化学</span>
+										</div>
+										<div class="sub">
+											<span style="font-size:20px">总分：</span>
+											<span th:utext="${thisexaminfo.totalpoint}" style="font-size:20px;font-weight: 700;">123</span>
+										</div>
+										<div class="sub"></div>
+									</div>
+									<div th:if="${not #lists.isEmpty(cqinfolist)}">
+										<div class="forqtitle">
+											<div class="someinfo">
+												<h3>选择题:</h3>
+											</div>
+											<div class="maininfo">	
+											</div>
+										</div>
+										<div class="forq" th:each="i:${cqinfolist}">
+												<div class="someinfo">
+													<div class="subsub">
+														题号:
+													</div>
+													<div class="suba">
+														<p th:utext="${iStat.count}" style="font-weight:700;">123</p>
+													</div>
+													<div class="subsub">
+														分值:
+													</div>
+													<div class="suba">
+														<p th:utext="${i.point}" style="font-weight:700;">123</p>
+													</div>
+													<div class="subsub">
+														难度:
+													</div>
+													<div class="suba">
+														<p th:if ="${i.difficulty} lt '0.5'" style="font-weight:700;">简单</p>
+														<p th:if ="${i.difficulty} eq '0.5'" style="font-weight:700;">中等</p>
+														<p th:if ="${i.difficulty} gt '0.5'" style="font-weight:700;">困难</p>
+													</div>
+													<div class="suba"></div>
+													<div class="suba"></div>
+													<div class="suba"></div>
+													<div class="suba"></div>
+													<div class="subsub"></div>
+													<div class="subsub"></div>
+												</div>
+												<div class="maininfo">
+													<div class="forblank"></div>
+													<div class="forreal">
+														<p th:utext="${i.content}">我是题干哈哈哈哈</p>
+														<div th:if="${not #strings.isEmpty(i.picture)}">
+															<div class="forimg">
+																<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+															</div>		
+														</div>
+														<div class="foroption">
+															<div class="foro1">
+																<div class="foro11">
+																	<div th:if="${i.answer} eq 'A'">
+																		<input class="form-check-input" type="radio" checked>
+																	</div>
+																	<div th:if="${i.answer} ne 'A'">
+																		<input class="form-check-input" type="radio">
+																	</div>
+																</div>
+																<div class="foro12">
+																	<span class="form-check-label"> A </span>
+																</div>
+															</div>
+															<div class="foro2">
+																<p style="white-space:normal; word-break:break-all;overflow:hidden;" th:utext="${i.optiona}">
+																	我是选项A
+																</p>
+															</div>
+														</div>
+														<div class="foroption">
+															<div class="foro1">
+																<div class="foro11">
+																	<div th:if="${i.answer} eq 'B'">
+																		<input class="form-check-input" type="radio" checked>
+																	</div>
+																	<div th:if="${i.answer} ne 'B'">
+																		<input class="form-check-input" type="radio">
+																	</div>
+																</div>
+																<div class="foro12">
+																	<span class="form-check-label"> B </span>
+																</div>
+															</div>
+															<div class="foro2">
+																<p style="white-space:normal; word-break:break-all;overflow:hidden;" th:utext="${i.optionb}">
+																	我是题干
+																</p>
+															</div>
+														</div>
+														<div class="foroption">
+															<div class="foro1">
+																<div class="foro11">
+																	<div th:if="${i.answer} eq 'C'">
+																		<input class="form-check-input" type="radio" checked>
+																	</div>
+																	<div th:if="${i.answer} ne 'C'">
+																		<input class="form-check-input" type="radio">
+																	</div>
+																</div>
+																<div class="foro12">
+																	<span class="form-check-label"> C </span>
+																</div>
+															</div>
+															<div class="foro2">
+																<p style="white-space:normal; word-break:break-all;overflow:hidden;" th:utext="${i.optionc}">
+																	我是题干
+																</p>
+															</div>
+														</div>
+														<div class="foroption">
+															<div class="foro1">
+																<div class="foro11">
+																	<div th:if="${i.answer} eq 'D'">
+																		<input class="form-check-input" type="radio" checked>
+																	</div>
+																	<div th:if="${i.answer} ne 'D'">
+																		<input class="form-check-input" type="radio">
+																	</div>
+																</div>
+																<div class="foro12">
+																	<span class="form-check-label"> D </span>
+																</div>
+															</div>
+															<div class="foro2">
+																<p style="white-space:normal; word-break:break-all;overflow:hidden;" th:utext="${i.optiond}">
+																	我是题干
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+									</div>
+									<div th:if="${not #lists.isEmpty(jqinfolist)}">
+										<div class="forqtitle1">
+											<div class="someinfo">
+												<h3>判断题:</h3>
+											</div>
+											<div class="maininfo">	
+											</div>
+										</div>
+										<div class="forq" th:each="i:${jqinfolist}">
+											<div class="someinfo">
+												<div class="subsub">
+													题号:
+												</div>
+												<div class="suba">
+													<p th:utext="${iStat.count}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													分值:
+												</div>
+												<div class="suba">
+													<p th:utext="${i.point}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													难度:
+												</div>
+												<div class="suba">
+													<p th:if ="${i.difficulty} lt '0.5'" style="font-weight:700;">简单</p>
+													<p th:if ="${i.difficulty} eq '0.5'" style="font-weight:700;">中等</p>
+													<p th:if ="${i.difficulty} gt '0.8'" style="font-weight:700;">困难</p>
+												</div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="subsub"></div>
+												<div class="subsub"></div>
+											</div>
+											<div class="maininfo">
+												<div class="forblank"></div>
+												<div class="forreal">
+													<p th:utext="${i.content}">我是题干哈哈哈哈</p>
+													<div th:if="${not #strings.isEmpty(i.picture)}">
+														<div class="forimg">
+															<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+														</div>		
+													</div>
+													<div class="forjud">
+														<div class="subsub">
+															<p style="font-weight:700;">判断正误</p>
+														</div>
+														<div class="subsub">
+															<div class="forT">
+																<div th:if="${i.answer} eq 'T'">
+																	<input class="form-check-input" type="radio" checked="true">
+																</div>
+																<div th:if="${i.answer} ne 'T'">
+																	<input class="form-check-input" type="radio">
+																</div>
+															</div>
+															<div class="forT1">
+																<span class="form-check-label">正确</span>
+															</div>
+														</div>
+														<div class="subsub">
+															<div class="forT">
+																<div th:if="${i.answer} eq 'F'">
+																	<input class="form-check-input" type="radio" checked="true">
+																</div>
+																<div th:if="${i.answer} ne 'F'">
+																	<input class="form-check-input" type="radio">
+																</div>
+															</div>
+															<div class="forT1">
+																<span class="form-check-label">错误</span>
+															</div>
+														</div>
+														<div class="subsub">123</div>
+														<div class="subsub">123</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div th:if="${not #lists.isEmpty(fqinfolist)}">
+										<div class="forqtitle1">
+											<div class="someinfo">
+												<h3>填空题:</h3>
+											</div>
+											<div class="maininfo">	
+											</div>
+										</div>
+										<div class="forq" th:each="i:${fqinfolist}">
+											<div class="someinfo">
+												<div class="subsub">
+													题号:
+												</div>
+												<div class="suba">
+													<p th:utext="${iStat.count}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													分值:
+												</div>
+												<div class="suba">
+													<p th:utext="${i.point}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													难度:
+												</div>
+												<div class="suba">
+													<p th:if ="${i.difficulty} eq '0.2'" style="font-weight:700;">简单</p>
+													<p th:if ="${i.difficulty} eq '0.5'" style="font-weight:700;">中等</p>
+													<p th:if ="${i.difficulty} eq '0.8'" style="font-weight:700;">困难</p>
+												</div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="subsub"></div>
+												<div class="subsub"></div>
+											</div>
+											<div class="maininfo">
+												<div class="forblank"></div>
+												<div class="forreal">
+													<p th:utext="${i.content}">我是题干哈哈哈哈</p>
+													<div th:if="${not #strings.isEmpty(i.picture)}">
+														<div class="forimg">
+															<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+														</div>		
+													</div>
+													<div class="forfill">
+														<div class="subsub">
+															<p style="font-weight:700;">正确答案：</p>
+														</div>
+														<div class="subsub2">
+															<p th:utext="${i.answer}"></p>
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div th:if="${not #lists.isEmpty(bqinfolist)}">
+										<div class="forqtitle1">
+											<div class="someinfo">
+												<h3>简答题:</h3>
+											</div>
+											<div class="maininfo">	
+											</div>
+										</div>
+										<div class="forq" th:each="i:${bqinfolist}">
+											<div class="someinfo">
+												<div class="subsub">
+													题号:
+												</div>
+												<div class="suba">
+													<p th:utext="${iStat.count}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													分值:
+												</div>
+												<div class="suba">
+													<p th:utext="${i.point}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													难度:
+												</div>
+												<div class="suba">
+													<p th:if ="${i.difficulty} eq '0.2'" style="font-weight:700;">简单</p>
+													<p th:if ="${i.difficulty} eq '0.5'" style="font-weight:700;">中等</p>
+													<p th:if ="${i.difficulty} eq '0.8'" style="font-weight:700;">困难</p>
+												</div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="subsub"></div>
+												<div class="subsub"></div>
+											</div>
+											<div class="maininfo">
+												<div class="forblank"></div>
+												<div class="forreal">
+													<p th:utext="${i.content}">我是题干哈哈哈哈</p>
+													<div th:if="${not #strings.isEmpty(i.picture)}">
+														<div class="forimg">
+															<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+														</div>		
+													</div>
+													<div class="forbig">
+														<div class="subsub">
+															<p style="font-weight:700;">正确答案：</p>
+														</div>
+														<div class="subsub2">
+															<p th:utext="${i.content}">我是答案哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或</p>
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+													<div class="forbig" th:if="${not #strings.isEmpty(i.picture)}">
+														<div class="subsub">
+															<p style="font-weight:700;">标答照片：</p>
+														</div>
+														<div class="subsub2">
+															<div class="forimg">
+																<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+															</div>			
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>				
+								</div>
+							
+						</div>
+						<div th:if="${#strings.isEmpty(noinfo) and (usertype==1)}" class="col-md-12">
+								<div class="bigbox">
+									<div class="forexaminfo">
+										<div class="sub"></div>
+										<div class="sub">
+											<span style="font-size:20px">考试id：</span>
+											<span th:utext="${examid}" style="font-size:20px;font-weight: 700;">123</span>
+										</div>
+										<div class="sub">
+											<span style="font-size:20px">科目：</span>
+											<span th:utext="${thisexaminfo.subject}" style="font-size:20px;font-weight: 700;">物理化学</span>
+										</div>
+										<div class="sub">
+											<span style="font-size:20px">总分：</span>
+											<span th:utext="${thisexaminfo.totalpoint}" style="font-size:20px;font-weight: 700;">123</span>
+										</div>
+										<div class="sub">
+											<span style="font-size:20px" th:if="${absent} eq '0'">当前得分：</span>
+											<span style="font-size:20px" th:if="${absent} eq '3'">得分：</span>
+											<span th:utext="${partscore}" style="font-size:20px;font-weight: 700;">123</span>
+										</div>
+										<div class="sub">
+											<span style="font-size:20px">批改状态：</span>
+											<span th:if="${absent} eq '1'" style="font-size:20px;font-weight: 700;">缺考</span>
+											<span th:if="${absent} eq '0'" style="font-size:20px;font-weight: 700;">未批改</span>
+											<span th:if="${absent} eq '3'" style="font-size:20px;font-weight: 700;">已批改</span>
+										</div>
+										<div class="sub"></div>
+									</div>
+									<div th:if="${not #lists.isEmpty(cqinfolist)}">
+										<div class="forqtitle">
+											<div class="someinfo">
+												<h3>选择题:</h3>
+											</div>
+											<div class="maininfo">	
+											</div>
+										</div>
+										<div class="forq" th:each="i:${cqinfolist}">
+												<div class="someinfo">
+													<div class="subsub">
+														题号:
+													</div>
+													<div class="suba">
+														<p th:utext="${iStat.count}" style="font-weight:700;">123</p>
+													</div>
+													<div class="subsub">
+														分值:
+													</div>
+													<div class="suba">
+														<p th:utext="${i.point}" style="font-weight:700;">123</p>
+													</div>
+													<div class="subsub">
+														难度:
+													</div>
+													<div class="suba">
+														<p th:if ="${i.difficulty} lt '0.5'" style="font-weight:700;">简单</p>
+														<p th:if ="${i.difficulty} eq '0.5'" style="font-weight:700;">中等</p>
+														<p th:if ="${i.difficulty} gt '0.5'" style="font-weight:700;">困难</p>
+													</div>
+													<div class="suba"></div>
+													<div class="suba"></div>
+													<div class="suba"></div>
+													<div class="suba"></div>
+													<div class="subsub"></div>
+													<div class="subsub"></div>
+												</div>
+												<div class="maininfo">
+													<div class="forblank"></div>
+													<div class="forreal">
+														<p th:utext="${i.content}">我是题干哈哈哈哈</p>
+														<div th:if="${not #strings.isEmpty(i.picture)}">
+															<div class="forimg">
+																<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+															</div>		
+														</div>
+														<div class="foroption">
+															<div class="foro1">
+																<div class="foro11">
+																	<div th:if="${i.answer} eq 'A'">
+																		<input class="form-check-input" type="radio" checked>
+																	</div>
+																	<div th:if="${i.answer} ne 'A'">
+																		<input class="form-check-input" type="radio">
+																	</div>
+																</div>
+																<div class="foro12">
+																	<span class="form-check-label"> A </span>
+																</div>
+															</div>
+															<div class="foro2">
+																<p style="white-space:normal; word-break:break-all;overflow:hidden;" th:utext="${i.optiona}">
+																	我是选项A
+																</p>
+															</div>
+														</div>
+														<div class="foroption">
+															<div class="foro1">
+																<div class="foro11">
+																	<div th:if="${i.answer} eq 'B'">
+																		<input class="form-check-input" type="radio" checked>
+																	</div>
+																	<div th:if="${i.answer} ne 'B'">
+																		<input class="form-check-input" type="radio">
+																	</div>
+																</div>
+																<div class="foro12">
+																	<span class="form-check-label"> B </span>
+																</div>
+															</div>
+															<div class="foro2">
+																<p style="white-space:normal; word-break:break-all;overflow:hidden;" th:utext="${i.optionb}">
+																	我是题干
+																</p>
+															</div>
+														</div>
+														<div class="foroption">
+															<div class="foro1">
+																<div class="foro11">
+																	<div th:if="${i.answer} eq 'C'">
+																		<input class="form-check-input" type="radio" checked>
+																	</div>
+																	<div th:if="${i.answer} ne 'C'">
+																		<input class="form-check-input" type="radio">
+																	</div>
+																</div>
+																<div class="foro12">
+																	<span class="form-check-label"> C </span>
+																</div>
+															</div>
+															<div class="foro2">
+																<p style="white-space:normal; word-break:break-all;overflow:hidden;" th:utext="${i.optionc}">
+																	我是题干
+																</p>
+															</div>
+														</div>
+														<div class="foroption">
+															<div class="foro1">
+																<div class="foro11">
+																	<div th:if="${i.answer} eq 'D'">
+																		<input class="form-check-input" type="radio" checked>
+																	</div>
+																	<div th:if="${i.answer} ne 'D'">
+																		<input class="form-check-input" type="radio">
+																	</div>
+																</div>
+																<div class="foro12">
+																	<span class="form-check-label"> D </span>
+																</div>
+															</div>
+															<div class="foro2">
+																<p style="white-space:normal; word-break:break-all;overflow:hidden;" th:utext="${i.optiond}">
+																	我是题干
+																</p>
+															</div>
+														</div>
+														<div class="forfill">
+															<div class="subsub">
+																<p style="font-weight:700;">我的答案：</p>
+															</div>
+															<div class="subsub2">
+																<p th:utext="${acqinfolist[iStat.index].answer}"></p>
+															</div>
+															<div class="subsub"></div>
+															<div class="subsub" th:if ="${acqinfolist[iStat.index].score} gt '0'">
+																<img src='/img/yes.png' style="width:50px;height:50px;margin-top:-15px">
+															</div>
+															<div class="subsub" th:if ="${acqinfolist[iStat.index].score} eq '0'">
+																<img src='/img/wrong.png' style="width:50px;height:50px;margin-top:-15px">
+															</div>
+															<div class="subsub"></div>
+															<div class="subsub"></div>
+															<div class="subsub"></div>
+															<div class="subsub"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+									</div>
+									<div th:if="${not #lists.isEmpty(jqinfolist)}">
+										<div class="forqtitle1">
+											<div class="someinfo">
+												<h3>判断题:</h3>
+											</div>
+											<div class="maininfo">	
+											</div>
+										</div>
+										<div class="forq" th:each="i:${jqinfolist}">
+											<div class="someinfo">
+												<div class="subsub">
+													题号:
+												</div>
+												<div class="suba">
+													<p th:utext="${iStat.count}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													分值:
+												</div>
+												<div class="suba">
+													<p th:utext="${i.point}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													难度:
+												</div>
+												<div class="suba">
+													<p th:if ="${i.difficulty} lt '0.5'" style="font-weight:700;">简单</p>
+													<p th:if ="${i.difficulty} eq '0.5'" style="font-weight:700;">中等</p>
+													<p th:if ="${i.difficulty} gt '0.8'" style="font-weight:700;">困难</p>
+												</div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="subsub"></div>
+												<div class="subsub"></div>
+											</div>
+											<div class="maininfo">
+												<div class="forblank"></div>
+												<div class="forreal">
+													<p th:utext="${i.content}">我是题干哈哈哈哈</p>
+													<div th:if="${not #strings.isEmpty(i.picture)}">
+														<div class="forimg">
+															<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+														</div>		
+													</div>
+													<div class="forjud">
+														<div class="subsub">
+															<p style="font-weight:700;">判断正误</p>
+														</div>
+														<div class="subsub">
+															<div class="forT">
+																<div th:if="${i.answer} eq 'T'">
+																	<input class="form-check-input" type="radio" checked="true">
+																</div>
+																<div th:if="${i.answer} ne 'T'">
+																	<input class="form-check-input" type="radio">
+																</div>
+															</div>
+															<div class="forT1">
+																<span class="form-check-label">正确</span>
+															</div>
+														</div>
+														<div class="subsub">
+															<div class="forT">
+																<div th:if="${i.answer} eq 'F'">
+																	<input class="form-check-input" type="radio" checked="true">
+																</div>
+																<div th:if="${i.answer} ne 'F'">
+																	<input class="form-check-input" type="radio">
+																</div>
+															</div>
+															<div class="forT1">
+																<span class="form-check-label">错误</span>
+															</div>
+														</div>
+														<div class="subsub">123</div>
+														<div class="subsub">123</div>
+													</div>
+													<div class="forfill">
+														<div class="subsub">
+															<p style="font-weight:700;">我的答案：</p>
+														</div>
+														<div class="subsub2">
+															<p th:utext="${ajqinfolist[iStat.index].answer}"></p>
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub" th:if ="${ajqinfolist[iStat.index].score} gt '0'">
+															<img src='/img/yes.png' style="width:50px;height:50px;margin-top:-15px">
+														</div>
+														<div class="subsub" th:if ="${ajqinfolist[iStat.index].score} eq '0'">
+															<img src='/img/wrong.png' style="width:50px;height:50px;margin-top:-15px">
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div th:if="${not #lists.isEmpty(fqinfolist)}">
+										<div class="forqtitle1">
+											<div class="someinfo">
+												<h3>填空题:</h3>
+											</div>
+											<div class="maininfo">	
+											</div>
+										</div>
+										<div class="forq" th:each="i:${fqinfolist}">
+											<div class="someinfo">
+												<div class="subsub">
+													题号:
+												</div>
+												<div class="suba">
+													<p th:utext="${iStat.count}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													分值:
+												</div>
+												<div class="suba">
+													<p th:utext="${i.point}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													难度:
+												</div>
+												<div class="suba">
+													<p th:if ="${i.difficulty} eq '0.2'" style="font-weight:700;">简单</p>
+													<p th:if ="${i.difficulty} eq '0.5'" style="font-weight:700;">中等</p>
+													<p th:if ="${i.difficulty} eq '0.8'" style="font-weight:700;">困难</p>
+												</div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="subsub"></div>
+												<div class="subsub"></div>
+											</div>
+											<div class="maininfo">
+												<div class="forblank"></div>
+												<div class="forreal">
+													<p th:utext="${i.content}">我是题干哈哈哈哈</p>
+													<div th:if="${not #strings.isEmpty(i.picture)}">
+														<div class="forimg">
+															<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+														</div>		
+													</div>
+													<div class="forfill">
+														<div class="subsub">
+															<p style="font-weight:700;">正确答案：</p>
+														</div>
+														<div class="subsub2">
+															<p th:utext="${i.answer}"></p>
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+													<div class="forfill">
+														<div class="subsub">
+															<p style="font-weight:700;">我的答案：</p>
+														</div>
+														<div class="subsub2">
+															<p th:utext="${afqinfolist[iStat.index].answer}"></p>
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub" th:if ="${afqinfolist[iStat.index].score} gt '0'">
+															<img src='/img/yes.png' style="width:50px;height:50px;margin-top:-15px">
+														</div>
+														<div class="subsub" th:if ="${afqinfolist[iStat.index].score} eq '0'">
+															<img src='/img/wrong.png' style="width:50px;height:50px;margin-top:-15px">
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div th:if="${not #lists.isEmpty(bqinfolist)}">
+										<div class="forqtitle1">
+											<div class="someinfo">
+												<h3>简答题:</h3>
+											</div>
+											<div class="maininfo">	
+											</div>
+										</div>
+										<div class="forq" th:each="i:${bqinfolist}">
+											<div class="someinfo">
+												<div class="subsub">
+													题号:
+												</div>
+												<div class="suba">
+													<p th:utext="${iStat.count}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													分值:
+												</div>
+												<div class="suba">
+													<p th:utext="${i.point}" style="font-weight:700;">123</p>
+												</div>
+												<div class="subsub">
+													难度:
+												</div>
+												<div class="suba">
+													<p th:if ="${i.difficulty} eq '0.2'" style="font-weight:700;">简单</p>
+													<p th:if ="${i.difficulty} eq '0.5'" style="font-weight:700;">中等</p>
+													<p th:if ="${i.difficulty} eq '0.8'" style="font-weight:700;">困难</p>
+												</div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="suba"></div>
+												<div class="subsub"></div>
+												<div class="subsub"></div>
+											</div>
+											<div class="maininfo">
+												<div class="forblank"></div>
+												<div class="forreal">
+													<p th:utext="${i.content}">我是题干哈哈哈哈</p>
+													<div th:if="${not #strings.isEmpty(i.picture)}">
+														<div class="forimg">
+															<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+														</div>		
+													</div>
+													<div class="forbig">
+														<div class="subsub">
+															<p style="font-weight:700;">正确答案：</p>
+														</div>
+														<div class="subsub2">
+															<p th:utext="${i.content}">我是答案哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或</p>
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+													<div class="forbig" th:if="${not #strings.isEmpty(i.picture)}">
+														<div class="subsub">
+															<p style="font-weight:700;">标答照片：</p>
+														</div>
+														<div class="subsub2">
+															<div class="forimg">
+																<img th:src="@{${i.picture}}" style="width: 100% ; height:100%">
+															</div>			
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+													<div class="forbig">
+														<div class="subsub">
+															<p style="font-weight:700;">我的答案：</p>
+														</div>
+														<div class="subsub2">
+															<p th:utext="${abqinfolist[iStat.index].answer}"></p>
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+													<div class="forbig" th:if="${not #strings.isEmpty(abqinfolist[iStat.index].answerpic)}">
+														<div class="subsub">
+															<p style="font-weight:700;">我的照片：</p>
+														</div>
+														<div class="subsub2">
+															<div class="forimg">
+																<img th:src="@{${abqinfolist[iStat.index].answerpic}}" style="width: 100% ; height:100%">
+															</div>	
+														</div>
+														<div class="subsub"></div>
+														<div class="subsub"></div>
+													</div>
+													<div th:if="${not #strings.isEmpty(abqinfolist[iStat.index].comment)}">
+														<div class="forbig">
+															<div class="subsub">
+																<p style="font-weight:700;">大题笔记：</p>
+															</div>
+															<div class="subsub2">
+																<p th:utext="${comment}"></p>
+															</div>
+															<div class="subsub"></div>
+															<div class="subsub"></div>
+														</div>
+													</div>
+													<div th:if ="${abqinfolist[iStat.index].score} ge '0'">
+														<div class="forfill">
+															<div class="subsub">
+																<p style="font-weight:700;">我的得分：</p>
+															</div>
+															<div class="subsub2">
+																<p th:utext="${abqinfolist[iStat.index].score}"></p>
+															</div>
+															<div class="subsub"></div>
+															<div class="subsub"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>				
+								</div>
+							</div>
+					</div>
+				</div>
+			</main>
+			</div>
+		</div>
+		
+		<script src="js/app.js"></script>
+	</body>
+</html>

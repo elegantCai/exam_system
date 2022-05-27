@@ -1,0 +1,228 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.bigbox1 {
+  margin-left: 20px;
+  margin-top: 10px;
+  min-width: 900px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+}
+.bigbox1 .fortitle {
+  height: 30px;
+}
+.bigbox1 .forqshow {
+  display: flex;
+  flex-flow: row wrap;
+}
+.bigbox1 .forqshow .eachq {
+  flex: 0 0 30%;
+  margin-left: 20px;
+  margin-right: 15px;
+  padding-bottom: 5px;
+  border-radius: 10%;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 1px solid rgba(7, 56, 41, 0.2);
+}
+.bigbox {
+  margin-left: 20px;
+  margin-top: 10px;
+  min-width: 950px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding-bottom: 10px;
+}
+.bigbox .thetitle {
+  margin-left: 20px;
+  margin-top: 10px;
+  border-radius: 10px;
+  display: flex;
+}
+.bigbox .thetitle .forh3 {
+  flex: 3;
+  margin-left: 8px;
+  margin-top: 5px;
+}
+.bigbox .forsubmit {
+  display: flex;
+  height: 60px;
+  margin-top: 20px;
+}
+.bigbox .forsubmit .eachtype {
+  flex: 3;
+  margin-left: 10px;
+}
+.bigbox .forinput3x {
+  display: flex;
+  margin-top: 10px;
+}
+.bigbox .forinput3x .subthing {
+  margin-left: 20px;
+  flex: 8;
+  display: flex;
+}
+.bigbox .forinput3x .subthing .subsub {
+  flex: 3;
+  margin-top: 8px;
+}
+.bigbox .forinput3x .subthing:nth-child(2) {
+  margin-left: 20px;
+  flex: 65;
+}
+.bigbox .forinput3x .subthing:nth-child(1) {
+  margin-left: 20px;
+  margin-top: 6px;
+  flex: 10;
+}
+.bigbox .typechoose {
+  display: flex;
+  height: 60px;
+  border-bottom: 1px solid rgba(7, 56, 41, 0.2);
+}
+.bigbox .typechoose .eachtype {
+  flex: 3;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.bigbox .forbig {
+  display: flex;
+  margin-top: 20px;
+  padding-right: 80px;
+  padding-left: 40px;
+}
+.bigbox .forbig .subsub {
+  flex: 3;
+  display: flex;
+}
+.bigbox .forbig .subsub2 {
+  flex: 9;
+  display: flex;
+  padding-left: 20px;
+}
+.bigbox .forfill {
+  display: flex;
+  margin-top: 20px;
+  padding-right: 80px;
+  padding-left: 40px;
+  height: 24px;
+}
+.bigbox .forfill .subsub {
+  flex: 3;
+  display: flex;
+}
+.bigbox .forfill .subsub2 {
+  flex: 9;
+  display: flex;
+  padding-left: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.bigbox .tips {
+  margin-top: 30px;
+  margin-left: 40px;
+}
+.bigbox .forinput {
+  display: flex;
+  margin-top: 10px;
+}
+.bigbox .forinput .subthing {
+  margin-left: 20px;
+  flex: 6;
+}
+.bigbox .forinput .subthing:nth-child(2n+0) {
+  margin-left: 20px;
+  flex: 24;
+}
+.bigbox .forinput2 {
+  display: flex;
+  margin-top: 10px;
+}
+.bigbox .forinput2 .subthing {
+  margin-left: 6px;
+  flex: 5;
+}
+.bigbox .forinput2 .subthing:nth-child(2) {
+  margin-left: 20px;
+  flex: 27;
+  border: 1px solid rgba(7, 56, 41, 0.2);
+}
+.bigbox .forinput2 .subthing:nth-child(1) {
+  margin-left: 20px;
+  margin-top: 6px;
+  flex: 3;
+}
+.bigbox .forinputx {
+  display: flex;
+  margin-top: 10px;
+}
+.bigbox .forinputx .subthing {
+  margin-left: 20px;
+  flex: 8;
+  display: flex;
+}
+.bigbox .forinputx .subthing .subsub {
+  flex: 3;
+  margin-top: 8px;
+}
+.bigbox .forinputx .subthing:nth-child(2) {
+  margin-left: 20px;
+  flex: 65;
+  margin-top: 6px;
+  border: 1px solid rgba(7, 56, 41, 0.2);
+}
+.bigbox .forinputx .subthing:nth-child(1) {
+  margin-left: 20px;
+  margin-top: 6px;
+  flex: 10;
+}
+.bigbox .forinput3 {
+  display: flex;
+  margin-top: 10px;
+}
+.bigbox .forinput3 .subtext {
+  width: 120px;
+  padding-left: 20px;
+}
+.bigbox .forinput3 .subpic {
+  width: 300px;
+}
+.bigbox .forinput4 {
+  margin-top: 10px;
+  display: flex;
+}
+.bigbox .forinput4 .culumn {
+  flex: 3;
+}
+.bigbox .forinput4 .culumn:nth-child(2) {
+  flex: 8;
+  background-color: pink;
+  border: 1px solid rgba(7, 56, 41, 0.2);
+}
+.bigbox .forinput5 {
+  display: flex;
+  margin-top: 10px;
+}
+.bigbox .forinput5 .subthing {
+  margin-left: 20px;
+  flex: 8;
+  display: flex;
+}
+.bigbox .forinput5 .subthing .subsub {
+  flex: 3;
+}
+.bigbox .forinput5 .subthing:nth-child(2) {
+  margin-left: 20px;
+  flex: 65;
+  margin-top: 6px;
+}
+.bigbox .forinput5 .subthing:nth-child(1) {
+  margin-left: 20px;
+  margin-top: 6px;
+  flex: 10;
+}

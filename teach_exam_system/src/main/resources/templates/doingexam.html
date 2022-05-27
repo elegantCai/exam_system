@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" onselectstart="return false">
+	<head>
+		<meta charset="utf-8">
+		<title>考试作答中</title>
+		<script language='javascript' th:inline="javascript">
+			var time=[[${leftms}]];
+			console.log(time);
+			setTimeout("document.submitexam.submit()",time)  
+		</script>  
+		<link href="css/app.css" rel="stylesheet">
+		<link rel="stylesheet" href=""/>
+		<link rel="stylesheet" href="../../static/css/exam/doingexam.css"/>
+	</head>
+	<body>
+		<div class="wrapper">
+			<nav id="sidebar" class="sidebar js-sidebar">
+				<div class="sidebar-content js-simplebar">
+					<a class="sidebar-brand">
+		      <span class="align-middle">考试系统</span>
+		    </a>
+					<div  style="display:none;" th:if ="${qtype} le '2'">
+						上传我的作答照片：<input type="file" name="stuanswerpic"><br/>
+					</div>
+					<ul class="sidebar-nav">
+						<li class="sidebar-header">
+							考试作答中
+						</li>
+						<li class="sidebar-item">
+							<a class="sidebar-link" >
+								<i class="align-middle" data-feather="activity"></i> <span class="align-middle">平心</span>
+						</a>
+						</li>
+						<li class="sidebar-item">
+									<a class="sidebar-link">
+						  <i class="align-middle" data-feather="slack"></i> <span class="align-middle">静气</span>
+						</a>
+								</li>
+						
+								<li class="sidebar-item">
+									<a class="sidebar-link" >
+						  <i class="align-middle" data-feather="heart"></i> <span class="align-middle">好运</span>
+						</a>
+								</li>
+						<div class="sidebar-cta">
+							<div class="sidebar-cta-content">
+								<strong class="d-inline-block mb-2">请认真作答</strong>
+								<div class="mb-3 text-sm">
+									请勿作弊、抄袭、请勿离开本页面，请遵守考试纪律</br>
+									诚信考试，从我做起
+								</div>
+								<div class="d-grid">
+									<a  class="btn btn-primary">Be easy</a>
+								</div>
+							</div>
+						</div>
+					</ul>
+				</div>
+			</nav>
+		
+			<div class="main">
+				<nav class="navbar navbar-expand navbar-light navbar-bg">
+					<a class="sidebar-toggle js-sidebar-toggle">
+						<i class="hamburger align-self-center"></i>
+					</a>
+		
+					<div class="navbar-collapse collapse">
+						<ul class="navbar-nav navbar-align">
+							<li class="nav-item dropdown">
+								<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+									<i class="align-middle" data-feather="settings"></i>
+								</a>
+		
+								<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+									<i class="align-middle me-2" data-feather="feather"></i>
+									<span th:if="${usertype} eq '0'">老师</span>
+									<span th:if="${usertype} eq '1'">学生</span>
+									<span th:if="${usertype} eq '2'">管理员</span>
+									<img src="images/someicon/teacher.jpg" class="avatar img-fluid rounded me-1" alt="老师" th:if="${usertype} eq '0'"/>
+									<img src="images/someicon/student.jpg" class="avatar img-fluid rounded me-1" alt="学生" th:if="${usertype} eq '1'"/> 
+									<img src="images/someicon/admin.jpg" class="avatar img-fluid rounded me-1" alt="管理员" th:if="${usertype} eq '2'"/> 
+									<span class="text-dark" th:utext="${usermail}"></span>
+								</a>
+								
+							</li>
+						</ul>
+					</div>
+				</nav>
+				<!--倒数-->
+				<script type="text/javascript" th:inline="javascript">
+					function getRTime(){
+					var StrEndTime= [[${endtime}]]; //考试开始时间
+					var EndTime= new Date(StrEndTime);
+					var NowTime = new Date(); 
+					var t =EndTime.getTime() - NowTime.getTime(); 
+					if (t<0) {setTimeout("document.form1.submit()",0); }
+					var h=Math.floor(t/1000/60/60%24); 
+					var m=Math.floor(t/1000/60%60); 
+					var s=Math.floor(t/1000%60); 
+					document.getElementById("t_h").innerHTML ="0"+ h + "时";
+					if (m<10){document.getElementById("t_m").innerHTML ="0" + m + "分"; }
+					else{document.getElementById("t_m").innerHTML = m + "分"; }
+					if (s<10){document.getElementById("t_s").innerHTML ="0" + s + "秒"; }
+					else{document.getElementById("t_s").innerHTML =s + "秒";}
+					} 
+					setInterval(getRTime,1000); 
+				</script> 
+				<!--在这里写我自己的东西-->
+				<main class="content">
+					<div class="container-fluid p-0">
+						<div class="count">
+							<div class="count1">
+								<span style="font-size:20px">考试还剩：</span>
+								<span id="t_h" style="font-size:18px">00时</span>
+								<span id="t_m" style="font-size:18px">00分</span> 
+								<span id="t_s" style="font-size:18px">00秒</span> 	
+							</div>
+							<div class="count2">
+								<p style="font-size:20px"><font color=red  th:utext="${warning}">还有试题未作答，请继续认真作答</font></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<div class="examinfo">
+									<div class="examtitle">
+										<div class="forh3">
+											<h2>考试信息</h2>
+										</div>
+									</div>
+									<div class="subexaminfo">
+										<div class="subsub">
+											考试id:<p th:utext="${examid}"></p>
+										</div>
+										<div class="subsub">
+											考试科目:<p th:utext="${thisexaminfo.subject}">111</p>
+										</div>
+									</div>
+									<div class="subexaminfo">
+										<div class="subsub">
+											试卷总分:<p th:utext="${thisexaminfo.totalpoint}"></p>
+										</div>
+										<div class="subsub">
+											作答学生:<p th:utext="${usermail}"></p>
+										</div>
+									</div>
+								</div>
+								<div class="questioncard">
+									<div class="forh3">
+										<h2 style="margin-top: 7px;">答题卡</h2>
+										<div class="forpoint">
+										</div>
+										<div class="forpoint">
+										</div>
+									</div>
+									<div th:if="${not #lists.isEmpty(upcqlist)}">
+										<div class="qlistborder">
+										    <h4 style="margin-top:8px;margin-left:15px;margin-bottom:0px;">选择题</h4>
+											<div class="forqlist">
+												<div class="forq"  th:each="i:${upcqlist}">
+													<form action="/DoingExam1" enctype='multipart/form-data' method='POST'>
+														<div th:if="${upcqdo[iStat.index]} eq '0'">
+															<button type="submit" style="width: 40px; height: 40px; border-radius: 50%;border: none;">
+																<input type="hidden" name="qtype" value=0><br/>
+																<p style="margin-top:-10px;">
+																	<font color="black" th:utext="${iStat.count}"></font>
+																</p>
+																<input type="hidden" name="qid" th:value="${i}">
+															</button>
+														</div>
+														<div th:if="${upcqdo[iStat.index]} eq '1'">
+															<button type="submit" style="width: 40px; height: 40px; border-radius: 50%;border: none;background-color: #99e6e6;">
+																<input type="hidden" name="qtype" value=0><br/>
+																<p style="margin-top:-10px;"th:utext="${iStat.count}">
+																	<font color="black" th:utext="${iStat.count}"></font>
+																</p>
+																<input type="hidden" name="qid" th:value="${i}">
+															</button>
+														</div>
+														
+													</form>
+												</div>
+											</div>	
+										</div>
+									</div>
+									<div th:if="${not #lists.isEmpty(upjqlist)}">
+										<div class="qlistborder">
+										    <h4 style="margin-top:8px;margin-left:15px;margin-bottom:0px;">判断题</h4>
+											<div class="forqlist">
+												<div class="forq"  th:each="i:${upjqlist}">
+													<form action="/DoingExam1" enctype='multipart/form-data' method='POST'>
+														<div th:if="${upjqdo[iStat.index]} eq '0'">
+															<button type="submit" style="width: 40px; height: 40px; border-radius: 50%;border: none;">
+																<input type="hidden" name="qtype" value=1><br/>
+																<p style="margin-top:-10px;">
+																	<font color="black" th:utext="${iStat.count}"></font>
+																</p>
+																<input type="hidden" name="qid" th:value="${i}">
+															</button>
+														</div>
+														<div th:if="${upjqdo[iStat.index]} eq '1'">
+															<button type="submit" style="width: 40px; height: 40px; border-radius: 50%;border: none;background-color: #99e6e6;">
+																<input type="hidden" name="qtype" value=1><br/>
+																<p style="margin-top:-10px;"th:utext="${iStat.count}">
+																	<font color="black" th:utext="${iStat.count}"></font>
+																</p>
+																<input type="hidden" name="qid" th:value="${i}">
+															</button>
+														</div>
+														
+													</form>
+												</div>
+											</div>	
+										</div>
+									</div>
+									<div th:if="${not #lists.isEmpty(upfqlist)}">
+										<div class="qlistborder">
+										    <h4 style="margin-top:8px;margin-left:15px;margin-bottom:0px;">填空题</h4>
+											<div class="forqlist">
+												<div class="forq"  th:each="i:${upfqlist}">
+													<form action="/DoingExam1" enctype='multipart/form-data' method='POST'>
+														<div th:if="${upfqdo[iStat.index]} eq '0'">
+															<button type="submit" style="width: 40px; height: 40px; border-radius: 50%;border: none;">
+																<input type="hidden" name="qtype" value=2><br/>
+																<p style="margin-top:-10px;">
+																	<font color="black" th:utext="${iStat.count}"></font>
+																</p>
+																<input type="hidden" name="qid" th:value="${i}">
+															</button>
+														</div>
+														<div th:if="${upfqdo[iStat.index]} eq '1'">
+															<button type="submit" style="width: 40px; height: 40px; border-radius: 50%;border: none;background-color: #99e6e6;">
+																<input type="hidden" name="qtype" value=2><br/>
+																<p style="margin-top:-10px;"th:utext="${iStat.count}">
+																	<font color="black" th:utext="${iStat.count}"></font>
+																</p>
+																<input type="hidden" name="qid" th:value="${i}">
+															</button>
+														</div>
+														
+													</form>
+												</div>
+											</div>	
+										</div>
+									</div>
+									<div th:if="${not #lists.isEmpty(upbqlist)}">
+										<div class="qlistborder">
+										    <h4 style="margin-top:8px;margin-left:15px;margin-bottom:0px;">简答题</h4>
+											<div class="forqlist">
+												<div class="forq"  th:each="i:${upbqlist}">
+													<form action="/DoingExam1" enctype='multipart/form-data' method='POST'>
+														<div th:if="${upbqdo[iStat.index]} eq '0'">
+															<button type="submit" style="width: 40px; height: 40px; border-radius: 50%;border: none;">
+																<input type="hidden" name="qtype" value=3><br/>
+																<p style="margin-top:-10px;">
+																	<font color="black" th:utext="${iStat.count}"></font>
+																</p>
+																<input type="hidden" name="qid" th:value="${i}">
+															</button>
+														</div>
+														<div th:if="${upbqdo[iStat.index]} eq '1'">
+															<button type="submit" style="width: 40px; height: 40px; border-radius: 50%;border: none;background-color: #99e6e6;">
+																<input type="hidden" name="qtype" value=3><br/>
+																<p style="margin-top:-10px;"th:utext="${iStat.count}">
+																	<font color="black" th:utext="${iStat.count}"></font>
+																</p>
+																<input type="hidden" name="qid" th:value="${i}">
+															</button>
+														</div>	
+													</form>
+												</div>
+											</div>	
+										</div>
+									</div>
+								</div>
+							</div>	
+							<div class="col-md-9">
+								<div class="bigbox">
+									<div class="forinput">
+										<div class="subthing">题号：</div>
+										<div class="subthing">
+											<p th:utext="${qinfo.id}" style="font-weight:700;"></p>
+										</div>
+										<div class="subthing">
+										</div>
+										<div class="subthing">
+										</div>
+										<div class="subthing">
+										</div>	
+										<div class="subthing">
+										</div>
+									</div>
+									<div class="forinput">
+										<div class="subthing">分值：</div>
+										<div class="subthing">
+											<p th:utext="${qinfo.point}" style="font-weight:700;"></p>
+										</div>
+										<div class="subthing">难度：</div>
+										<div class="subthing">
+											<div th:if ="${qinfo.difficulty} lt '0.5'">
+												<p style="font-weight:700;">简单</p>
+											</div>
+											<div th:if ="${qinfo.difficulty} eq '0.5'">
+												<p style="font-weight:700;">中等</p>
+											</div>
+											<div th:if ="${qinfo.difficulty} gt '0.5'">
+												<p style="font-weight:700;">困难</p>
+											</div>
+										</div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+									</div>
+									<div class="forinput2x">
+										<div class="subthing">题干：</div>
+										<div class="subthing">
+											<p th:utext="${qinfo.content}" style="margin-left:20px;margin-top:5px;"></p>
+										</div>
+										<div class="subthing"></div>
+										<div class="subthing"></div>
+									</div>
+									<div th:if="${not #strings.isEmpty(qinfo.picture)}">
+										<div class="forinput3">
+											<div class="subtext"></div>
+											<div class="subpic">
+												<img th:src="@{${qinfo.picture}}" width="100%">
+											</div>
+										</div>
+									</div>
+										<!-- 选择题要额外加选项 -->
+										<div th:if ="${qtype} eq '0'">
+											<div th:if="${not #strings.isEmpty(aqinfo.answer)}">
+												<div class="forinput2">
+													<div th:if="${aqinfo.answer} eq 'A'" class="subthing">
+														<input class="form-check-input" type="radio" checked  name="answer" value="A" form="doq">	
+														<span class="form-check-label">A</span>
+													</div>
+													<div th:if="${aqinfo.answer} ne 'A'" class="subthing">
+														<input class="form-check-input" type="radio" name="answer" value="A" form="doq">	
+														<span class="form-check-label">A</span>
+													</div>
+													<div class="subthing">
+														<p th:utext="${qinfo.optiona}" style="margin-left:20px;margin-top:5px;"></p>
+													</div>
+													<div class="subthing"></div>
+													<div class="subthing"></div>
+												</div>
+												<div class="forinput2">
+													<div th:if="${aqinfo.answer} eq 'B'" class="subthing">
+														<input class="form-check-input" type="radio" checked name="answer" value="B" form="doq">	
+														<span class="form-check-label">B</span>
+													</div>
+													<div th:if="${aqinfo.answer} ne 'B'" class="subthing">
+														<input class="form-check-input" type="radio" name="answer" value="B" form="doq">	
+														<span class="form-check-label">B</span>
+													</div>
+													<div class="subthing">
+														<p th:utext="${qinfo.optionb}" style="margin-left:20px;margin-top:5px;"></p>
+													</div>
+													<div class="subthing"></div>
+													<div class="subthing"></div>
+												</div>
+												<div class="forinput2">
+													<div th:if="${aqinfo.answer} eq 'C'" class="subthing">
+														<input class="form-check-input" type="radio" checked name="answer" value="C" form="doq">	
+														<span class="form-check-label">C</span>
+													</div>
+													<div th:if="${aqinfo.answer} ne 'C'" class="subthing">
+														<input class="form-check-input" type="radio" name="answer" value="C" form="doq">	
+														<span class="form-check-label">C</span>
+													</div>
+													<div class="subthing">
+														<p th:utext="${qinfo.optionc}" style="margin-left:20px;margin-top:5px;"></p>
+													</div>
+													<div class="subthing"></div>
+													<div class="subthing"></div>
+												</div>
+												<div class="forinput2">
+													<div th:if="${aqinfo.answer} eq 'D'" class="subthing">
+														<input class="form-check-input" type="radio" checked name="answer" value="D" form="doq">	
+														<span class="form-check-label">D</span>
+													</div>
+													<div th:if="${aqinfo.answer} ne 'D'" class="subthing">
+														<input class="form-check-input" type="radio" name="answer" value="D" form="doq">	
+														<span class="form-check-label">D</span>
+													</div>
+													<div class="subthing">
+														<p th:utext="${qinfo.optiond}" style="margin-left:20px;margin-top:5px;"></p>
+													</div>
+													<div class="subthing"></div>
+													<div class="subthing"></div>
+												</div>
+											</div>
+											<div th:if="${#strings.isEmpty(aqinfo.answer)}">
+												<div class="forinput2">
+													<div class="subthing">
+														<input class="form-check-input" type="radio" name="answer" value="A" form="doq">	
+														<span class="form-check-label">A</span>
+													</div>
+													<div class="subthing">
+														<p th:utext="${qinfo.optiona}" style="margin-left:20px;margin-top:5px;"></p>
+													</div>
+													<div class="subthing"></div>
+													<div class="subthing"></div>
+												</div>
+												<div class="forinput2">
+													<div class="subthing">
+														<input class="form-check-input" type="radio" name="answer" value="B" form="doq">	
+														<span class="form-check-label">B</span>
+													</div>
+													<div class="subthing">
+														<p th:utext="${qinfo.optionb}" style="margin-left:20px;margin-top:5px;"></p>
+													</div>
+													<div class="subthing"></div>
+													<div class="subthing"></div>
+												</div>
+												<div class="forinput2">
+													<div class="subthing">
+														<input class="form-check-input" type="radio" name="answer" value="C" form="doq">	
+														<span class="form-check-label">C</span>
+													</div>
+													<div class="subthing">
+														<p th:utext="${qinfo.optionc}" style="margin-left:20px;margin-top:5px;"></p>
+													</div>
+													<div class="subthing"></div>
+													<div class="subthing"></div>
+												</div>
+												<div class="forinput2">
+													<div class="subthing">
+														<input class="form-check-input" type="radio" name="answer" value="D" form="doq">	
+														<span class="form-check-label">D</span>
+													</div>
+													<div class="subthing">
+														<p th:utext="${qinfo.optiond}" style="margin-left:20px;margin-top:5px;"></p>
+													</div>
+													<div class="subthing"></div>
+													<div class="subthing"></div>
+												</div>
+											</div>
+										</div>
+										<!-- 判断题的答案是T or F -->
+										<div th:if ="${qtype} eq '1'">
+											<div class="forinput5">
+												<div class="subthing">作答：</div>
+												<div class="subthing">
+													<div class="subsub">
+														<div th:if="${#strings.isEmpty(aqinfo.answer)}">
+															<input class="form-check-input" type="radio" name="answer" value="T" form="doq">
+														</div>
+														<div th:if="${not #strings.isEmpty(aqinfo.answer)}">
+															<div th:if="${aqinfo.answer} eq 'T'">
+																<input class="form-check-input" type="radio" checked="true" name="answer" value="T" form="doq">
+															</div>
+															<div th:if="${aqinfo.answer} ne 'T'">
+																<input class="form-check-input" type="radio" name="answer" value="T" form="doq">
+															</div>
+														</div>
+														<span class="form-check-label">正确</span>
+													</div>
+													<div class="subsub">
+														<div th:if="${#strings.isEmpty(aqinfo.answer)}">
+															<input class="form-check-input" type="radio" name="answer" value="F" form="doq">
+														</div>
+														<div th:if ="${not #strings.isEmpty(aqinfo.answer)}">
+															<div th:if="${aqinfo.answer} eq 'F'">
+																<input class="form-check-input" type="radio" checked="true" name="answer" value="F" form="doq">
+															</div>
+															<div th:if="${aqinfo.answer} ne 'F'">
+																<input class="form-check-input" type="radio" name="answer" value="F" form="doq">
+															</div>
+														</div>
+														<span class="form-check-label">错误</span>
+													</div>
+													<div class="subsub"></div>
+												</div>
+												<div class="subthing"></div>
+												<div class="subthing"></div>
+												<div class="subthing"></div>
+												<div class="subthing"></div>
+												<div class="subthing"></div>
+											</div> 
+										</div>
+										<div th:if ="${qtype} eq '2'">
+											<div class="forinput2x">
+												<div class="subthing">作答：</div>
+												<div class="subthing">
+													<input type="text" name="answer" th:value="${aqinfo.answer}" class="form-control" form="doq">
+												</div>
+												<div class="subthing"></div>
+												<div class="subthing"></div>
+											</div>
+										</div>
+										<div th:if ="${qtype} eq '3'">
+											<div class="forinput2x">
+												<div class="subthing">作答：</div>
+												<div class="subthing">
+													<textarea cols="80" rows="6"  name="answer" th:utext="${aqinfo.answer}" class="form-control" form="doq"></textarea>
+												</div>
+												<div class="subthing"></div>
+												<div class="subthing"></div>
+											</div>
+										</div>
+										<div th:if ="${qtype} eq '3'">
+											<div class="forinput3x">
+												<div class="subthing">添加图片</div>
+												<div class="subthing">
+													<input type="file" name="stuanswerpic" class="form-control" form="doq">
+												</div>
+												<div class="subthing"></div>
+												<div class="subthing"></div>
+												<div class="subthing"></div>
+												<div class="subthing"></div>
+												<div class="subthing"></div>
+											</div>
+										</div>
+										<div  style="display:none;" th:if ="${qtype} le '2'">
+											上传我的作答照片：<input type="file" name="stuanswerpic" form="doq"><br/>
+										</div>
+										<div th:if ="${qtype} eq '3'">
+											<div class="forinput3x" th:if="${not #strings.isEmpty(aqinfo.answerpic)}">
+												<div class="subthing">我的图片</div>
+												<div class="subthing">
+													<img th:src="@{${aqinfo.answerpic}}" width="100%">
+												</div>
+												<div class="subthing"></div>
+												<div class="subthing"></div>
+												<div class="subthing"></div>
+												<div class="subthing"></div>
+												<div class="subthing"></div>
+											</div>
+										</div>
+										<div class="forsubmit">
+											<div class="eachtype"></div>
+											<div class="eachtype">
+												<form action="/DoingExam2" enctype='multipart/form-data' method='POST' id="doq">
+													<input type="hidden" name="qid" th:value="${qinfo.id}">
+													<input type="hidden" name="qtype" th:value="${qtype}">
+													<button type="submit" style="width: 120px; height: 40px; border-radius: 20%;border: none;background-color: #81c1c1;">
+														<h3 style="margin-top:8px;">
+															<font color="white">作答题目</font>
+														</h3>
+													</button>  
+												</form>	
+											</div>
+											<div class="eachtype">
+												<form action="/FinishExam" enctype='multipart/form-data' method='POST' >
+													<button type="submit" style="width: 120px; height: 40px; border-radius: 20%;border: none;background-color: #aa0000;">
+														<h3 style="margin-top:8px;">
+															<font color="white">提交试卷</font>
+														</h3>
+													</button> 
+												</form> 
+											</div>
+											<div class="eachtype">
+												<form action="/FinishExam1" enctype='multipart/form-data' method='POST' name='submitexam'>
+													<button type="submit" class="btn btn-default" style="display:none">提交考试</button> 
+												</form>
+											</div>
+										</div>
+								</div>
+								</div>
+							</div>		
+							</div>	
+						</div>
+					</div>
+				</main>
+				
+				
+				
+			</div>
+		</div>
+		
+		<script src="js/app.js"></script>
+	</body>
+</html>

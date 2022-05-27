@@ -1,0 +1,211 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.examinfo {
+  height: 180px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+.examinfo .examtitle {
+  display: flex;
+  height: 40px;
+  border-bottom: 1px solid rgba(7, 56, 41, 0.2);
+}
+.examinfo .examtitle .forh3 {
+  flex: 3;
+}
+.examinfo .examtitle .forh3:nth-child(1) {
+  margin-left: 8px;
+  margin-top: 5px;
+  flex: 3.2;
+}
+.examinfo .examtitle .forh3:nth-child(2) {
+  margin-top: 17px;
+  flex: 6;
+}
+.examinfo .examtitle .forh3:nth-child(2) .p {
+  font-weight: 700;
+}
+.examinfo .subexaminfo {
+  display: flex;
+  margin-left: 20px;
+  margin-top: 8px;
+}
+.examinfo .subexaminfo .subsub {
+  flex: 3;
+}
+.examinfo .subexamclass {
+  display: flex;
+  height: 30px;
+  margin-top: 10px;
+  margin-left: 20px;
+  flex-flow: row wrap;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.examinfo .subexamclass .subsub {
+  flex: 0 0 20%;
+}
+.corinfo {
+  background-color: #ffffff;
+  border-radius: 10px;
+  margin-top: 20px;
+  padding-bottom: 10px;
+}
+.corinfo .fortitle {
+  padding-left: 8px;
+  padding-top: 5px;
+  height: 40px;
+  border-bottom: 1px solid rgba(7, 56, 41, 0.2);
+}
+.corinfo .corlist {
+  display: flex;
+  margin-top: 6px;
+}
+.corinfo .corlist .sub1 {
+  flex: 2;
+  display: flex;
+}
+.corinfo .corlist .sub1 .subsub {
+  flex: 2;
+  text-align: center;
+}
+.corinfo .corlist .sub2 {
+  flex: 1;
+  text-align: center;
+}
+.bigbox {
+  background-color: #ffffff;
+  min-height: 560px;
+  border-radius: 10px;
+}
+.bigbox .forexaminfo {
+  display: flex;
+  padding-top: 10px;
+  height: 50px;
+  border-bottom: 1px solid rgba(7, 56, 41, 0.2);
+}
+.bigbox .forexaminfo .sub {
+  flex: 3;
+}
+.forq {
+  padding-left: 20px;
+  padding-top: 8px;
+}
+.forq .someinfo {
+  display: flex;
+  height: 20px;
+}
+.forq .someinfo .subsub {
+  flex: 1;
+}
+.forq .someinfo .suba {
+  flex: 2;
+}
+.forq .maininfo {
+  display: flex;
+}
+.forq .maininfo .forblank {
+  flex: 1;
+  margin-top: 10px;
+}
+.forq .maininfo .forreal {
+  flex: 8;
+  margin-top: 10px;
+}
+.forq .maininfo .forreal .forimg {
+  width: 300px;
+  margin-left: 20px;
+}
+.forq .maininfo .forreal .foroption {
+  display: flex;
+  margin-top: 10px;
+  padding-right: 80px;
+}
+.forq .maininfo .forreal .foroption .foro1 {
+  flex: 1;
+  display: flex;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.forq .maininfo .forreal .foroption .foro1 .foro11 {
+  flex: 1;
+}
+.forq .maininfo .forreal .foroption .foro1 .foro12 {
+  flex: 3;
+  margin-left: 10px;
+}
+.forq .maininfo .forreal .foroption .foro2 {
+  flex: 12;
+  padding-right: 40px;
+  padding-left: 10px;
+}
+.forq .maininfo .forreal .forjud {
+  display: flex;
+  margin-top: 20px;
+  padding-right: 80px;
+  padding-left: 40px;
+}
+.forq .maininfo .forreal .forjud .subsub {
+  flex: 3;
+  display: flex;
+}
+.forq .maininfo .forreal .forjud .subsub .forT {
+  flex: 1;
+}
+.forq .maininfo .forreal .forjud .subsub .forT1 {
+  flex: 2;
+}
+.forq .maininfo .forreal .forfill {
+  display: flex;
+  margin-top: 20px;
+  padding-right: 80px;
+  padding-left: 40px;
+  height: 24px;
+}
+.forq .maininfo .forreal .forfill .subsub {
+  flex: 3;
+  display: flex;
+}
+.forq .maininfo .forreal .forfill .subsub2 {
+  flex: 9;
+  display: flex;
+  padding-left: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.forq .maininfo .forreal .forbig {
+  display: flex;
+  margin-top: 20px;
+  padding-right: 80px;
+  padding-left: 40px;
+}
+.forq .maininfo .forreal .forbig .subsub {
+  flex: 3;
+  display: flex;
+}
+.forq .maininfo .forreal .forbig .subsub2 {
+  flex: 9;
+  display: flex;
+  padding-left: 20px;
+}
+.forsubmit {
+  height: 60px;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+  padding-left: 400px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+.warning {
+  height: 50px;
+  display: flex;
+  margin-top: 10px;
+}
+.warning .sub1 {
+  flex: 8;
+}
+.warning .sub2 {
+  flex: 3;
+}

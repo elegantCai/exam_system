@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.bigbox {
+  background-color: #ffffff;
+  border-radius: 10px;
+  min-height: 400px;
+  padding-top: 20px;
+}
+.forbutton {
+  height: 50px;
+  text-align: center;
+}
+.forbutton1 {
+  height: 50px;
+  display: flex;
+}
+.forbutton1 .sub {
+  flex: 2;
+  text-align: center;
+}

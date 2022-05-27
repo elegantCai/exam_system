@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+		<meta name="author" content="AdminKit">
+		<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+
+		<link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
+
+		<title>题库页面</title>
+
+		<link rel="stylesheet" href="https://unpkg.com/@adminkit/core@latest/dist/css/app.css">
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="../../static/css/questionbank/questionbank.css"/>
+	</head>
+	<body>
+	<div class="wrapper">
+			<nav id="sidebar" class="sidebar js-sidebar">
+				<div class="sidebar-content js-simplebar">
+					<a class="sidebar-brand">
+		      <span class="align-middle">考试系统</span>
+		    </a>
+		
+					<ul class="sidebar-nav">
+						<li class="sidebar-header">
+									导航栏
+								</li>
+						
+						
+								<li class="sidebar-item">
+									<a class="sidebar-link" href="teacher.html" th:if="${usertype} eq '0'" >
+						  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+						</a>
+						<a class="sidebar-link" href="/personpage3" th:if="${usertype} eq '1'" >
+						  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+						</a>
+						<a class="sidebar-link" href="admin.html" th:if="${usertype} eq '2'" >
+						  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+						</a>
+								</li>
+						
+								<li class="sidebar-item">
+									<a class="sidebar-link" href="/myexam">
+						  <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">考试主页</span>
+						</a>
+								</li>
+						
+								<li class="sidebar-item">
+									<a class="sidebar-link" href="/class">
+						  <i class="align-middle" data-feather="book"></i> <span class="align-middle">课程主页</span>
+						</a>
+								</li>
+						
+								<li class="sidebar-item">
+									<a class="sidebar-link" href="/questionbankpage">
+						  <i class="align-middle" data-feather="map"></i> <span class="align-middle">题库练习</span>
+						</a>
+								</li>
+								<li class="sidebar-item" th:if="${usertype} eq '0'">
+											<a class="sidebar-link" href="/AddExaminfo">
+								  <i class="align-middle" data-feather="file"></i> <span class="align-middle">上传考试</span>
+								</a>
+										</li>
+					</ul>
+				</div>
+			</nav>
+		
+			<div class="main">
+				<nav class="navbar navbar-expand navbar-light navbar-bg">
+					<a class="sidebar-toggle js-sidebar-toggle">
+						<i class="hamburger align-self-center"></i>
+					</a>
+		
+					<div class="navbar-collapse collapse">
+						<ul class="navbar-nav navbar-align">
+							<li class="nav-item dropdown">
+								<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+									<i class="align-middle" data-feather="settings"></i>
+								</a>
+		
+								<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+									<i class="align-middle me-2" data-feather="feather"></i>
+									<span th:if="${usertype} eq '0'">老师</span>
+									<span th:if="${usertype} eq '1'">学生</span>
+									<span th:if="${usertype} eq '2'">管理员</span>
+									<img src="images/someicon/teacher.jpg" class="avatar img-fluid rounded me-1" alt="老师" th:if="${usertype} eq '0'"/> 
+									<img src="images/someicon/student.jpg" class="avatar img-fluid rounded me-1" alt="学生" th:if="${usertype} eq '1'"/> 
+									<img src="images/someicon/admin.jpg" class="avatar img-fluid rounded me-1" alt="管理员" th:if="${usertype} eq '2'"/> 
+									<span class="text-dark" th:text="${usermail}"></span>
+								</a>
+								<div class="dropdown-menu dropdown-menu-end">
+									<a class="dropdown-item" href="teacherinfoupdate" th:if="${usertype} eq '0'"><i class="align-middle me-1" data-feather="user"></i> 修改信息</a>
+									<a class="dropdown-item" href="/newstudentInformation" th:if="${usertype} eq '1'"><i class="align-middle me-1" data-feather="user"></i>  修改信息</a>
+									<a class="dropdown-item" href="admininfoupdate" th:if="${usertype} eq '2'"><i class="align-middle me-1" data-feather="user"></i>  修改信息</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="logout">Log out</a>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</nav>
+	
+			<main class="content">
+				<div class="container-fluid p-0">
+				<div class="row">
+					<div class="col-lg-8">
+						<h1 class="h3 mb-3">题库</h1>
+					</div>
+					<div class="col-lg-4" th:if="${usertype} eq '0'">
+
+
+							<div class="mb-3">
+								<form action="/Addquestion" enctype='multipart/form-data' method='POST'>
+								<button class="btn btn-success" type="submit" style="margin-left: 200px;">老师上传题库</button>
+								</form>
+							</div>
+
+					</div>
+				</div>
+
+
+				<form action="/qb_searchq" enctype='multipart/form-data' method='POST'>
+					<div class="card">
+						<div class="card-body">
+							<div class="row">
+
+								<div class="col-lg-4">
+
+
+
+									<input type="search" class="form-control" placeholder="请输入科目" name="subject" th:value="${subject}">
+
+								</div>
+
+								<div class="col-lg-4 ">
+									<div class="mb-3">
+
+
+
+										<input type="search" class="form-control" placeholder="请输入题干" name="content" th:value="${content}">
+									</div>
+
+
+								</div>
+
+								<div class="col-lg-4">
+									<div class="mb-3">
+
+										<button type="submit" class="btn btn-primary">开始搜索</button>
+
+									</div>
+								</div>
+								<div class="col-lg-6">
+
+
+
+									<div>
+										<label class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" name="stype" value="0">
+											<span class="form-check-label">
+					  按科目搜索
+					</span>
+										</label>
+										<label class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" name="stype" value="1">
+											<span class="form-check-label">
+					  按题干搜索
+					</span>
+										</label>
+										<label class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" name="stype"  value="2" >
+											<span class="form-check-label">
+					  按科目与题干搜索
+					</span>
+										</label>
+									</div>
+
+
+
+								</div>
+
+
+
+								<div class="col-lg-6">
+									<div class="mb-2">
+										<a href="#"data-bs-toggle="collapse" data-bs-target="#demo">更多搜索选择</a><i class="align-middle me-2" data-feather="chevrons-down"></i>
+									</div>
+								</div>
+								<div id="demo" class="collapse">
+									<div class="col-lg-12">
+
+
+
+										<div>
+											<label class="form-check form-check-inline">
+												<input class="form-check-input" type="checkbox" name="choiceq" value=1>
+												<span class="form-check-label">
+											选择题
+											</span>
+											</label>
+											<label class="form-check form-check-inline">
+												<input class="form-check-input" type="checkbox" name="judq" value=1>
+												<span class="form-check-label">
+											判断题
+											</span>
+											</label>
+											<label class="form-check form-check-inline">
+												<input class="form-check-input" type="checkbox" name="fillq" value=1  >
+												<span class="form-check-label">
+											填空题
+											</span>
+											</label>
+
+											<label class="form-check form-check-inline">
+												<input class="form-check-input" type="checkbox" name="bigq" value=1>
+												<span class="form-check-label">
+											简答题
+											</span>
+											</label>
+
+
+											<label class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" name="sortype" value=1>
+												<span class="form-check-label">
+													难题优先
+												</span>
+											</label>
+											<label class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" name="sortype" value=2 >
+												<span class="form-check-label">
+													简单题优先
+												</span>
+											</label>
+										</div>
+
+
+
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+				</form>
+
+				<div class="col-md-12">
+					<div class="bigbox">
+						<p style="font-size: 60px;text-align: center;font-family: ‘Times New Roman’">practice makes perfect</p>
+						<p style="font-size: 45px;text-align: center;font-family: ‘Times New Roman’">多见者博，多闻者智，拒谏者塞，专己者孤。</p>
+						<p style="font-size: 35px;text-align: center;font-family: ‘Times New Roman’">Make up leaks while the weather is clear, and read while young</p>
+						<p th:if="${not #strings.isEmpty(qwarning)}"  style="font-size: 20px;text-align: center;font-family: ‘Times New Roman’;color:red">网络错误，请重试</p>
+						<div class="forbutton" th:if="${usertype} eq '2'">
+							<form action="/myquestion_search" enctype='multipart/form-data' method='POST'>
+								<button type="submit" style="width: 160px; height: 80px; border-radius: 20%;border: none;background-color: #17A2B8;">
+									<span style="font-size: 35px;margin-top:-15px;">
+										<font color="white">做过的题</font>
+									</span>
+								</button>
+							</form>
+						</div>
+						<div class="forbutton1" th:if="${usertype} eq '1'">
+							<div class="sub"></div>
+							<div class="sub">
+								<form action="/qdetail" enctype='multipart/form-data' method='POST'>
+									<button type="submit" style="width: 160px; height: 80px; border-radius: 20%;border: none;background-color: #e79a00;">
+										<span style="font-size: 35px;margin-top:-15px;">
+											<input type="hidden" name="recommend" value=1>
+											<font color="white">推荐试题</font>
+										</span>
+									</button>
+								</form>
+							</div>
+							<div class="sub">
+								<form action="/myquestion_search" enctype='multipart/form-data' method='POST'>
+									<button type="submit" style="width: 160px; height: 80px; border-radius: 20%;border: none;background-color: #17A2B8;">
+										<span style="font-size: 35px;margin-top:-15px;">
+											<font color="white">做过的题</font>
+										</span>
+									</button>
+								</form>
+							</div>
+							<div class="sub"></div>
+						</div>
+						<div class="forbutton1" th:if="${usertype} eq '0'">
+							<div class="sub"></div>
+							<div class="sub">
+								<form action="/myquestion_search" enctype='multipart/form-data' method='POST'>
+									<button type="submit" style="width: 160px; height: 80px; border-radius: 20%;border: none;background-color: #e79a00;">
+										<span style="font-size: 35px;margin-top:-15px;">
+											<font color="white">我出的题</font>
+										</span>
+									</button>
+								</form>
+							</div>
+							<div class="sub">
+								<form action="/myquestion_search" enctype='multipart/form-data' method='POST'>
+									<button type="submit" style="width: 160px; height: 80px; border-radius: 20%;border: none;background-color: #17A2B8;">
+										<span style="font-size: 35px;margin-top:-15px;">
+											<font color="white">做过的题</font>
+										</span>
+									</button>
+								</form>
+							</div>
+							<div class="sub"></div>
+						</div>
+					</div>
+				</div>
+
+
+
+				
+
+
+				</div>
+			</main>
+		</div>
+	</div>
+	<script src="https://unpkg.com/@adminkit/core@latest/dist/js/app.js"></script>
+	</body>
+</html>

@@ -1,0 +1,181 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.bigbox {
+  background-color: #ffffff;
+  min-height: 560px;
+  border-radius: 10px;
+  padding-bottom: 20px;
+}
+.bigbox .forexaminfo {
+  display: flex;
+  padding-top: 10px;
+  height: 50px;
+  border-bottom: 1px solid rgba(7, 56, 41, 0.2);
+}
+.bigbox .forexaminfo .sub {
+  flex: 3;
+}
+.bigbox .forexaminfo1 {
+  display: flex;
+  padding-top: 10px;
+  height: 50px;
+}
+.bigbox .forexaminfo1 .sub {
+  flex: 3;
+}
+.forpeople {
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+.forpeople .fortitle {
+  padding-top: 10px;
+  height: 60px;
+  text-align: center;
+}
+.forpeople .forp1 {
+  height: 25px;
+  text-align: center;
+  display: flex;
+}
+.forpeople .forp1 .sub {
+  flex: 3;
+}
+.forpeople .forp {
+  height: 28px;
+  text-align: center;
+  display: flex;
+  padding-top: 6px;
+}
+.forpeople .forp .sub {
+  flex: 3;
+}
+.forqtitle {
+  display: flex;
+  height: 40px;
+  border-bottom: 1px solid rgba(7, 56, 41, 0.2);
+  padding-left: 50px;
+}
+.forqtitle .someinfo {
+  flex: 2;
+  margin-top: 10px;
+}
+.forqtitle .maininfo {
+  flex: 8;
+}
+.forqtitle1 {
+  display: flex;
+  height: 40px;
+  border-bottom: 1px solid rgba(7, 56, 41, 0.2);
+  padding-left: 50px;
+  margin-top: 30px;
+}
+.forqtitle1 .someinfo {
+  flex: 2;
+  margin-top: 10px;
+}
+.forqtitle1 .maininfo {
+  flex: 8;
+}
+.forq {
+  padding-left: 20px;
+  margin-top: 8px;
+}
+.forq .someinfo {
+  display: flex;
+  height: 20px;
+}
+.forq .someinfo .subsub {
+  flex: 1;
+}
+.forq .someinfo .suba {
+  flex: 2;
+}
+.forq .maininfo {
+  display: flex;
+}
+.forq .maininfo .forblank {
+  flex: 1;
+  margin-top: 10px;
+}
+.forq .maininfo .forreal {
+  flex: 8;
+  margin-top: 10px;
+}
+.forq .maininfo .forreal .forimg {
+  width: 300px;
+  margin-left: 20px;
+}
+.forq .maininfo .forreal .foroption {
+  display: flex;
+  margin-top: 10px;
+  padding-right: 80px;
+}
+.forq .maininfo .forreal .foroption .foro1 {
+  flex: 1;
+  display: flex;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.forq .maininfo .forreal .foroption .foro1 .foro11 {
+  flex: 1;
+}
+.forq .maininfo .forreal .foroption .foro1 .foro12 {
+  flex: 3;
+  margin-left: 10px;
+}
+.forq .maininfo .forreal .foroption .foro2 {
+  flex: 12;
+  padding-right: 40px;
+  padding-left: 10px;
+}
+.forq .maininfo .forreal .forjud {
+  display: flex;
+  margin-top: 20px;
+  padding-right: 80px;
+  padding-left: 40px;
+}
+.forq .maininfo .forreal .forjud .subsub {
+  flex: 3;
+  display: flex;
+}
+.forq .maininfo .forreal .forjud .subsub .forT {
+  flex: 1;
+}
+.forq .maininfo .forreal .forjud .subsub .forT1 {
+  flex: 2;
+}
+.forq .maininfo .forreal .forfill {
+  display: flex;
+  margin-top: 20px;
+  padding-right: 80px;
+  padding-left: 40px;
+  height: 24px;
+}
+.forq .maininfo .forreal .forfill .subsub {
+  flex: 3;
+  display: flex;
+}
+.forq .maininfo .forreal .forfill .subsub2 {
+  flex: 9;
+  display: flex;
+  padding-left: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.forq .maininfo .forreal .forbig {
+  display: flex;
+  margin-top: 20px;
+  padding-right: 80px;
+  padding-left: 40px;
+}
+.forq .maininfo .forreal .forbig .subsub {
+  flex: 3;
+  display: flex;
+}
+.forq .maininfo .forreal .forbig .subsub2 {
+  flex: 9;
+  display: flex;
+  padding-left: 20px;
+}

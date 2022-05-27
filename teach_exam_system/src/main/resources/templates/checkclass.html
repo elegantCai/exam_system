@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>班级详情</title>
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+	
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+	
+	<link rel="canonical" href="https://demo-basic.adminkit.io/pages-profile.html" />
+
+	<link href="css/app.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	<!----<script src="js/app.js"></script>------>	
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<!----<script src="js/app.js"></script>------>
+	
+	<style type="text/css">
+		div::-webkit-scrollbar {
+			width: 6px;
+			height: 6px;
+  			background-color: rgba(240, 240, 240, 1);
+  		}
+		/*定义滚动条轨道 内阴影+圆角*/
+		div::-webkit-scrollbar-track {
+			box-shadow: inset 0 0 0px rgba(240, 240, 240, 0.0);
+			border-radius: 10px;  
+			background-color: rgba(240, 240, 240, 00.0);
+		}
+		/*定义滑块 内阴影+圆角*/
+		div::-webkit-scrollbar-thumb {
+			border-radius: 10px;  
+			box-shadow: inset 0 0 0px rgb(255, 0, 0);
+			background-color: rgb(0, 0, 0,0.3)
+	</style>
+	
+	
+</head>
+
+<body>
+
+<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand">
+	      <span class="align-middle">考试系统</span>
+	    </a>
+	
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+								导航栏
+							</li>
+					
+					
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="teacher.html" th:if="${usertype} eq '0'" >
+					  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+					</a>
+					<a class="sidebar-link" href="/personpage3" th:if="${usertype} eq '1'" >
+					  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+					</a>
+					<a class="sidebar-link" href="admin.html" th:if="${usertype} eq '2'" >
+					  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+					</a>
+							</li>
+					
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="/myexam">
+					  <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">考试主页</span>
+					</a>
+							</li>
+					
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="/class">
+					  <i class="align-middle" data-feather="book"></i> <span class="align-middle">课程主页</span>
+					</a>
+							</li>
+					
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="/questionbankpage">
+					  <i class="align-middle" data-feather="map"></i> <span class="align-middle">题库练习</span>
+					</a>
+							</li>
+							<li class="sidebar-item" th:if="${usertype} eq '0'">
+										<a class="sidebar-link" href="/AddExaminfo">
+							  <i class="align-middle" data-feather="file"></i> <span class="align-middle">上传考试</span>
+							</a>
+									</li>
+				</ul>
+			</div>
+		</nav>
+	
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+					<i class="hamburger align-self-center"></i>
+				</a>
+	
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+								<i class="align-middle" data-feather="settings"></i>
+							</a>
+	
+							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+								<i class="align-middle me-2" data-feather="feather"></i>
+								<span th:if="${usertype} eq '0'">老师</span>
+								<span th:if="${usertype} eq '1'">学生</span>
+								<span th:if="${usertype} eq '2'">管理员</span>
+								<img src="images/someicon/teacher.jpg" class="avatar img-fluid rounded me-1" alt="老师" th:if="${usertype} eq '0'"/> 
+								<img src="images/someicon/student.jpg" class="avatar img-fluid rounded me-1" alt="学生" th:if="${usertype} eq '1'"/> 
+								<img src="images/someicon/admin.jpg" class="avatar img-fluid rounded me-1" alt="管理员" th:if="${usertype} eq '2'"/> 
+								<span class="text-dark" th:text="${usermail}"></span>
+							</a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="teacherinfoupdate" th:if="${usertype} eq '0'"><i class="align-middle me-1" data-feather="user"></i> 修改信息</a>
+								<a class="dropdown-item" href="/newstudentInformation" th:if="${usertype} eq '1'"><i class="align-middle me-1" data-feather="user"></i>  修改信息</a>
+								<a class="dropdown-item" href="admininfoupdate" th:if="${usertype} eq '2'"><i class="align-middle me-1" data-feather="user"></i>  修改信息</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="logout">Log out</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+		
+			<!--主要内容栏--->			
+			<main class="content">
+				<div class="container-fluid p-0">		
+					<div class="row">
+						<div class="col-12 mb-3">
+							<h1 class="h3 d-inline align-middle">班级详情展示</h1>
+							<a class="badge bg-dark text-white ms-2" href="help.html">Get more tips</a>
+						</div>
+						
+						<div class="col-12 col-lg-8">
+							<div class="card flex-fill" th:each="i:${Classinfo}">
+								<div class="row g-0">
+									<div class="col-3">
+										<img th:src="@{${i.picture}}" class="card-img-top" onerror="this.src='images/class/classheadshot/5.jpg'" >
+									</div>
+									<div class="col-9">
+										<div class="card-body col-12">
+											<div class="card-title"> 
+												<div style="display: flex;">
+													<h2 class="col" th:text="${i.classname}"></h2>
+													<div class="col mt-2">
+														<span th:if="${i.state} eq '0'" class="badge bg-danger">未审核</span>
+														<span th:if="${i.state} eq '1'" class="badge bg-danger">审核未通过</span>
+														<span th:if="${i.state} eq '2'" class="badge bg-warning">审核通过进行中</span>
+														<span th:if="${i.state} eq '3'" class="badge bg-warning">结课申请中</span>
+														<span th:if="${i.state} eq '4'" class="badge bg-success">已结课</span>
+													</div>
+													<div class="col"></div>
+												</div>
+												<div style="display: flex;">
+  													<div class="col mr-3 mb-3" style="display: flex">
+  														<h4>班级编号：</h4>
+  														<h4 th:text="${i.classid}"></h4>
+  													</div>
+  													<div class="col mr-3 mb-3" style="display: flex">
+  														<h4>班级类型：</h4>
+  														<h4 th:text="${i.classtype}"></h4>
+  													</div>
+  													<div class="col mr-3 mb-3"style="display: flex">
+  														<h4>任课老师邮箱：</h4>
+  														<h4  th:text="${i.teachermail}"></h4>
+  													</div>
+  												</div>
+  												<div style="display: flex;">
+  													<h4 class="card-text mb-3 mr-3">班级简介：</h4>
+  													<h4 class="card-text mb-3" th:text="${i.information}"></h4>
+  												</div>
+  											</div>
+  										</div>
+									</div>
+								</div>
+							</div>
+						
+							<div class="card flex-fill">
+								<div class="card-header">
+									<h5 class="card-title mb-0">考试列表</h5>
+								</div>
+								<div style="overflow-y: scroll;height:17.5rem;">
+								<table class="table table-hover my-0">
+									<thead>
+										<tr>
+											<th>考试编号</th>
+      										<th>开始时间</th>
+      										<th>结束时间</th>
+      										<th>考试科目</th>
+        									<th>考试状态</th>
+											<th>贡献为题库</th>
+											<th>查看成绩</th>
+        								</tr>
+    								</thead>
+    								<tbody>
+      									<tr th:each="i:${Examinfo}">
+        									<td th:text="${i.id}"></td>
+        									<td th:text="${#dates.format(i.starttime, 'yyyy-MM-dd HH:mm')}"></td>
+        									<td th:text="${#dates.format(i.endtime, 'yyyy-MM-dd HH:mm')}"></td>
+        									<td th:text="${i.subject}"></td>
+        									<!-- 0：未审核 6：审核未通过 1：未开始 5：签到中 2：考试中 3：结束未批改完成 4：结束并批改完成 -->
+        									<td th:if="${i.state} eq '0'"><span class="badge bg-danger">未审核</span></td>
+        									<td th:if="${i.state} eq '6'"><span class="badge bg-danger">审核未通过</span></td>
+        									<td th:if="${i.state} eq '1'"><span class="badge bg-warning">未开考</span></td>
+        									<td th:if="${i.state} eq '5'"><span class="badge bg-warning">签到中</span></td>
+        									<td th:if="${i.state} eq '2'"><span class="badge bg-warning">考试中</span></td>
+        									<td th:if="${i.state} eq '3'"><span class="badge bg-success">批改中</span></td>
+        									<td th:if="${i.state} eq '4'"><span class="badge bg-success">批改结束</span></td>
+        									<td th:if="${i.type} eq '0'"><i class="align-middle me-2" data-feather="check"></i></td>
+        									<td th:if="${i.type} eq '1'"><i class="align-middle me-2" data-feather="x"></i></td>
+        									<td>
+        										<form action="/checkscore" enctype='multipart/form-data' method='POST'>
+													<button type="submit" class="btn btn-primary">查看</button>
+													<input type="hidden" name="examid" th:value="${i.id}">
+													<div th:each="j:${Classinfo}">
+														<input type="hidden" name="classid" th:value="${j.classid}">
+													</div>
+												</form>
+											</td>
+        								</tr>
+    								</tbody>
+  								</table>
+  								</div>
+							</div>
+						</div>
+						
+						<div class="col-12 col-lg-4 d-flex">
+							<div class="card flex-fill">
+								<div class="card-header">
+									<h5 class="card-title mb-0">学生名单</h5>
+								</div>
+								<div style="overflow-y: scroll;height:29.5rem;">
+								<table class="table table-hover my-0">
+									<thead>
+										<tr>
+											<th>姓名</th>
+      										<th>邮箱</th>
+      										<th>性别</th>
+										</tr>
+    								</thead>
+    								<tbody>
+      									<tr th:each="i:${Studentinfo}">
+        									<td th:text="${i.username}"></td>
+        									<td th:text="${i.usermail}"></td>
+        									<td th:if="${i.usergender} eq '0'">男</td>
+        									<td th:if="${i.usergender} eq '1'">女</td>
+        								</tr>
+    								</tbody>
+  								</table>
+  								</div>
+							</div>
+						</div>
+						
+										
+					</div>
+				</div>
+			</main>
+		</div>
+</div>
+
+<script src="js/app.js"></script>
+
+
+
+
+
+</body>
+</html>

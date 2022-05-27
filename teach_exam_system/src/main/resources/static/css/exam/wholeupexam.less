@@ -1,0 +1,364 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.mainbox{
+	display:flex;
+	min-width: 1024px;
+	max-width: 1920px;
+	margin:0 auto;
+	margin-left:25px;
+	padding:0.125rem 0.125rem 0;
+	.column{
+		flex:3;
+	}
+	.column:nth-child(1) {
+	  flex: 4;
+	  margin: 0 0.125rem 0.1875rem;
+	  overflow: hidden;
+	  
+	}
+	.column:nth-child(2) {
+	  flex: 9;
+	  margin: 0 0.125rem 0.1875rem;
+	  overflow: hidden;
+	}
+}
+
+.qlistborder{
+	border:  1px solid rgba(7, 56, 41, 0.2);
+	border-radius: 5px;
+	margin-top:15px;
+	margin-bottom:15px;
+	margin-left:20px;
+	margin-right:20px;
+}
+
+.bigbox{
+	margin-left:20px;
+	margin-top:10px;
+	min-width: 850px;
+	min-height: 700px;
+	background-color: rgba(255, 255, 255, 1.0);
+	border-radius: 10px;
+	.thetitle{
+		margin-left:20px;
+		margin-top:10px;
+		border-radius: 10px;
+		display:flex;
+		.forh3{
+			flex:3;
+			margin-left: 8px;
+			margin-top:5px;
+		}
+	}
+	.typechoose{
+		display:flex;
+		height:60px;
+		border-bottom:  1px solid rgba(7, 56, 41, 0.2);
+		.eachtype{
+			flex:3;
+			margin-left:10px;
+			margin-top:10px;
+		}
+	}
+	.tips{
+		margin-top:30px;
+		margin-left:40px;
+	}
+	.forinput{
+		display:flex;
+		margin-top:10px;
+		.subthing{
+			margin-left:20px;
+			flex:6;
+		}
+		.subthing:nth-child(2n+0){
+			margin-left:20px;
+			flex:24;
+		}
+	}
+	.forinput2{
+		display:flex;
+		margin-top:10px;
+		.subthing{
+			margin-left:6px;
+			flex:5;
+		}
+		.subthing:nth-child(2){
+			margin-left:20px;
+			flex:27;
+			border:1px solid rgba(7, 56, 41, 0.2);
+		}
+		.subthing:nth-child(1){
+			margin-left:20px;
+			margin-top:6px;
+			flex:3;
+		}
+	}
+	.forinputx{
+		display:flex;
+		margin-top:10px;
+		.subthing{
+			margin-left:20px;
+			flex:8;
+			display:flex;
+			.subsub{
+				flex:3;
+				margin-top:8px;
+			}
+		}
+		.subthing:nth-child(2){
+			margin-left:20px;
+			flex:65;
+			margin-top:6px;
+			border:1px solid rgba(7, 56, 41, 0.2);
+		}
+		.subthing:nth-child(1){
+			margin-left:20px;
+			margin-top:6px;
+			flex:10;
+		}
+	}
+	.forinput3{
+		display:flex;
+		margin-top:10px;
+		.subtext{
+			width:120px;
+			padding-left:20px;
+		}
+		.subpic{
+			width:300px;
+		}
+	}
+	.forinput4{
+		margin-top:10px;
+		display:flex;
+		.culumn{
+			flex:3;
+		}
+		.culumn:nth-child(2){
+			flex:8;
+			background-color: pink;
+			border: 1px solid rgba(7, 56, 41, 0.2);
+		}
+		
+	}
+	.forinput5{
+		display:flex;
+		margin-top:10px;
+		.subthing{
+			margin-left:20px;
+			flex:8;
+			display:flex;
+			.subsub{
+				flex:3;
+				
+			}
+		}
+		.subthing:nth-child(2){
+			margin-left:20px;
+			flex:65;
+			margin-top:6px;
+			
+		}
+		.subthing:nth-child(1){
+			margin-left:20px;
+			margin-top:6px;
+			flex:10;
+		}
+	}
+}
+
+.examinfo{
+		  margin-top:10px;
+		  height:280px;
+		  background-color: rgba(255, 255, 255, 1.0);
+		  border-radius: 10px;
+		  .examtitle{
+			  display:flex;
+			  height:40px;
+			  border-bottom:  1px solid rgba(7, 56, 41, 0.2);
+			  .forh3{
+				  flex:3;
+			  }
+			  .forh3:nth-child(1){
+				  margin-left: 8px;
+				  margin-top:5px;
+				  flex:3.2;
+			  }
+			  .forh3:nth-child(2){
+			  		margin-top:17px;
+			  		flex:6;
+					.p{
+						font-weight: 700;
+					}
+			  }
+		  }
+		  .subexaminfo{
+			  display:flex;
+			  margin-left:20px;
+			  margin-top:8px;
+			  .subsub{
+				  flex:3;
+			  }
+		  }
+		  .subexamclass{
+			  display:flex;
+			  height:30px;
+			  margin-top:10px;
+			  margin-left:20px;
+			  flex-flow: row wrap;
+			  overflow: scroll;
+			  overflow-x: hidden;
+			  .subsub{
+				  flex:0 0 20%;
+			  }
+		  }
+	  }
+	  
+.forq{
+	padding-left:20px;
+	margin-top:8px;
+	.someinfo{
+		display:flex;
+		height:20px;
+		.subsub{
+			flex:1
+		}
+		.suba{
+			flex:2
+		}
+	}
+	.maininfo{
+		display:flex;
+		.forblank{
+			flex:1;
+			margin-top:10px;
+		}
+		.forreal{
+			flex:8;
+			margin-top:10px;
+			.forimg{
+				width:300px;
+				margin-left:20px;
+			}
+			.foroption{
+				display:flex;
+				margin-top:10px;
+				padding-right:80px;
+				.foro1{
+					flex:1;
+					display:flex;
+					padding-left:20px;
+					padding-right:20px;
+					.foro11{
+						flex:1;
+					}
+					.foro12{
+						flex:3;
+						margin-left:10px;
+						
+					}
+				}
+				.foro2{
+					flex:12;
+					padding-right:40px;
+					padding-left:10px;
+				}
+			}
+			.forjud{
+				display:flex;
+				margin-top:20px;
+				padding-right:80px;
+				padding-left:40px;
+				.subsub{
+					flex:3;
+					display:flex;
+					.forT{
+						flex:1
+					}
+					.forT1{
+						flex:2
+					}
+				}
+			}
+			.forfill{
+				display:flex;
+				margin-top:20px;
+				padding-right:80px;
+				padding-left:40px;
+				height:24px;
+				.subsub{
+					flex:3;
+					display:flex;
+				}
+				.subsub2{
+					flex:9;
+					display:flex;
+					padding-left:20px;
+					border-bottom:  1px solid rgba(0, 0, 0, 0.2);
+				}
+			}
+			.forbig{
+				display:flex;
+				margin-top:20px;
+				padding-right:80px;
+				padding-left:40px;
+				.subsub{
+					flex:3;
+					display:flex;
+				}
+				.subsub2{
+					flex:9;
+					display:flex;
+					padding-left:20px;
+					.forimg{
+						
+					}
+				}
+			}
+		}
+	}
+}
+
+.forqtitle{
+	display:flex;
+	height:40px;
+	border-bottom:  1px solid rgba(7, 56, 41, 0.2);
+	padding-left:50px;
+	.someinfo{
+		flex:2;
+		margin-top:10px;
+	}
+	.maininfo{
+		flex:8;
+	}
+}
+.forqtitle1{
+	display:flex;
+	height:40px;
+	border-bottom:  1px solid rgba(7, 56, 41, 0.2);
+	padding-left:50px;
+	margin-top:30px;
+	.someinfo{
+		flex:2;
+		margin-top:10px;
+	}
+	.maininfo{
+		flex:8;
+	}
+}
+		
+	  
+	  
+.examtitle{
+	display:flex;
+	height:60px;
+	border-bottom:  1px solid rgba(7, 56, 41, 0.2);
+	.subsub{
+		flex:3;
+		margin-top: 15px;
+	}
+}

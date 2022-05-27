@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+	
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+	<title>考试成绩展示</title>
+	<link href="css/app.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">	
+	
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>				
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	
+	<style type="text/css">
+		div::-webkit-scrollbar {
+			width: 6px;
+			height: 6px;
+  			background-color: rgba(240, 240, 240, 1);
+  		}
+		/*定义滚动条轨道 内阴影+圆角*/
+		div::-webkit-scrollbar-track {
+			box-shadow: inset 0 0 0px rgba(240, 240, 240, 0.0);
+			border-radius: 10px;  
+			background-color: rgba(240, 240, 240, 00.0);
+		}
+		/*定义滑块 内阴影+圆角*/
+		div::-webkit-scrollbar-thumb {
+			border-radius: 10px;  
+			box-shadow: inset 0 0 0px rgb(255, 0, 0);
+			background-color: rgb(0, 0, 0,0.3)
+	</style>
+	
+	
+</head>
+
+<body>
+
+<input type="hidden" id="allclassid" value='${allclassid}'>
+<input type="hidden"  id="allclassavg" value='${allclassavg}'>
+<input type="hidden" id="allclassmax" value='${allclassmax}'>
+<input type="hidden" id="result" value='${result}'>
+<input type="hidden" id="scorelever" value='${scorelever}'>
+<input type="hidden" id="scorelevernow" value='${scorelevernow}'>
+<input type="hidden" id="classid" value='${classid}'>
+
+<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand">
+	      <span class="align-middle">考试系统</span>
+	    </a>
+	
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+								导航栏
+							</li>
+					
+					
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="teacher.html" th:if="${usertype} eq '0'" >
+					  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+					</a>
+					<a class="sidebar-link" href="/personpage3" th:if="${usertype} eq '1'" >
+					  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+					</a>
+					<a class="sidebar-link" href="admin.html" th:if="${usertype} eq '2'" >
+					  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+					</a>
+							</li>
+					
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="/myexam">
+					  <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">考试主页</span>
+					</a>
+							</li>
+					
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="/class">
+					  <i class="align-middle" data-feather="book"></i> <span class="align-middle">课程主页</span>
+					</a>
+							</li>
+					
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="/questionbankpage">
+					  <i class="align-middle" data-feather="map"></i> <span class="align-middle">题库练习</span>
+					</a>
+							</li>
+							<li class="sidebar-item" th:if="${usertype} eq '0'">
+										<a class="sidebar-link" href="/AddExaminfo">
+							  <i class="align-middle" data-feather="file"></i> <span class="align-middle">上传考试</span>
+							</a>
+									</li>
+				</ul>
+			</div>
+		</nav>
+	
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+					<i class="hamburger align-self-center"></i>
+				</a>
+	
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+								<i class="align-middle" data-feather="settings"></i>
+							</a>
+	
+							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+								<i class="align-middle me-2" data-feather="feather"></i>
+								<span th:if="${usertype} eq '0'">老师</span>
+								<span th:if="${usertype} eq '1'">学生</span>
+								<span th:if="${usertype} eq '2'">管理员</span>
+								<img src="images/someicon/teacher.jpg" class="avatar img-fluid rounded me-1" alt="老师" th:if="${usertype} eq '0'"/> 
+								<img src="images/someicon/student.jpg" class="avatar img-fluid rounded me-1" alt="学生" th:if="${usertype} eq '1'"/> 
+								<img src="images/someicon/admin.jpg" class="avatar img-fluid rounded me-1" alt="管理员" th:if="${usertype} eq '2'"/> 
+								<span class="text-dark" th:text="${usermail}"></span>
+							</a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="teacherinfoupdate" th:if="${usertype} eq '0'"><i class="align-middle me-1" data-feather="user"></i> 修改信息</a>
+								<a class="dropdown-item" href="/newstudentInformation" th:if="${usertype} eq '1'"><i class="align-middle me-1" data-feather="user"></i>  修改信息</a>
+								<a class="dropdown-item" href="admininfoupdate" th:if="${usertype} eq '2'"><i class="align-middle me-1" data-feather="user"></i>  修改信息</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="logout">Log out</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+		
+			<!--主要内容栏--->			
+			<main class="content">
+				<div class="container-fluid p-0">		
+					<div class="col-12 mb-3">
+						<h1 class="h3 d-inline align-middle">考试详情展示</h1>
+						<a class="badge bg-dark text-white ms-2" href="help.html">Get more tips</a>
+					</div>	
+					<div class="row">
+						
+						<div class="col-12 col-lg-6">
+							<div class="card flex-fill w-100">
+								<div class="card-header mb-3">
+									<h5 class="card-title">所有班级平均分和最高分对比图</h5>
+									<h6 class="card-subtitle text-muted">指这场考试内所有班级的平均分和最高分的对比</h6>
+								</div>
+								<div class="card-body" id="chart1" style="width:100%;height:30rem"></div>
+							</div>
+						</div>
+						
+						<div class="col-12 col-lg-6">
+							<div class="card flex-fill w-100">
+								<div class="card-header mb-3">
+									<h5 class="card-title">所有班级在该场考试的成绩分布图</h5>
+									<h6 class="card-subtitle text-muted">指参加这场考试内所有同学的分数分布</h6>
+								</div>
+								<div class="card-body" id="chart2" style="width:100%;height:30rem"></div>
+							</div>
+						</div>
+						
+						<div class="col-12 col-lg-6" th:if="${usertype} ne '1'">
+							<div class="card flex-fill w-100">
+								<div class="card-header mb-3">
+									<h5 class="card-title">当前班级在该场考试的成绩排名</h5>
+									<h6 class="card-subtitle text-muted">指这场考试中该班级的所有同学的成绩排名</h6>
+								</div>
+								<div>
+								<div style="overflow-y: scroll;height:30rem;">
+								<div class="card-body" style="width:100%;height:5.25rem" id="titleoftable">
+								
+	<!-- titleoftable -->
+	<script type="text/javascript">
+		$(function() {
+			// 基于准备好的dom，初始化echarts实例
+		    var myChart4= echarts.init(document.getElementById('titleoftable'));
+		    var classid = '[[${classid}]]';
+			var classidstr = classid+"班-成绩排名";
+			var option = {
+				title: {
+					text: classidstr,
+					subtext: "数据来自该班级所有参加该场考试的同学，但该排名表学生不可见",
+					left:'0%',
+				},
+			};
+			// 使用刚指定的配置项和数据显示图表。
+		    myChart4.setOption(option);	
+		    $(window).resize(function(){
+		    	myChart4.resize();
+		    });
+		})
+	</script>
+		
+								
+								
+								</div>
+								<table class="table table-hover my-0">
+									<thead class="padding-top:-1rem;">
+										<tr>
+											<th>学号</th>
+      										<th>邮箱</th>
+      										<th>成绩</th>
+										</tr>
+    								</thead>
+    								<tbody>
+    									<tr th:each="i:${nowclassscore}">
+        									<td th:text="${i.studentid}"></td>
+        									<td th:text="${i.studentmail}"></td>
+        									<td th:text="${i.sumscore}"></td>	
+        								</tr>
+    								</tbody>
+  								</table>
+  								</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-12 col-lg-6" th:if="${usertype} eq '1'">
+							<div class="card flex-fill w-100">
+								<div class="card-header mb-3">
+									<h5 class="card-title">您在该场考试中的综合情况分析</h5>
+									<h6 class="card-subtitle text-muted">指在以所有考生中的考生的综合情况作为基准的条件下</h6>
+								</div>
+								<div class="card-body" id="chart4" style="width:100%;height:30rem">
+								
+								<!-- chart4-for-student -->
+	<script type="text/javascript">
+		$(function() {
+			// 基于准备好的dom，初始化echarts实例
+		    var myChart5= echarts.init(document.getElementById('chart4'));
+			var score1 = '[[${analyticyou}]]';
+			console.log(score1);
+			var score11 = JSON.parse(score1);
+			console.log(score11);
+			
+			var score2 = '[[${analyticall}]]';
+			console.log(score2);
+			var score22 = JSON.parse(score2);
+			console.log(score22);
+			
+			var score3 = '[[${maxscore}]]';
+			console.log(score3);
+			var score33 = JSON.parse(score3);
+			console.log(score33);
+			
+			var option = {
+					 title: {
+					    text: "成绩分析图",
+					    subtext: "数据来自所有参加该场考试的同学",
+						left:'0%',
+					  },
+					  tooltip: {},
+					  legend: {
+						    show: true,
+						    icon: "circle",
+						    bottom: 20,
+						    center: 0,
+						    itemWidth: 14,
+						    itemHeight: 14,
+						    itemGap: 21,
+						    orient: "horizontal",
+						    data: ["个人情况", "全体学生平均情况"],
+						    textStyle: {
+						      fontSize: 14,
+						      color: "#8C8C8C",
+						    },
+						  },
+					
+					  radar: {					    
+					    name: {
+					      textStyle: {
+					    	
+					    	  color: "#8C8C8C",
+					        borderRadius: 3,
+					        padding: [3, 5],
+					      },
+					    },
+					    indicator: [
+					      {
+					        name: "选择题得分",
+					        max: score33[0],
+					      },
+					      {
+					        name: "填空题得分",
+					        max: score33[1],
+					      },
+					      {
+					        name: "判断题得分",
+					        max: score33[2],
+					      },
+					      {
+					        name: "大题得分",
+					        max: score33[3],
+					      },
+					      {
+					        name: "总分",
+					        max: score33[4],
+					      },
+					      {
+					        name: "班级排名",
+					        max: score22[5]*2,
+					      },
+					      {
+					        name: "全部排名",
+					        max: 100,
+					      },
+					    ],
+					    splitArea: {					      
+					      show: true,
+					    },
+					    axisLine: {
+					        //指向外圈文本的分隔线样式
+					        lineStyle: {
+					          color: "#E5E5E6",
+					        },
+					      },
+					    splitLine: {
+					      lineStyle: {
+					    	 color: "#E5E5E6", // 分隔线颜色
+					      	 width: 2, 
+					      },
+					    },
+					  },
+
+					  series: [
+					    {
+					      name: "个人 vs 总体平均",
+					      type: "radar",
+					      data: [
+					        {
+					          value: score11,
+					          name: "个人情况",	
+					          areaStyle: {
+					              normal: {
+					                
+					              },
+					            },
+					        },
+					        {
+					          value: score22,
+					          name: "全体学生平均情况",
+					          areaStyle: {
+					              normal: {
+					               
+					              },
+					            },
+					         
+					        },
+					      ],
+					    },
+					  ],
+					  
+					};
+			// 使用刚指定的配置项和数据显示图表。
+		    myChart5.setOption(option);	
+		    $(window).resize(function(){
+		    	myChart5.resize();
+		    });
+		})
+	</script>
+		
+		
+								
+								
+								</div>
+							</div>
+						</div>
+						
+						
+						<div class="col-12 col-lg-6">
+							<div class="card flex-fill w-100">
+								<div class="card-header mb-3">
+									<h5 class="card-title">当前班级在该场考试的成绩分布图</h5>
+									<h6 class="card-subtitle text-muted">指当前班级里所有学生的成绩分布</h6>
+								</div>
+								<div class="card-body" id="chart3" style="width:100%;height:30rem"></div>
+							</div>
+						</div>
+						
+	
+					</div>
+				</div>
+			</main>
+		</div>
+</div>
+
+	<script src="js/app.js"></script>
+	
+	<script src="js/jquery-3.6.0.js"></script>
+	<script src="js/echarts.min.js"></script>
+	<!-- chart1 -->
+	<script type="text/javascript">
+		$(function() {
+			// 基于准备好的dom，初始化echarts实例
+		    var myChart = echarts.init(document.getElementById('chart1'));
+			
+		    var classid1 = '[[${allclassid}]]';
+			console.log(classid1);
+			var classid = JSON.parse(classid1);
+			console.log(classid);
+			var classidstr=new Array(); 
+			for (i = 0; i < classid.length; i++) { 
+			    classidstr[i]= classid[i] +"班";
+			}
+			console.log(classidstr);
+
+			var allclassavg1 = '[[${allclassavg}]]';
+			console.log(allclassavg1);
+			var allclassavg = JSON.parse(allclassavg1);
+			console.log(allclassavg);
+			
+			var allclassmax1 = '[[${allclassmax}]]';
+			console.log(allclassmax1);
+			var allclassmax = JSON.parse(allclassmax1);
+			console.log(allclassmax);
+
+			var option = {
+					 title: {
+					    text: "成绩对比图",
+					    subtext: "数据来自所有参加该场考试的班级",
+					    left:'0%',
+					  },
+					  tooltip: {
+					    trigger: "axis",
+					    axisPointer: {
+					      type: "shadow",
+					    },
+					  },
+					  legend: {
+					    right: '13%',
+				        data: ["平均分", "最高分"],
+					  },
+					  grid: {
+					    left: "3%",
+					    right: "13%",
+					    bottom: "6%",
+					    containLabel: true,
+					  },
+					  xAxis: {
+					    type: "value",
+					    boundaryGap: [0, 0.1],
+					  },
+					  yAxis: {
+					    type: "category",
+					    data: classidstr,
+					  },
+					  series: [
+					    {
+					      name: "平均分",
+					      type: "bar",
+					      data: allclassavg,
+					    },
+					    
+					    {
+					      name: "最高分",
+					      type: "bar",
+					      data: allclassmax,
+					    },
+					  ],
+					};
+
+			// 使用刚指定的配置项和数据显示图表。
+		    myChart.setOption(option);
+		    $(window).resize(function(){
+		    	myChart.resize();
+		    });
+		})
+	</script>
+	
+	<!-- chart2 -->
+	<script type="text/javascript">
+		$(function() {
+			// 基于准备好的dom，初始化echarts实例
+		    var myChart2 = echarts.init(document.getElementById('chart2'));
+
+			var scoretemp = '[[${scorelever}]]';
+			console.log(scoretemp);
+			var scorelever = JSON.parse(scoretemp);
+			console.log(scorelever);
+			var leverstr=['90~100','80~90','70~80','60~70','50~60','<50'];
+
+			let datalever = [];
+			for (let i = 0; i < 6; i++) {
+				let obj = {
+					value: scorelever[i],
+					name: leverstr[i],
+				};
+				datalever.push(obj);	
+			};
+			console.log(datalever);
+			var option = {
+				title: {
+					text: "成绩分布图",
+					subtext: "数据来自所有参加该场考试的班级",
+					left:'0%',
+				},
+				tooltip: {
+				    trigger: 'item'
+			    },
+			 	legend: {
+			 		orient: 'vertical',
+			        top: 'center',
+			        left: 'right',
+				},
+				grid: {
+				    left: "3%",
+				    right: "13%",
+				    top:"25%",
+				    
+				},
+				series: [
+					{
+						name: '所属分数段',
+					    type: 'pie',
+					    radius: ['40%', '70%'],
+					    avoidLabelOverlap: false,
+					    itemStyle: {
+						    borderRadius: 10,
+					        borderColor: '#fff',
+					        borderWidth: 2
+					    },
+					    label: {
+					        show: false,
+					        position: 'center'
+					    },
+					    emphasis: {
+					        label: {
+					        	show: true,
+					          	fontSize: '40',
+					          	fontWeight: 'bold'
+					        }
+					    },
+					    labelLine: {
+					        show: false
+					    },
+					    data:datalever
+					}
+				]
+			};
+			// 使用刚指定的配置项和数据显示图表。
+		    myChart2.setOption(option);	
+		    $(window).resize(function(){
+		    	myChart2.resize();
+		    });
+		})
+	</script>
+	
+	<!-- chart3 -->
+	<script type="text/javascript">
+		$(function() {
+			// 基于准备好的dom，初始化echarts实例
+		    var myChart3= echarts.init(document.getElementById('chart3'));
+		    var classid = '[[${classid}]]';
+			var classidstr = classid+"班-成绩分布图";
+			
+			var scoretemp = '[[${scorelevernow}]]';
+			console.log(scoretemp);
+			var scorelever = JSON.parse(scoretemp);
+			console.log(scorelever);
+			var leverstr=['90~100','80~90','70~80','60~70','50~60','<50'];
+
+			let datalever = [];
+			for (let i = 0; i < 6; i++) {
+				let obj = {
+					value: scorelever[i],
+					name: leverstr[i],
+				};
+				datalever.push(obj);	
+			};
+			console.log(datalever);
+			var option = {
+				title: {
+					text: classidstr,
+					subtext: "数据来自该班级所有参加该场考试的同学",
+					left:'0%',
+				},
+				tooltip: {
+				    trigger: 'item'
+			    },
+			 	legend: {
+			 		orient: 'vertical',
+			        top: 'center',
+			        left: 'right',
+				},
+				grid: {
+				    left: "3%",
+				    right: "13%",
+				    top:"25%",		    
+				},
+				series: [
+					{
+						name: '所属分数段',
+					    type: 'pie',
+					    radius: ['40%', '70%'],
+					    avoidLabelOverlap: false,
+					    itemStyle: {
+						    borderRadius: 10,
+					        borderColor: '#fff',
+					        borderWidth: 2
+					    },
+					    label: {
+					        show: false,
+					        position: 'center'
+					    },
+					    emphasis: {
+					        label: {
+					        	show: true,
+					          	fontSize: '40',
+					          	fontWeight: 'bold'
+					        }
+					    },
+					    labelLine: {
+					        show: false
+					    },
+					    data:datalever
+					}
+				]
+			};
+			// 使用刚指定的配置项和数据显示图表。
+		    myChart3.setOption(option);	
+		    $(window).resize(function(){
+		    	myChart3.resize();
+		    });
+		})
+	</script>
+
+	
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,234 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.mainbox {
+  display: flex;
+  min-width: 1024px;
+  max-width: 1920px;
+  margin: 0 auto;
+  margin-left: 25px;
+  padding: 0.125rem 0.125rem 0;
+}
+.mainbox .column {
+  flex: 3;
+}
+.mainbox .column:nth-child(1) {
+  flex: 4;
+  margin: 0 0.125rem 0.1875rem;
+  overflow: hidden;
+}
+.mainbox .column:nth-child(1) .column:nth-child(2) {
+  flex: 9;
+  margin: 0 0.125rem 0.1875rem;
+  overflow: hidden;
+}
+.mainbox .qlistborder {
+  border: 1px solid rgba(7, 56, 41, 0.2);
+  border-radius: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.mainbox .examinfo {
+  margin-top: 10px;
+  height: 260px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+.mainbox .examinfo .examtitle {
+  display: flex;
+  height: 40px;
+  border-bottom: 1px solid rgba(7, 56, 41, 0.2);
+}
+.mainbox .examinfo .examtitle .forh3 {
+  flex: 3;
+}
+.mainbox .examinfo .examtitle .forh3:nth-child(1) {
+  margin-left: 8px;
+  margin-top: 5px;
+  flex: 3.2;
+}
+.mainbox .examinfo .examtitle .forh3:nth-child(2) {
+  margin-top: 17px;
+  flex: 6;
+}
+.mainbox .examinfo .examtitle .forh3:nth-child(2) .p {
+  font-weight: 700;
+}
+.mainbox .examinfo .subexaminfo {
+  display: flex;
+  margin-left: 20px;
+  margin-top: 8px;
+}
+.mainbox .examinfo .subexaminfo .subsub {
+  flex: 3;
+}
+.mainbox .examinfo .subexamclass {
+  display: flex;
+  height: 30px;
+  margin-top: 10px;
+  margin-left: 20px;
+  flex-flow: row wrap;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.mainbox .examinfo .subexamclass .subsub {
+  width: 70px;
+  text-align: center;
+}
+.mainbox .examinfo .subexamclass .subsub1 {
+  width: 70px;
+}
+.mainbox .questioncard {
+  margin-top: 10px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding-bottom: 10px;
+}
+.mainbox .questioncard .forh3 {
+  margin-left: 8px;
+  display: flex;
+  height: 40px;
+  border-bottom: 1px solid rgba(7, 56, 41, 0.2);
+}
+.mainbox .questioncard .forh3 .forpoint {
+  margin-top: 10px;
+  display: flex;
+}
+.mainbox .questioncard .forqlist {
+  display: flex;
+  margin-top: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
+  flex-flow: row wrap;
+}
+.mainbox .questioncard .forqlist .forq {
+  flex: 0 0 12%;
+  margin-left: 10px;
+  margin-right: 5px;
+  margin-top: 8px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+  text-align: center;
+  height: 40px;
+}
+.mainbox .questioncard .forqlist .forq .button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: #1CBB8C;
+}
+.bigbox {
+  margin-left: 20px;
+  margin-top: 10px;
+  min-width: 950px;
+  min-height: 700px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.bigbox .thetitle {
+  margin-left: 20px;
+  margin-top: 10px;
+  border-radius: 10px;
+  display: flex;
+}
+.bigbox .thetitle .forh3 {
+  flex: 3;
+  margin-left: 8px;
+  margin-top: 5px;
+}
+.bigbox .typechoose {
+  display: flex;
+  height: 60px;
+  border-bottom: 1px solid rgba(7, 56, 41, 0.2);
+}
+.bigbox .typechoose .eachtype {
+  flex: 3;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.bigbox .forsubmit {
+  display: flex;
+  height: 60px;
+}
+.bigbox .forsubmit .eachtype {
+  flex: 3;
+  margin-left: 10px;
+}
+.bigbox .tips {
+  margin-top: 30px;
+  margin-left: 40px;
+}
+.bigbox .forinput {
+  display: flex;
+  margin-top: 10px;
+}
+.bigbox .forinput .subthing {
+  margin-left: 20px;
+  flex: 6.8;
+}
+.bigbox .forinput .subthing:nth-child(2) {
+  margin-left: 20px;
+  flex: 8;
+}
+.bigbox .forinput .subthing:nth-child(1) {
+  margin-left: 20px;
+  margin-top: 6px;
+  flex: 3;
+}
+.bigbox .forinput2 {
+  display: flex;
+  margin-top: 10px;
+}
+.bigbox .forinput2 .subthing {
+  margin-left: 20px;
+  flex: 5;
+}
+.bigbox .forinput2 .subthing:nth-child(2) {
+  margin-left: 20px;
+  flex: 27;
+}
+.bigbox .forinput2 .subthing:nth-child(1) {
+  margin-left: 20px;
+  margin-top: 6px;
+  flex: 3;
+}
+.bigbox .forinput3 {
+  display: flex;
+  margin-top: 10px;
+}
+.bigbox .forinput3 .subthing {
+  margin-left: 20px;
+  flex: 8;
+  display: flex;
+}
+.bigbox .forinput3 .subthing .subsub {
+  flex: 3;
+  margin-top: 8px;
+}
+.bigbox .forinput3 .subthing:nth-child(2) {
+  margin-left: 20px;
+  flex: 65;
+}
+.bigbox .forinput3 .subthing:nth-child(1) {
+  margin-left: 20px;
+  margin-top: 6px;
+  flex: 10;
+}
+.bigbox .forinput4 {
+  margin-top: 10px;
+  display: flex;
+}
+.bigbox .forinput4 .culumn {
+  flex: 3;
+}
+.bigbox .forinput4 .culumn:nth-child(2) {
+  flex: 8;
+  background-color: pink;
+  border: 1px solid rgba(7, 56, 41, 0.2);
+}

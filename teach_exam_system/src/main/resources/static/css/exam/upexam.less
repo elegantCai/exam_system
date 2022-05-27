@@ -1,0 +1,126 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.mainbox{
+	display:flex;
+	min-width: 1024px;
+	max-width: 1920px;
+	margin:0 auto;
+	margin-left:25px;
+	padding:0.125rem 0.125rem 0;
+	.column{
+		flex:3
+	}
+	.column:nth-child(1) {
+	  flex: 8;
+	  margin: 0 0.125rem 0.1875rem;
+	  overflow: hidden;
+	}
+}
+
+.divide{
+	display:flex;
+	margin-top:20px;
+	.subdivide{
+		flex:3;
+		margin-left: 20px;
+	}
+}
+
+.divide1{
+	display:flex;
+	margin-top:5px;
+	.subdivide{
+		flex:3;
+		margin-left: 20px;
+	}
+}
+
+.forradio{
+		display:flex;
+		margin-top:15px;
+		.subdivide{
+			flex:3;
+			margin-left: 20px;
+		}
+	}
+
+.classtable{
+	border: 1px solid rgba(206, 212, 218, 1.0);
+	border-radius:5px;
+	height:200px;
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+.classtable::-webkit-scrollbar {/*滚动条整体样式*/
+			   width: 2px;     /*高宽分别对应横竖滚动条的尺寸*/
+			   height: 1px;
+			 }
+			.navbox::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+			   border-radius: 20px;
+			   -webkit-box-shadow: inset 0 0 5px rgba(170, 85, 0, 0.2);
+			   background: #aa0000;
+			}
+			.navbox::-webkit-scrollbar-track {/*滚动条里面轨道*/
+			   -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+			   border-radius: 10px;
+			   background: #aaaa00;
+			}
+
+.eachclass{
+	display:flex;
+	margin-top:10px;
+	.subclassid{
+		width:20px;
+		height:20px;
+		margin-left:20px;
+	}
+	.subclassname{
+		width:100px;
+		height:20px;
+		margin-left:30px;
+		overflow:hidden;
+		padding-left:10px;
+		padding-right:10px;
+	}
+	.subclasstype{
+		width:150px;
+		height:20px;
+		margin-left:30px;
+		overflow:hidden;
+		padding-left:10px;
+		padding-right:10px;
+	}
+	.subclassinfo{
+		width:250px;
+		height:20px;
+		margin-left:30px;
+		overflow:hidden;
+	}
+	
+	.submoreinfo{
+		width:100px;
+		height:20px;
+		margin-left:30px;
+		overflow:hidden;
+	}
+}
+
+.forsubmit{
+	margin-top:15px;
+	background-color:pink;
+	border-radius: 15px;
+}
+
+.fornothave{
+	height:66px;
+	display:flex;
+	.subsub{
+		flex:3;
+		text-align: center;
+	}
+}

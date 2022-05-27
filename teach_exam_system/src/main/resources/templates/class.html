@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>班级管理</title>
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+	
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+	
+	<link rel="canonical" href="https://demo-basic.adminkit.io/pages-profile.html" />
+
+	<link href="css/app.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	<!----<script src="js/app.js"></script>------>	
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		
+	<style type="text/css">
+		div::-webkit-scrollbar {
+			width: 6px;
+			height: 6px;
+  			background-color: rgba(240, 240, 240, 1);
+  		}
+		/*定义滚动条轨道 内阴影+圆角*/
+		div::-webkit-scrollbar-track {
+			box-shadow: inset 0 0 0px rgba(240, 240, 240, 0.0);
+			border-radius: 10px;  
+			background-color: rgba(240, 240, 240, 00.0);
+		}
+		/*定义滑块 内阴影+圆角*/
+		div::-webkit-scrollbar-thumb {
+			border-radius: 10px;  
+			box-shadow: inset 0 0 0px rgb(255, 0, 0);
+			background-color: rgb(0, 0, 0,0.3)
+	</style>
+		
+		
+</head>
+
+<body>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#a1").click(function(){
+		$("#b1").slideToggle("slow");
+	});
+	$("#a2").click(function(){
+		$("#b2").slideToggle("slow");
+	});
+	$("#a3").click(function(){
+		$("#b3").slideToggle("slow");
+	});
+});
+</script>
+
+<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand">
+	      <span class="align-middle">考试系统</span>
+	    </a>
+	
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+								导航栏
+							</li>
+					
+					
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="teacher.html" th:if="${usertype} eq '0'" >
+					  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+					</a>
+					<a class="sidebar-link" href="/personpage3" th:if="${usertype} eq '1'" >
+					  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+					</a>
+					<a class="sidebar-link" href="admin.html" th:if="${usertype} eq '2'" >
+					  <i class="align-middle" data-feather="user"></i> <span class="align-middle">个人主页</span>
+					</a>
+							</li>
+					
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="/myexam">
+					  <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">考试主页</span>
+					</a>
+							</li>
+					
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="/class">
+					  <i class="align-middle" data-feather="book"></i> <span class="align-middle">课程主页</span>
+					</a>
+							</li>
+					
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="/questionbankpage">
+					  <i class="align-middle" data-feather="map"></i> <span class="align-middle">题库练习</span>
+					</a>
+							</li>
+							<li class="sidebar-item" th:if="${usertype} eq '0'">
+										<a class="sidebar-link" href="/AddExaminfo">
+							  <i class="align-middle" data-feather="file"></i> <span class="align-middle">上传考试</span>
+							</a>
+									</li>
+				</ul>
+			</div>
+		</nav>
+	
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+					<i class="hamburger align-self-center"></i>
+				</a>
+	
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+								<i class="align-middle" data-feather="settings"></i>
+							</a>
+	
+							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+								<i class="align-middle me-2" data-feather="feather"></i>
+								<span th:if="${usertype} eq '0'">老师</span>
+								<span th:if="${usertype} eq '1'">学生</span>
+								<span th:if="${usertype} eq '2'">管理员</span>
+								<img src="images/someicon/teacher.jpg" class="avatar img-fluid rounded me-1" alt="老师" th:if="${usertype} eq '0'"/> 
+								<img src="images/someicon/student.jpg" class="avatar img-fluid rounded me-1" alt="学生" th:if="${usertype} eq '1'"/> 
+								<img src="images/someicon/admin.jpg" class="avatar img-fluid rounded me-1" alt="管理员" th:if="${usertype} eq '2'"/> 
+								<span class="text-dark" th:text="${usermail}"></span>
+							</a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="teacherinfoupdate" th:if="${usertype} eq '0'"><i class="align-middle me-1" data-feather="user"></i> 修改信息</a>
+								<a class="dropdown-item" href="/newstudentInformation" th:if="${usertype} eq '1'"><i class="align-middle me-1" data-feather="user"></i>  修改信息</a>
+								<a class="dropdown-item" href="admininfoupdate" th:if="${usertype} eq '2'"><i class="align-middle me-1" data-feather="user"></i>  修改信息</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="logout">Log out</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		
+			<!--主要内容栏--->			
+			<main class="content">
+				<div class="container-fluid p-0">		
+					<div class="row">
+						<!-- 老师添加课程----->
+						<div class="col-12 col-lg-6">
+							<!-- 老师添加课程--->
+							<div th:if="${usertype} eq '0'">
+								<form action="/upclass" enctype='multipart/form-data' method='POST'>
+									<div class="card">
+										<div class="card-header" style="height:3rem" id="a1">
+											<h3 class="card-title mb-0">创建新班级</h3>
+											<i class="align-middle me-2 " style="margin-top:-1rem;float:right;" data-feather="chevron-down"></i>	
+										</div>
+										<div class="card-body row" style="display:none;" id="b1">
+											<div class="col-6  mb-3">
+												<label for="class1" class="form-label" id="checkname">班级名称</label>
+												<input type="text" name="classname" class="form-control" id="class1" placeholder="请输入班级名称-必填项">
+											</div>
+											<div class="col-6  mb-3">
+												<label for="class2" class="form-label" id="checktype">班级类型</label>
+												<input type="text" name="classtype" class="form-control" id="class2" placeholder="请输入班级类型-必填项">
+											</div>
+											<div class="col-12  mb-3">
+												<label for="class3" class="form-label">班级简介</label>
+												<textarea class="form-control" name="information" id="class3" rows="1" placeholder="请输入班级简介-选填项"></textarea>
+											</div>
+											<div class="col-8  mb-3">
+												<label for="class4" class="form-label">班级封面</label>
+												<input class="form-control" type="file" name="picture"id="class4">
+											</div>
+											<div class="col-4  mb-3">
+												<label for="class5" class="form-label">点击按钮完成创建</label>
+												<button type="submit" name="create" class="btn btn-primary col-12">创建班级</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>	
+						<!--老师搜索，竖着排-->
+						<div class="col-12 col-lg-6">
+							<div  th:if="${usertype} eq '0'">
+								<form class="row g-3" action="/searchclass" enctype='multipart/form-data' method='POST'>
+									<div class="card">
+										<div class="card-header" style="height:3rem" id="a2">
+											<h3 class="card-title mb-0">搜索班级</h3>
+											<i class="align-middle me-2 " style="margin-top:-1rem;float:right;" data-feather="chevron-down"></i>
+										</div>
+										<div class="card-body row" style="display:none;" id="b2">
+											<div class="col-4  mb-3">
+												<label for="class1" class="form-label">班级编号</label>
+												<input class="form-control" type="text" placeholder="请输入班号" name="classid" id="class1">
+											</div>
+											<div class="col-4  mb-3">
+												<label for="class2" class="form-label">班级名称</label>
+												<input class="form-control" type="text" placeholder="请输入班名" name="classname"  id="class2">
+											</div>
+											<div class="col-4  mb-3">
+												<label for="class3" class="form-label">班级类型</label>
+												<input class="form-control" type="text" placeholder="请输入类型" name="classtype"  id="class3">
+											</div>
+											<div class="col-6  mb-3">
+												<label for="class4" class="form-label">老师邮箱</label>
+												<input class="form-control" type="text" placeholder="请输入邮箱" name="teachermail"  id="class4">
+											</div>
+											<div class="col-6  mb-3">
+												<label for="class5" class="form-label">班级状态</label>
+												<select id="class5" class="form-select" name="state">
+													<option selected="selected">选择下列其中一个班级状态----</option>
+													<option th:if="${usertype} ne '1'" value=0>未审核</option>
+													<option th:if="${usertype} ne '1'" value=1>审核未通过</option>
+													<option value=2>审核通过进行中</option>
+													<option value=3>申请结课中</option>
+													<option value=4>已结课</option>
+												</select>
+											</div>
+											<div class="col-6  mb-3">
+												<label for="class6" class="form-label">搜索模式</label>
+												<select id="class6" class="form-select" name="stype">
+													<option selected="selected">根据您的输入选择对应搜索模式</option>
+													<option value=0>根据班级编号搜索</option>
+													<option value=1>根据班级名称搜索</option>
+													<option value=2>根据班级类型搜索</option>
+													<option value=3>根据老师邮箱搜索</option>
+													<option value=4>根据班级状态搜索</option>
+													<option value=5>精准搜索（输入完整信息）</option>
+													<option value=6>显示全部（无需输入信息）</option>
+												</select>
+											</div>
+											<div class="col-6 justify-content-md-end">
+												<input type="hidden" name="searchtype" value="1">
+												<label class="form-label">点击按钮开始搜索</label>
+												<button type="submit" name="create" class="btn btn-primary col-12">搜索</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<!--学生和管理员搜索，横着排-->
+						<div class="col-12">
+							<div  th:if="${usertype} ne '0'">
+								<form class="row g-3" action="/searchclass" enctype='multipart/form-data' method='POST'>
+									<div class="card">
+										<div class="card-header" style="height:3rem" id="a3">
+											<h5 class="card-title mb-0">搜索班级</h5>
+											<i class="align-middle me-2 " style="margin-top:-1rem;float:right;" data-feather="chevron-down"></i>
+										</div>
+										<div class="card-body row" style="display:none;" id="b3">
+											<div class="col-2 mb-3">
+												<label for="class1" class="form-label">班级编号</label>
+												<input class="form-control" type="text" placeholder="请输入班号" name="classid" id="class1">
+											</div>
+											<div class="col-2  mb-3">
+												<label for="class2" class="form-label">班级名称</label>
+												<input class="form-control" type="text" placeholder="请输入班名" name="classname"  id="class2">
+											</div>
+											<div class="col-2  mb-3">
+												<label for="class3" class="form-label">班级类型</label>
+												<input class="form-control" type="text" placeholder="请输入类型" name="classtype"  id="class3">
+											</div>
+											<div class="col-6   mb-3">
+												<label for="class4" class="form-label">老师邮箱</label>
+												<input class="form-control" type="text" placeholder="请输入邮箱" name="teachermail"  id="class4">
+											</div>
+											<div class="col-5  mb-3">
+												<label for="class5" class="form-label">班级状态</label>
+												<select id="class5" class="form-select" name="state">
+													<option selected="selected">选择下列其中一个班级状态----</option>
+													<option th:if="${usertype} ne '1'" value=0>未审核</option>
+													<option th:if="${usertype} ne '1'" value=1>审核未通过</option>
+													<option value=2>审核通过进行中</option>
+													<option value=3>申请结课中</option>
+													<option value=4>已结课</option>
+												</select>
+											</div>
+											<div class="col-5 mb-3">
+												<label for="class6" class="form-label">搜索模式</label>
+												<select id="class6" class="form-select" name="stype">
+													<option selected="selected">根据您的输入选择对应搜索模式</option>
+													<option value=0>根据班级编号搜索</option>
+													<option value=1>根据班级名称搜索</option>
+													<option value=2>根据班级类型搜索</option>
+													<option value=3>根据老师邮箱搜索</option>
+													<option value=4>根据班级状态搜索</option>
+													<option value=5>精准搜索（输入完整信息）</option>
+													<option value=6>显示全部（无需输入信息）</option>
+												</select>
+											</div>
+											<div class="col-2  mb-3 ">
+												<input type="hidden" name="searchtype" value="1">
+												<label class="form-label">点击按钮开始搜索</label>
+												<button type="submit" name="create" class="btn btn-primary col-12">搜索</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						
+						<div class="col-12 mb-3">
+							<h1 class="h3 d-inline align-middle">班级详情展示</h1>
+							<a class="badge bg-dark text-white ms-2" href="help.html">Get more tips</a>
+						</div>
+						
+						<!-- 老师，学生，管理员默认课程信息展示 -->
+						<div class="row"style="height:30rem;overflow-y:scroll" th:if="${searchtype} eq '0'">
+						<div class="col-4 col-lg-3" th:each="i:${classinfo}">
+							<div class="card">
+								<div class="card-header mb-0">
+									<div class="row">
+										<div class="card-title col-4" th:text="${i.classid}"></div>
+										<div class="card-title col-6" th:text="${i.classname}"></div>
+										<div class="card-title col-4">
+											<span class="badge bg-primary" th:text="${i.classtype}"></span>
+										</div>
+										<div class="card-title col-4">
+											<span th:if="${i.state} eq '0'" class="badge bg-danger">未审核</span>
+											<span th:if="${i.state} eq '1'" class="badge bg-danger">审核未通过</span>
+											<span th:if="${i.state} eq '2'" class="badge bg-warning">课程进行中</span>
+											<span th:if="${i.state} eq '3'" class="badge bg-warning">结课申请中</span>
+											<span th:if="${i.state} eq '4'" class="badge bg-success">已结课</span>						
+										</div>
+									</div>		
+								</div>
+								<div class="card-body text-center row" style="margin-top: -2rem;">
+									<img th:src="@{${i.picture}}" onerror="this.src='images/class/classheadshot/default.png'" alt="班级封面" class="img-fluid rounded-circle mb-1" width="128" height="128" />
+									<div class=" mt-1 row" th:if="${usertype} ne '0'">
+										<div class="col-3" style="float:right">邮箱:</div>
+										<div class="col-9 ml-0" th:text="${i.teachermail}" style="float:left"></div>								
+									</div>
+									<!--按钮的模块-->
+									<!--按钮，所有课程都只可能有一个关于状态修改的按钮，无论是管理员还是老师-->
+									<div th:if="${usertype} eq '1'" class="col-12 mt-2 mb-2 mx-auto row">
+										<!---查看详情按钮--->
+										<form class="col-6 mx-auto" action="/checkclass" enctype='multipart/form-data' method='POST'>
+											<button type="submit" name="create" class="btn btn-primary">查看详情</button>
+											<input type="hidden" name="searchtype" th:value="0">
+											<input type="hidden" name="classid" th:value="${i.classid}">
+										</form>
+									</div>
+									<div th:if="${usertype} eq '0'" class="col-12 mt-2 mb-2 mx-auto row">
+										<!---查看详情按钮--->
+										<form class="col-6 mx-auto" action="/checkclass" enctype='multipart/form-data' method='POST'>
+											<button type="submit" name="create" class="btn btn-primary">查看详情</button>
+											<input type="hidden" name="searchtype" th:value="0">
+											<input type="hidden" name="classid" th:value="${i.classid}">
+										</form>
+										<div th:if="${i.state} le '1'"  class="col-6 mx-auto">
+											<form action="/shenheclass" enctype='multipart/form-data' method='POST'>
+												<button type="submit" name="create" class="btn btn-primary">申请重审</button>
+												<input type="hidden" name="searchtype" th:value="0">
+												<input type="hidden" name="classid" th:value="${i.classid}">
+											</form>
+										</div>
+										<div th:if="${i.state} eq '2'"  class="col-6 mx-auto">
+											<form action="/endclass" enctype='multipart/form-data' method='POST'>
+												<button type="submit" name="create" class="btn btn-primary">申请结课</button>
+												<input type="hidden" name="searchtype" th:value="0">
+												<input type="hidden" name="classid" th:value="${i.classid}">
+											</form>
+										</div>
+									</div>
+									<div th:if="${usertype} eq '2'" class="col-12 mt-2 mb-2 mx-auto row">
+										<!---查看详情按钮--->
+										<form class="col-6 mx-auto" action="/checkclass" enctype='multipart/form-data' method='POST'>
+											<button type="submit" name="create" class="btn btn-primary">查看详情</button>
+											<input type="hidden" name="searchtype" th:value="0">
+											<input type="hidden" name="classid" th:value="${i.classid}">
+										</form>
+										<div th:if="${i.state} le '1'" class="col-6 mx-auto">
+											<form action="/shenheclass" id="default1" enctype='multipart/form-data' method='POST'>
+												<select onchange="submitForm1();" class="form-select" name="stypey">
+													<option selected="selected">选择审核结果</option>
+													<option value=0>不通过</option>
+													<option value=1>通过</option>
+												</select>
+												<script type="text/javascript">
+													function submitForm1(){
+											   			var form = document.getElementById("default1");
+											    		form.submit();
+													}
+												</script>												
+												<input type="hidden" name="searchtype" th:value="0">
+												<input type="hidden" name="classid" th:value="${i.classid}">
+											</form>
+										</div>
+										<div th:if="${i.state} eq '3'" class="col-6 mx-auto">
+											<form action="/endclass" enctype='multipart/form-data' method='POST'>
+												<button type="submit" class="btn btn-primary">允许结课</button>
+												<input type="hidden" name="searchtype" th:value="0">
+												<input type="hidden" name="classid" th:value="${i.classid}">
+											</form>
+										</div>										
+									</div>
+									<hr class="my-0" style="margin-bottom:-2rem"/>
+									<div class="card-body" style="margin-bottom:-1rem">
+										<h5 class="h6 card-title">班级简介</h5>
+										<div class="text-muted" th:text="${i.information}"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+						<!-- 老师，学生，管理员搜索课程信息展示 -->
+						<div class="row"style="height:30rem;overflow-y:scroll" th:if="${searchtype} eq '1'">
+						<div class="col-4 col-lg-3" th:each="i:${classinfo1}" >
+							<div class="card" th:if="${usertype} ne '1'">
+								<div class="card-header mb-0">
+									<div class="row">
+										<div class="card-title col-4" th:text="${i.classid}"></div>
+										<div class="card-title col-6" th:text="${i.classname}"></div>
+										<div class="card-title col-4">
+											<span class="badge bg-primary" th:text="${i.classtype}"></span>
+										</div>
+										<div class="card-title col-4">
+											<span th:if="${i.state} eq '0'" class="badge bg-danger">未审核</span>
+											<span th:if="${i.state} eq '1'" class="badge bg-danger">审核未通过</span>
+											<span th:if="${i.state} eq '2'" class="badge bg-warning">课程进行中</span>
+											<span th:if="${i.state} eq '3'" class="badge bg-warning">结课申请中</span>
+											<span th:if="${i.state} eq '4'" class="badge bg-success">已结课</span>						
+										</div>
+									</div>		
+								</div>
+								<div class="card-body text-center row" style="margin-top: -2rem;">
+									<img th:src="@{${i.picture}}" onerror="this.src='images/class/classheadshot/default.png'" alt="班级封面" class="img-fluid rounded-circle mb-1" width="128" height="128" />
+									<div class=" mt-1 row">
+										<div class="col-3" style="float:right">邮箱:</div>
+										<div class="col-9" th:text="${i.teachermail}" style="float:left"></div>								
+									</div>
+									<!--按钮的模块-->									
+									<!--按钮，所有课程都只可能有一个关于状态修改的按钮，无论是管理员还是老师-->
+									<!-- 老师 -->
+									<div th:if="${usertype} eq '0'" class="col-12 mt-2 mb-2 mx-auto row">
+										<div th:if="${eqmail[__${iStat.index}__] ne '1'}" class="col-6 mx-auto">
+											<!---查看详情按钮--->									
+											<form action="/checkclass" enctype='multipart/form-data' method='POST'>
+												<button type="submit" name="create" class="btn btn-primary">查看详情</button>
+												<input type="hidden" name="searchtype" th:value="1">
+												<input type="hidden" name="classid" th:value="${i.classid}">
+											</form>
+										</div>
+										<div th:if="${eqmail[__${iStat.index}__] eq '1'}" class="col-12 mx-auto">
+											<!---查看详情按钮--->									
+											<form action="/checkclass" class="col-6  mx-auto" enctype='multipart/form-data' method='POST'>
+												<button type="submit" name="create" class="btn btn-primary">查看详情</button>
+												<input type="hidden" name="searchtype" th:value="1">
+												<input type="hidden" name="classid" th:value="${i.classid}">
+											</form>
+											<div th:if="${i.state} le '1'" class="col-6 mx-auto">
+												<form action="/shenheclass" enctype='multipart/form-data' method='POST'>
+													<button type="submit" class="btn btn-primary">申请重审</button>
+													<input type="hidden" name="searchtype" th:value="1">
+													<input type="hidden" name="classid" th:value="${i.classid}">
+												</form>
+											</div>
+											<div th:if="${i.state} eq '2'" class="col-6 mx-auto">
+												<form action="/endclass" enctype='multipart/form-data' method='POST'>
+													<button type="submit" class="btn btn-primary">申请结课</button>
+													<input type="hidden" name="searchtype" th:value="1">
+													<input type="hidden" name="classid" th:value="${i.classid}">
+												</form>
+											</div>
+										</div>
+									</div>
+									
+									<!-- 管理员 -->
+									<div th:if="${usertype} eq '2'" class="col-12 mt-2 mb-2 mx-auto row">
+										<!---查看详情按钮--->									
+										<form class="col-6 mx-auto" action="/checkclass" enctype='multipart/form-data' method='POST'>
+											<button type="submit" name="create" class="btn btn-primary">查看详情</button>
+											<input type="hidden" name="searchtype" th:value="1">
+											<input type="hidden" name="classid" th:value="${i.classid}">
+										</form>																	
+										<form  th:if="${i.state} le '1'" id="myform" class="col-6 mx-auto" action="/shenheclass" enctype='multipart/form-data' method='POST'>
+											<select onchange="submitForm();" class="form-select" name="stypey">
+												<option selected="selected">审核提交</option>
+												<option value="0">不通过</option>
+												<option value="1">通过</option>
+											</select>
+											<script type="text/javascript">
+												function submitForm(){
+											   		var form = document.getElementById("myform");
+											    	form.submit();
+												}
+											</script>											
+											<input type="hidden" name="searchtype" th:value="1">
+											<input type="hidden" name="classid" th:value="${i.classid}">
+										</form>
+										<form th:if="${i.state} eq '3'" class="col-6 mx-auto" action="/endclass" enctype='multipart/form-data' method='POST'>
+											<button type="submit" class="btn btn-primary">允许结课</button>
+											<input type="hidden" name="searchtype" th:value="1">
+											<input type="hidden" name="classid" th:value="${i.classid}">
+										</form>																		
+									</div>
+									<hr class="my-0" style="margin-bottom:-2rem" />
+									<div class="card-body" style="margin-bottom:-1rem">
+										<h5 class="h6 card-title">班级简介</h5>
+										<div class="text-muted" th:text="${i.information}"></div>
+									</div>
+								</div>
+							</div>
+							<!-- 学生 -->
+							<div th:if="${usertype} eq '1'" >
+								<div class="card" th:if="${i.state} ge '2'">
+									<div class="card-header mb-0">
+										<div class="row">
+											<div class="card-title col-4" th:text="${i.classid}"></div>
+											<div class="card-title col-6" th:text="${i.classname}"></div>
+											<div class="card-title col-4">
+												<span class="badge bg-primary" th:text="${i.classtype}"></span>
+											</div>
+											<div class="card-title col-4">												
+												<span th:if="${i.state} eq '2'" class="badge bg-warning">课程进行中</span>
+												<span th:if="${i.state} eq '3'" class="badge bg-warning">结课申请中</span>
+												<span th:if="${i.state} eq '4'" class="badge bg-success">已结课</span>						
+											</div>
+										</div>		
+									</div>		
+									<div class="card-body text-center row" style="margin-top: -2rem;">
+										<img th:src="@{${i.picture}}" onerror="this.src='images/class/classheadshot/default.png'" alt="班级封面" class="img-fluid rounded-circle mb-1" width="128" height="128" />
+										<div class=" mt-1 row">
+											<div class="col-3" style="float:right">邮箱:</div>
+											<div class="col-9 ml-0" th:text="${i.teachermail}" style="float:left"></div>								
+										</div>										
+										<!--按钮的模块-->
+										<!---查看详情按钮--->
+										<div th:if="${i.state} ne '2'" class="col-6 mt-2 mb-2 mx-auto">
+											<form  action="/checkclass" enctype='multipart/form-data' method='POST'>
+												<button type="submit" class="btn btn-primary">查看详情</button>
+												<input type="hidden" name="searchtype" th:value="1">
+												<input type="hidden" name="classid" th:value="${i.classid}">
+											</form>
+										</div>
+										<div th:if="${i.state} eq '2'" class="col-12 mt-2 mb-2 mx-auto row">
+											<form class="col-6 mx-auto" action="/checkclass" enctype='multipart/form-data' method='POST'>
+												<button type="submit" class="btn btn-primary">查看详情</button>
+												<input type="hidden" name="searchtype" th:value="1">
+												<input type="hidden" name="classid" th:value="${i.classid}">
+											</form>
+											<!--按钮，加入课程，判断是否已经加入，已经加入不展示加入班级按钮-->
+											<form  class="col-6 mx-auto" action="/joinclass" enctype='multipart/form-data' method='POST' th:if="${joinclass[iStat.index]} eq '0'">
+												<button type="submit" class="btn btn-primary">加入班级</button>
+												<input type="hidden" name="searchtype" th:value="1">
+												<input type="hidden" name="classid" th:value="${i.classid}">
+											</form>
+										</div>
+										
+										<hr class="my-0" style="margin-bottom:-2rem"/>
+										<div class="card-body" style="margin-bottom:-1rem">
+											<h5 class="h6 card-title">班级简介</h5>
+											<div class="text-muted" th:text="${i.information}"></div>
+										</div>
+									</div>
+								</div>
+							
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+</div>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>

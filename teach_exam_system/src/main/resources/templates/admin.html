@@ -165,13 +165,13 @@
                             		<div class="d-flex align-items-start" th:each="i:${class_list}">
                             			<div class="flex-grow-1">
                             				<div th:if="${i.treatresult} eq '0'">
-                            					<p th:text="审核记录-----课程号+${i.treatid}-----审核通过-----审核原因+${i.comment}"></p>
+                            					<p th:text="审核记录-----课程号+${i.treatid}+-----审核通过-----审核原因+${i.comment}"></p>
                             				</div>
                             				<div th:if="${i.treatresult} eq '1'">
-                            					<p th:text="审核记录-----课程号+${i.treatid}-----审核未通过+-----审核原因+${i.comment}"></p>
+                            					<p th:text="审核记录-----课程号+${i.treatid}+-----审核未通过+-----审核原因+${i.comment}"></p>
                             				</div>
                             				<div th:if="${i.treatresult} eq '2'">
-                            					<p th:text="审核记录-----课程号+${i.treatid}---------审核结课通过+-----审核原因+${i.comment}"></p>
+                            					<p th:text="审核记录-----课程号+${i.treatid}+---------审核结课通过+-----审核原因+${i.comment}"></p>
                             				</div>
                             					<hr />
                             			</div>
